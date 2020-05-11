@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/order/index",
+    "pages/news/index",
+    "pages/my/index",
+    "pages/mall/index",
+    "pages/route/index",
+    "pages/homestay/index",
+    "pages/livebroadcast/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "小林漫画",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color" : "#999999",
+    "selectedColor" : "#CB0101",
+    "list": [{
+      "iconPath" : "",
+      "selectedIconPath" : "",
+      "pagePath": "pages/index/index",
+      "text": "首页"
+    }, {
+      "iconPath" : "",
+      "selectedIconPath" : "",
+      "pagePath": "pages/order/index",
+      "text": "订单"
+    },{
+      "iconPath" : "",
+      "selectedIconPath" : "",
+      "pagePath": "pages/news/index",
+      "text": "消息"
+    }, {
+      "iconPath" : "",
+      "selectedIconPath" : "",
+      "pagePath": "pages/my/index",
+      "text": "我的"
+    }]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

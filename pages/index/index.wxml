@@ -1,0 +1,39 @@
+<!--index.wxml-->
+<view class="container">
+	<view class="top">
+		<view>上海</view>
+		<view class="search" catchtap="router_search">
+			<image></image>
+			<text>请输入您想要的东西</text>
+		</view>
+	</view>
+	<view>
+		<!-- 轮播导航 -->
+		<view class="swiper_banner">
+			<swiper indicator-dots="true" autoplay="true">
+				<block wx:for="{{Carousel}}" wx:key="*this">
+					<swiper-item>
+						<view class="swiper_image">{{item}}
+							<!-- <image src="./../images/banner{{item}}.png"></image> -->
+						</view>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+	</view>
+	<view>
+		正在直播
+		<image src="./../images/banner{{item}}.png"></image>
+	</view>
+	
+
+
+
+
+
+
+	<view catchtap="router_mall">商城</view>
+	<view catchtap="router_homestay">民宿</view>
+	<view catchtap="router_route">路线</view>
+	<view catchtap="router_livebroadcast">直播</view>
+</view>

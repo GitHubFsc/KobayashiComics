@@ -1,0 +1,63 @@
+/**index.wxss**/
+.swiper_banner swiper {
+  width: 100%;
+  height: 345rpx;
+  position: relative;
+}
+
+swiper .swiper_image image {
+  display: inline-block;
+  width: 100%;
+  height: 345rpx;
+}
+
+/* 设置点点的层级 */
+
+swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
+  position: absolute;
+  top: 320rpx;
+  z-index: 2;
+}
+
+/* 设置点点的样式 */
+
+swiper .wx-swiper-dot {
+  width: 16rpx;
+  height: 6rpx;
+  border-radius: 0;
+  display: inline-flex;
+  margin-left: 8rpx;
+  justify-content: space-between;
+}
+
+swiper .wx-swiper-dot::before {
+  content: '';
+  flex-grow: 1;
+  background-color: #C0C0C0;
+  opacity: 0.5;
+}
+
+/* 当前点点的样式 */
+swiper .wx-swiper-dot-active::before {
+  background-color: #CB0101;
+  opacity: 0.9;
+  border-radius: 0;
+}
+
+swiper .wx-swiper-dot.wx-swiper-dot-active {
+  width: 16rpx;
+}
+
+.swiper_sort swiper {
+  width: 100%;
+  height: 413rpx;
+  padding-bottom: 20rpx;
+  position: relative;
+}
+
+.swiper_sort swiper-item {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
