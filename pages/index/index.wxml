@@ -1,39 +1,90 @@
 <!--index.wxml-->
 <view class="container">
+	<!-- 头部 定位+搜索 -->
 	<view class="top">
-		<view>上海</view>
+		<view class="top_left">
+			<text>上海</text>
+			<image src="./../icon/down.png"></image>
+		</view>
 		<view class="search" catchtap="router_search">
-			<image></image>
+			<image src="./../icon/search.png"></image>
 			<text>请输入您想要的东西</text>
 		</view>
 	</view>
-	<view>
-		<!-- 轮播导航 -->
-		<view class="swiper_banner">
-			<swiper indicator-dots="true" autoplay="true">
-				<block wx:for="{{Carousel}}" wx:key="*this">
-					<swiper-item>
-						<view class="swiper_image">{{item}}
-							<!-- <image src="./../images/banner{{item}}.png"></image> -->
-						</view>
-					</swiper-item>
-				</block>
-			</swiper>
+	<!-- 轮播导航 -->
+	<view class="swiper_banner">
+		<swiper indicator-dots="true" autoplay="true">
+			<block wx:for="{{Carousel}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper_image">
+						<image src="./../images/banner{{item}}.png"></image>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<!-- 分类导航 -->
+	<view class="navigates">
+		<view catchtap="router_mall" class="navigate">
+			<image src="./../images/mall.png" style="width:70rpx;height:68rpx;margin-left:49rpx;margin-top:10rpx;"></image>
+			<view>商城</view>
+		</view>
+		<view catchtap="router_homestay" class="navigate">
+			<image src="./../images/homestay.png" style="width:100rpx;height:70rpx;margin-left:44rpx;"></image>
+			<view>民宿</view>
+		</view>
+		<view catchtap="router_route" class="navigate">
+			<image src="./../images/route.png" style="width:90rpx;height:49rpx;margin-left:49rpx;margin-top:20rpx;"></image>
+			<view>路线</view>
+		</view>
+		<view catchtap="router_livebroadcast" class="navigate">
+			<image src="./../images/live.png" style="width:40rpx;height:73rpx;margin-left:66rpx;margin-top:10rpx;"></image>
+			<view>直播</view>
 		</view>
 	</view>
-	<view>
-		正在直播
-		<image src="./../images/banner{{item}}.png"></image>
+	<view class="hr"></view>
+	<!-- 直播 -->
+	<view class="livebroadcast">
+		<view class="live_top">正在直播</view>
+		<image src="./../images/livebroadcast.png" class="bgimg"></image>
+		<image src="./../icon/paly.png" class="bgplay"></image>
+		<view class="liveing">
+			<view>直播中</view>
+			<view>100人正在围观</view>
+		</view>
+		<view class="title">超级直播间，直播的标题</view>
 	</view>
-	
-
-
-
-
-
-
-	<view catchtap="router_mall">商城</view>
-	<view catchtap="router_homestay">民宿</view>
-	<view catchtap="router_route">路线</view>
-	<view catchtap="router_livebroadcast">直播</view>
+	<view class="hr"></view>
+	<!--推荐咨询 -->
+	<view class="tree_detail">
+		<view class="nav_tabs">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">{{item}}
+					<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+				</view>
+			</block>
+		</view>
+		<view class="tab_ctn">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+					<block wx:for="{{4}}" wx:key="*this">
+						<view class="fruit">
+							<view class="fruit_img">
+								<image src="./../images/mall1.png"></image>
+							</view>
+							<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+							<view class="fruit_bottom">
+								<view class="fb_left"> 
+									<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+								</view>
+								<view class="fb_right">
+									<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+			</block>
+		</view>
+	</view>
 </view>

@@ -5,9 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    recommend :['全部','待付款','待发货','待收货','待评价'],
+    currentTab : 0,
   },
+  //路由
 
+  //事件
+  nav_tab(e){
+  this.setData({
+    currentTab : e.target.dataset.index
+  })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

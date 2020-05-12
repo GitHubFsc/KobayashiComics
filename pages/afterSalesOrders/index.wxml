@@ -1,0 +1,47 @@
+<!--pages/afterSalesOrders/index.wxml-->
+<view class="container">
+	<view class="tree_detail">
+		<view class="nav_tabs">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">{{item}}
+					<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+				</view>
+			</block>
+		</view>
+		<view class="tab_ctn">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+					<block wx:for="{{3}}" wx:key="*this">
+						<view class="order">
+								<view class="title">
+									<view class="orderId">售后编号：88888888</view>
+									<view class="shop_status">{{index==0?"退款中":index==1?"退款成功":index==2?"退款失败":""}}</view>
+								</view>
+								<view wx:for="{{2}}" wx:key="index" class="mall" data-order_no="index" catchtap="router_afterSalesOrderDetails">
+									<view class="mall_img">
+										<image src="./../images/mall1.png"></image>
+									</view>
+									<view class="mall_right">
+										<view class="mall_name">经典马克杯</view>
+										<view class="mall_txt">白色</view>
+										<view class="mall_price">¥10<text>x1</text></view>
+									</view>
+								</view>
+								<view class="mall_bot">
+									共1件商品 <text>¥200</text>
+								</view>
+							<view class="btn" wx:if="{{index==0||index==2}}">
+								<view wx:if="{{index==0}}">
+									<view class="btnz">取消申请</view>
+								</view>
+                <view wx:if="{{index==2}}">
+									<view class="btnz" catchtap="applyAgain" data-index="index">再次申请</view>
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>

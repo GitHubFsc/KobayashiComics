@@ -7,7 +7,9 @@ const app = getApp()
 Page({
   data: {
     userInfo: {},
-    Carousel :[1,2,3],
+    Carousel :[1,2],
+    recommend :['官方资讯','关注','推荐','热点'],
+    currentTab : 0,
   },
   
   //路由
@@ -32,7 +34,11 @@ Page({
     })
   },
   //事件
-
+  nav_tab(e){
+    this.setData({
+      currentTab : e.target.dataset.index
+    })
+  },
 
 
 

@@ -1,2 +1,62 @@
 <!--pages/order/index.wxml-->
-<text>pages/order/index.wxml</text>
+<view class="container">
+	<view class="tree_detail">
+		<view class="nav_tabs">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">{{item}}
+					<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+				</view>
+			</block>
+		</view>
+		<view class="tab_ctn">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+					<block wx:for="{{5}}" wx:key="*this">
+						<view class="order">
+								<view class="title">
+									<view class="orderId">订单编号：88888888</view>
+									<view class="shop_status">{{index==0?"已完成":index==1?"待付款":index==2?"待发货":index==3?"待收货":index==4?"待评价":""}}</view>
+								</view>
+								<view wx:for="{{2}}" wx:key="index" class="mall">
+									<view class="mall_img">
+										<image src="./../images/mall1.png"></image>
+									</view>
+									<view class="mall_right">
+										<view class="mall_name">经典马克杯</view>
+										<view class="mall_txt">白色</view>
+										<view class="mall_price">¥10<text>x1</text></view>
+									</view>
+								</view>
+								<view class="mall_bot">
+									共1件商品 <text>¥200</text>
+								</view>
+							<view class="btn">
+                <view wx:if="{{index==1}}">
+									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">取消订单</view>
+								</view>
+								<view wx:if="{{index==2||index==3||index==4}}">
+									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">申请售后</view>
+								</view>
+								<view wx:if="{{index==3}}">
+									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">查看物流</view>
+								</view>
+                <view wx:if="{{index==1}}">
+									<view class="btnz">付款</view>
+								</view>
+								<view wx:if="{{index==2}}">
+									<view class="btnz">提醒发货</view>
+								</view>
+                <view wx:if="{{index==3}}">
+									<view class="btnz">确认签收</view>
+								</view>
+                <view wx:if="{{index==4}}">
+									<view class="btnz">评价</view>
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>
