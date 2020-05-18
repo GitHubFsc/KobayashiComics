@@ -1,1 +1,154 @@
 /* pages/homestay/index.wxss */
+.address{
+  height:56rpx;
+  padding:  0 20rpx;
+  background:rgba(0,0,0,0.5);
+  border-radius:29rpx;
+  text-align: center;
+  line-height: 56rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 10;
+  display: flex;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+.address .down{
+  width: 24rpx;
+  height: 14rpx;
+  margin: -3rpx 0 0 12rpx;
+}
+/* 轮播导航 */
+.swiper_banner swiper {
+  width: 100%;
+  height: 400rpx;
+  position: relative;
+}
+
+.swiper_banner swiper .swiper_image image {
+  display: inline-block;
+  width: 100%;
+  height: 375rpx;
+}
+
+/* 设置点点的层级 */
+
+.swiper_banner swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
+  position: absolute;
+  top: 385rpx;
+  z-index: 2;
+}
+
+.homestay_title {
+  height: 100rpx;
+  line-height: 100rpx;
+  margin-left: 48rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+}
+
+.homestay_title::before {
+  position: absolute;
+  top: 38rpx;
+  left: 20rpx;
+  content: "";
+  display: inline-block;
+  width: 8rpx;
+  height: 26rpx;
+  background: rgba(203, 1, 1, 1);
+}
+
+.homestay_Boutique {
+  width: auto;
+  height: auto;
+  position: relative;
+}
+
+.hb_boxs {
+  width: auto;
+  height: auto;
+  padding:  20rpx;
+  display: flex;
+  overflow: scroll;
+  margin-right: 20rpx;
+}
+
+.hb_box {
+  position: relative;
+  margin-right: 20rpx;
+}
+
+.homestay_top {
+  position: absolute;
+  width: 73rpx;
+  height: 36rpx;
+  top: -8rpx;
+  left: 20rpx;
+}
+
+.hb_img {
+  width: 420rpx;
+  height: 273rpx;
+}
+
+.hb_txt{
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  padding: 6rpx 20rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.hb_price {
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(203,1,1,1);
+}
+.homestay_recommend{
+  width: 100%;
+  height: auto;  
+  background:rgba(250,250,252,1);
+  position: relative;
+}
+.hr_bot{
+  width: 670;
+  padding: 0 20rpx;
+  display: flex;
+  justify-content: space-between;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.hr_boxs {
+  width: auto;
+  height: auto;
+  padding:  20rpx;
+  margin-right: 20rpx;
+}
+
+.hr_box {
+  width:710rpx;
+  height: auto;
+  margin: 0 auto;
+  margin-bottom: 20rpx;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 2px 4px 0px rgba(223,223,223,0.5);
+  border-radius:0px 0px 10px 10px;
+  padding-bottom: 20rpx;
+  position: relative;
+}
+.hr_img{
+  width: 710rpx;
+  height: 462rpx;
+  margin-bottom: 10rpx;
+}

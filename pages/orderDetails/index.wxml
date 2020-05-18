@@ -1,0 +1,103 @@
+<!--pages/orderDetails/index.wxml-->
+<view class="container">
+	<view class="refund">
+		<view class="refund_left {{order_no==0||order_no==1?'Tobepaid':'refund_img'}}">
+			<image src="../icon/wait{{order_no!=0?order_no:1}}.png"></image>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==0||order_no==1}}">
+			<text>待支付</text><text>请在20分20秒内付款，超时订单将自动取</text>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==2}}">
+			<text>待发货</text><text>商家会尽快安排发货</text>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==3}}">
+			<text>待收货</text><text></text>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==4}}">
+			<text>待评价</text><text></text>
+		</view>
+	</view>
+	<view class="bgcolor">
+		<view class="Logistics" wx:if="{{order_no==3||order_no==4}}">
+			<view class="Logistics_left">
+				<image src="../icon/wuliu.png"></image>
+			</view>
+			<view class="position_right">
+				<view>快递已经到达上海，正在安排派件</view>
+				<view>2019-12-12 12:00</view>
+			</view>
+			<image class="gengduo" src="./../icon/gengduo.png" />
+		</view>
+		<view class="position">
+			<view class="position_left">
+				<image src="../icon/dingwei.png"></image>
+			</view>
+			<view class="position_right">
+				<view>张三 18888888888</view>
+				<view>上海市长宁区延安西路1088号1903</view>
+			</view>
+		</view>
+		<view class="commoditys">
+			<view class="commodity" wx:for="{{2}}" wx:key="*this">
+				<view class="commodity_left">
+					<image src="./../images/mall1.png"></image>
+				</view>
+				<view class="commodity_right">
+					<view class="commodity_title">经典马克杯<text class="commodity_num">x1</text></view>
+					<view class="commodity_property">白色</view>
+					<view class="commodity_money">
+						<text>¥200</text>
+						<!-- <text class="commodity_num">x1</text> -->
+						<text class="commodity_aftersale_btn" data-order_no="index" catchtap="applyAgain">售后</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="amount">
+			<view style="border:none;">
+				<text>商品总额</text>
+				<text>¥200</text>
+			</view>
+			<view>
+				<text>运费</text>
+				<text>¥20</text>
+			</view>
+			<view>
+				<text>积分</text>
+				<text class="jifen">-20</text>
+			</view>
+			<view>
+				<text>优惠券</text>
+				<text>-20</text>
+			</view>
+			<view>
+				<text>发票</text>
+				<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
+			</view>
+			<view>
+				<text>实际需支付金额</text>
+				<text class="jine">¥20</text>
+			</view>
+		</view>
+		<view class="order">
+			<view class="reason_tex">订单编号：89898988</view>
+			<view class="reason_tex">下单时间：2019-12-12 12:00</view>
+			<view class="reason_tex">付款时间: 2019-12-12 12:00</view>
+			<view class="reason_tex">付款方式：微信</view>
+			<view class="reason_tex">发货时间：2019-12-12 12:00</view>
+		</view>
+		<view class="refund_btn">
+			<view class="Quantity">共2件商品</view>
+			<view class="Amount">¥200</view>
+      <view class="btns">
+        <view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">取消订单</view>      
+        <view class="btnz" catchtap="" wx:if="{{order_no == 2||order_no == 3}}">申请售后</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 3||order_no == 4}}">查看物流</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">付款</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 2}}">提醒发货</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 3}}">确认签收</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 4}}">评价</view>
+      </view>
+		</view>
+	</view>
+</view>

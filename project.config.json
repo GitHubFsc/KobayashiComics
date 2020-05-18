@@ -74,6 +74,41 @@
 					"id": -1,
 					"name": "售后订单",
 					"pathName": "pages/afterSalesOrders/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "订单详情",
+					"pathName": "pages/orderDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商城",
+					"pathName": "pages/mall/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "社群详情",
+					"pathName": "pages/communityDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/productDetails/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "民宿",
+					"pathName": "pages/homestay/index",
 					"scene": null
 				}
 			]

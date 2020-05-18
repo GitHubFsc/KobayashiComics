@@ -17,39 +17,39 @@
 		</view>
 	</view>
 	<view class="reason">
-		<view class="reason_tex">售后编号：{{orderDetails.order_no}}</view>
-		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3||orderDetails.refund_status == 2}}">{{orderDetails.refund_status == 2?"退款时间：":"失败时间："}}{{orderDetails.check_add_time}}</view>
+		<view class="reason_tex">售后编号：89898988</view>
+		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3||orderDetails.refund_status == 2}}">2019-12-12 12:00</view>
 		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3}}">退款失败原因：货物还未退回</view>
-		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3}}">退款金额：{{orderDetails.refund_amount}}</view>
-		<view class="reason_tex">申请时间：{{orderDetails.refund_add_time}}</view>
-		<view class="reason_tex">申请金额：¥{{orderDetails.refund_amount}}</view>
-		<view class="reason_tex">申请类型：{{orderDetails.refund_type == 1?"仅退款":"退货退款"}}</view>
-		<view class="reason_tex">申请原因：{{orderDetails.refund_reason}}</view>
-		<view class="reason_tex">退款说明：{{orderDetails.refund_instruction}}</view>
+		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3}}">退款金额：¥1000</view>
+		<view class="reason_tex">申请时间：2019-12-12 12:00</view>
+		<view class="reason_tex">申请金额：¥200</view>
+		<view class="reason_tex">申请类型：仅退款 退货退款</view>
+		<view class="reason_tex">申请原因：仅退款 退货退款</view>
+		<view class="reason_tex">退款说明：仅退款 退货退款</view>
 		<view class="reason_img" >
-			<image wx:for="{{imgArr}}" src="{{item}}" mode='aspectFill'></image>
+			<image wx:for="{{3}}" src="./../images/mall1.png" mode='aspectFill'  wx:key="*this"></image>
 		</view>
 	</view>
 	<view class="position">
 		<view class="position_left">
-			<image src="../img/dingwei.png"></image>
+			<image src="../icon/dingwei.png"></image>
 		</view>
 		<view class="position_right">
-			<view>{{orderDetails.address_recipient}} {{orderDetails.address_phone}}</view>
-			<view>{{orderDetails.shipping_address}}</view>
+			<view>张三 18888888888</view>
+			<view>上海市长宁区延安西路1088号1903</view>
 		</view>
 	</view>
 	<view class="commoditys">
-		<view class="commodity" wx:for="{{orderDetails.pro_list}}">
+		<view class="commodity" wx:for="{{2}}" wx:key="*this">
 			<view class="commodity_left">
-				<image src="{{item.pro_images}}"></image>
+				<image src="./../images/mall1.png"></image>
 			</view>
 			<view class="commodity_right">
-				<view class="commodity_title">{{item.pro_name}}</view>
-				<view class="commodity_property">{{item.pro_specification}}</view>
+				<view class="commodity_title">经典马克杯</view>
+				<view class="commodity_property">白色</view>
 				<view class="commodity_money">
-					<text>¥{{item.pro_unitprice}}</text>
-					<text class="commodity_money_right">x{{item.pro_number}}</text>
+					<text>¥200</text>
+					<text class="commodity_num">x1</text>
 				</view>
 			</view>
 		</view>
@@ -57,40 +57,40 @@
 	<view class="amount">
 		<view>
 			<text>商品总额</text>
-			<text>¥{{orderDetails.combined}}</text>
+			<text>¥200</text>
 		</view>
 		<view>
 			<text>运费</text>
-			<text>¥{{orderDetails.freight}}</text>
+			<text>¥20</text>
 		</view>
 		<view>
 			<text>积分</text>
-			<text class="jifen">-{{orderDetails.point_youhui}}</text>
+			<text class="jifen">-20</text>
 		</view>
 		<view>
 			<text>优惠券</text>
-			<text>-{{orderDetails.point_youhui}}</text>
+			<text>-20</text>
 		</view>
 		<view>
 			<text>发票</text>
 			<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
 		</view>
 		<view>
-			<text>实际需支付金额</text>
-			<text class="jine">¥{{orderDetails.pay_money}}</text>
+			<text>实际需支付金额  </text>
+			<text class="jine">  ¥20</text>
 		</view>
 	</view>
 	<view class="order">
-		<view class="reason_tex">订单编号：{{orderDetails.order_no}}</view>
-		<view class="reason_tex">下单时间：{{orderDetails.create_add_time}}</view>
-		<view class="reason_tex">付款时间: {{orderDetails.create_add_time}}</view>
-		<view class="reason_tex">付款方式：{{orderDetails.create_add_time}}</view>
-		<view class="reason_tex">发货时间：{{orderDetails.create_add_time}}</view>
+		<view class="reason_tex">订单编号：89898988</view>
+		<view class="reason_tex">下单时间：2019-12-12 12:00</view>
+		<view class="reason_tex">付款时间: 2019-12-12 12:00</view>
+		<view class="reason_tex">付款方式：微信</view>
+		<view class="reason_tex">发货时间：2019-12-12 12:00</view>
 	</view>
 	
 	<view class="refund_btn">
-		<view class="Quantity">共{{orderDetails.sumpro}}件商品</view>
-		<view class="Amount">¥{{orderDetails.combined}}</view>
+		<view class="Quantity">共2件商品</view>
+		<view class="Amount">¥200</view>
 		<view class="SingleNumber" catchtap="SingleNumber" wx:if="{{orderDetails.refund_status == 1}}">填写寄回单号</view>
 		<view class="btnz" catchtap="CancelRefund"  wx:if="{{orderDetails.refund_status == 1}}">取消退款</view>
 		<view class="btnz" catchtap="applyAgain"  wx:if="{{orderDetails.refund_status == 3}}">再次申请</view>

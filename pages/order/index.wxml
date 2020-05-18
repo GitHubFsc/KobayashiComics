@@ -12,7 +12,7 @@
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
 					<block wx:for="{{5}}" wx:key="*this">
-						<view class="order">
+						<view class="order" data-order_no="{{item}}" catchtap="router_orderDetails">
 								<view class="title">
 									<view class="orderId">订单编号：88888888</view>
 									<view class="shop_status">{{index==0?"已完成":index==1?"待付款":index==2?"待发货":index==3?"待收货":index==4?"待评价":""}}</view>

@@ -33,6 +33,16 @@ Page({
       url: '../livebroadcast/index',
     })
   },
+  router_dynamic(){
+    wx.navigateTo({
+      url: '../dynamic/index',
+    })
+  },
+  router_communityDetails(e){
+    wx.navigateTo({
+      url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
+    })
+  },
   //事件
   nav_tab(e){
     this.setData({

@@ -47,7 +47,7 @@
 	<view class="livebroadcast">
 		<view class="live_top">正在直播</view>
 		<image src="./../images/livebroadcast.png" class="bgimg"></image>
-		<image src="./../icon/paly.png" class="bgplay"></image>
+		<image src="./../icon/play.png" class="bgplay"></image>
 		<view class="liveing">
 			<view>直播中</view>
 			<view>100人正在围观</view>
@@ -68,7 +68,7 @@
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
 					<block wx:for="{{4}}" wx:key="*this">
-						<view class="fruit">
+						<view class="fruit" data-id="index" catchtap="router_communityDetails">
 							<view class="fruit_img">
 								<image src="./../images/mall1.png"></image>
 							</view>
@@ -86,5 +86,9 @@
 				</view>
 			</block>
 		</view>
+	</view>
+	<!-- 发布动态 -->
+	<view class="dynamic" catchtap="router_dynamic">
+		<image src="./../images/dynamic.png"></image>
 	</view>
 </view>

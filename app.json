@@ -10,7 +10,17 @@
     "pages/livebroadcast/index",
     "pages/afterSalesOrders/index",
     "pages/afterSalesOrderDetails/index",
-    "pages/applyForSale/index"
+    "pages/applyForSale/index",
+    "pages/orderDetails/index",
+    "pages/mallList/index",
+    "pages/shoppingcart/index",
+    "pages/dynamic/index",
+    "pages/communityDetails/index",
+    "pages/homepage/index",
+    "pages/productDetails/index",
+    "pages/reply/index",
+    "pages/commen/index",
+    "pages/homestayDetails/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -19,29 +29,34 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color" : "#999999",
-    "selectedColor" : "#CB0101",
-    "list": [{
-      "iconPath" : "./pages/icon/indexH.png",
-      "selectedIconPath" : "./pages/icon/indexR.png",
-      "pagePath": "pages/index/index",
-      "text": "首页"
-    }, {
-      "iconPath" : "./pages/icon/orderH.png",
-      "selectedIconPath" : "./pages/icon/orderR.png",
-      "pagePath": "pages/order/index",
-      "text": "订单"
-    },{
-      "iconPath" : "./pages/icon/newsH.png",
-      "selectedIconPath" : "./pages/icon/newsR.png",
-      "pagePath": "pages/news/index",
-      "text": "消息"
-    }, {
-      "iconPath" : "./pages/icon/myH.png",
-      "selectedIconPath" : "./pages/icon/myR.png",
-      "pagePath": "pages/my/index",
-      "text": "我的"
-    }]
+    "color": "#999999",
+    "selectedColor": "#CB0101",
+    "list": [
+      {
+        "iconPath": "./pages/icon/indexH.png",
+        "selectedIconPath": "./pages/icon/indexR.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "iconPath": "./pages/icon/orderH.png",
+        "selectedIconPath": "./pages/icon/orderR.png",
+        "pagePath": "pages/order/index",
+        "text": "订单"
+      },
+      {
+        "iconPath": "./pages/icon/newsH.png",
+        "selectedIconPath": "./pages/icon/newsR.png",
+        "pagePath": "pages/news/index",
+        "text": "消息"
+      },
+      {
+        "iconPath": "./pages/icon/myH.png",
+        "selectedIconPath": "./pages/icon/myR.png",
+        "pagePath": "pages/my/index",
+        "text": "我的"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

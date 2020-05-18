@@ -1,0 +1,99 @@
+<!--pages/homepage/index.wxml-->
+<view class="container">
+	<view class="user">
+		<view class="user_top">
+			<view class="user_avatar">
+				<image src="./../images/userimg.png" />
+			</view>
+			<view class="user_right">
+				<view class="user_name">张三</view>
+				<view class="user_signature">超级个性的签名</view>
+			</view>
+		</view>
+		<view class="user_bot">
+			<view class="user_attention">关注<text>20</text></view>
+			<view class="user_fan">粉丝<text>20</text></view>
+			<view class="user_btn" wx:if="{{type==1}}" data-id="2" catchtap="attention">关注</view>
+		</view>
+	</view>
+	<view class="hr"></view>
+	<view wx:if="{{type==0}}">
+		<view class="tree_detail">
+			<view class="nav_tabs">
+				<block wx:for="{{recommend}}" wx:key="*this">
+					<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">{{item}}
+						<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+					</view>
+				</block>
+			</view>
+			<view class="tab_ctn">
+				<block wx:for="{{recommend}}" wx:key="*this">
+					<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+						<block wx:if="{{currentTab==0||currentTab==2}}">
+							<block wx:for="{{4}}" wx:key="*this">
+								<view class="fruit" data-id="index" catchtap="router_communityDetails">
+									<view class="fruit_del" data-id="{{index}}" catchtap="communityDel">
+										<image src="./../icon/del.png"></image>
+									</view>
+									<view class="fruit_play" wx:if="{{index==3}}">
+										<image src="./../icon/play.png"></image>
+									</view>
+									<view class="fruit_img">
+										<image src="./../images/mall1.png"></image>
+									</view>
+									<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+									<view class="fruit_bottom">
+										<view class="fb_left">
+											<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+										</view>
+										<view class="fb_right">
+											<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+										</view>
+									</view>
+								</view>
+							</block>
+						</block>
+						<block wx:for="{{4}}" wx:key="*this" wx:if="{{currentTab==1}}">
+							<view class="comment" data-id="1" catchtap="router_reply"> 
+								<view class="comment_top"> 
+									<view class="ct_time">2020-02-02 12:00</view>
+                  <view wx:if="{{index%2==0}}" class="ct_txt">评论：“我对别人的评论”</view>
+									<view wx:if="{{index%2==1}}" class="ct_txt">回复<text>张三</text>“我对别人的很多的评论，巴拉巴拉吧啦啦”</view>
+								</view>
+								<view class="comment_bot"> 
+									<view class="cb_img"><image src="./../images/mall1.png" /></view>
+									<view class="cb_txt">强烈安利这款马克杯，好看拿着也舒服…</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
+	<view wx:if="{{type==1}}">
+		<view class="myinformation">我的资讯</view>
+		<view class="mallList">
+			<block wx:for="{{4}}" wx:key="*this">
+				<view class="fruit" data-id="index" catchtap="router_communityDetails">
+					<view class="fruit_img">
+						<image src="./../images/mall1.png"></image>
+					</view>
+					<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+					<view class="fruit_bottom">
+						<view class="fb_left">
+							<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+						</view>
+						<view class="fb_right">
+							<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</view>
+  <!-- 发布动态 -->
+	<view class="dynamic" catchtap="router_dynamic" wx:if="{{currentTab==0}}">
+		<image src="./../images/dynamic.png"></image>
+	</view>
+</view>

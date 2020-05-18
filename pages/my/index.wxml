@@ -55,75 +55,77 @@
 		<!-- myother  -->
 		<view class="myothers">
 			<view class="myother">
+				<navigator url="../shoppingcart/index" hover-class="none">
+					<view class="myother_img">
+						<image src="./../icon/car.png" style="width: 52rpx;height: 52rpx;" />
+					</view>
+					<view class="myother_txt">购物车</view>
+				</navigator>
+			</view>
+			<view class="myother">
 				<navigator url="../afterSalesOrders/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/Aftersale.png" style="width: 35rpx;height: 34rpx;" />
+						<image src="./../icon/Aftersale.png" style="width: 52rpx;height: 52rpx;" />
 					</view>
 					<view class="myother_txt">售后订单</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../homepage/index?id=0&type=0" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/personal.png" style="width: 35rpx;height: 34rpx;" />
+						<image src="./../icon/personal.png" style="width: 44rpx;height: 44rpx;" />
 					</view>
 					<view class="myother_txt">个人主页</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
+					
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/route.png" style="width: 43rpx;height: 34rpx;" />
+						<image src="./../icon/route.png" style="width: 48rpx;height: 40rpx;" />
 					</view>
 					<view class="myother_txt">我的路线</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
+					
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/Myhomestay.png" style="width: 41rpx;height: 36rpx;" />
+						<image src="./../icon/Myhomestay.png" style="width: 48rpx;height: 43rpx;" />
 					</view>
 					<view class="myother_txt">我的民宿</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/invoice.png" style="width: 40rpx;height: 31rpx;" />
+						<image src="./../icon/invoice.png" style="width: 48rpx;height: 39rpx;" />
 					</view>
 					<view class="myother_txt">发票管理</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/address.png" style="width: 31rpx;height: 41rpx;" />
+						<image src="./../icon/address.png" style="width: 36rpx;height: 51rpx;" />
 					</view>
 					<view class="myother_txt">地址管理</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/mycollection.png" style="width: 41rpx;height: 40rpx;" />
+						<image src="./../icon/mycollection.png" style="width: 48rpx;height: 48rpx;" />
 					</view>
 					<view class="myother_txt">我的收藏</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 			<view class="myother">
 				<navigator url="../mall/index" hover-class="none">
 					<view class="myother_img">
-						<image src="./../icon/Feedback.png" style="width: 37rpx;height: 40rpx;" />
+						<image src="./../icon/Feedback.png" style="width: 44rpx;height: 45rpx;" />
 					</view>
 					<view class="myother_txt">意见反馈</view>
-					<image class="gengduo" src="./../icon/gengduo.png" />
 				</navigator>
 			</view>
 		</view>

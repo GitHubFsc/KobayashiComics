@@ -1,1 +1,21 @@
 /* pages/route/index.wxss */
+/*轮播图*/
+.homestay.swiper_banner swiper {
+  width: 100%;
+  height: 400rpx;
+  position: relative;
+}
+
+.homestay .swiper_banner swiper .swiper_image image {
+  display: inline-block;
+  width: 100%;
+  height: 375rpx;
+}
+
+/* 设置点点的层级 */
+
+.homestay.swiper_banner swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
+  position: absolute;
+  top: 385rpx;
+  z-index: 2;
+}

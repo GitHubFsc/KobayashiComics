@@ -1,2 +1,97 @@
 <!--pages/mall/index.wxml-->
-<text>pages/mall/index.wxml</text>
+<view class="container">
+	<!-- 头部 搜索+消息 -->
+	<view class="top">
+		<view class="search" catchtap="router_search">
+			<image src="./../icon/search.png"></image>
+			<text>请输入您想要的东西</text>
+		</view>
+		<view class="top_right" catchtap="router_news">
+			<image src="./../icon/mallnews.png"></image>
+			<text>1</text>
+		</view>
+	</view>
+	<!-- 轮播导航 -->
+	<view class="swiper_banner">
+		<swiper indicator-dots="true" autoplay="true">
+			<block wx:for="{{Carousel}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper_image">
+						<image src="./../images/banner{{item}}.png"></image>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+	<!-- 分类导航 -->
+	<view class="navigates">
+		<view catchtap="router_mallList"  data-index="0" class="navigate">
+			<image src="./../icon/farm.png" style="width:48rpx;height:48rpx;margin-left:48rpx;margin-top:10rpx;"></image>
+			<view>农家特产</view>
+		</view>
+		<view catchtap="router_mallList" data-index="1" class="navigate">
+			<image src="./../icon/personalized.png" style="width:46rpx;height:46rpx;margin-left:44rpx;margin-top:10rpx;"></image>
+			<view>个性优品</view>
+		</view>
+		<view catchtap="router_mallList" data-index="2" class="navigate">
+			<image src="./../icon/life.png" style="width:48rpx;height:48rpx;margin-left:48rpx;margin-top:10rpx;"></image>
+			<view>生活用品</view>
+		</view>
+		<view catchtap="router_mallList"  data-index="3" class="navigate">
+			<image src="./../icon/manual.png" style="width:42rpx;height:53rpx;margin-left:66rpx;margin-top:10rpx;"></image>
+			<view>手工产品</view>
+		</view>
+	</view>
+	<view class="hr"></view>
+	<view class="activity">
+		<view class="activity_top">
+			<view class="activity_left">
+				<view class="activity_img">
+					<image src="./../icon/activity.png"></image>
+				</view>
+				<view>活动商品</view>
+			</view>
+			<view class="activity_right" data-index="4" catchtap="router_mallList">
+				<view>更多商品</view>
+				<view class="genduo">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+		</view>
+		<view class="activity_bot">
+			<block wx:for="{{4}}" wx:key="index">
+				<view class="activity_mall" data-id="1" catchtap="router_productDetails">
+					<view class="am_img">
+						<image src="./../images/mallmin.png"></image>
+					</view>
+					<view class="am_title">经典马克杯</view>
+					<view class="am_price">¥200</view>
+				</view>
+			</block>
+		</view>
+	</view>
+	<view class="recommend">
+		<view class="activity_top">
+			<view class="activity_left">
+				<view class="activity_img">
+					<image src="./../icon/recommend.png"></image>
+				</view>
+				<view>推荐商品</view>
+			</view>
+		</view>
+    <view class="recommend_bot">
+      <block wx:for="{{8}}" wx:key="index">
+        <view class="fruit" data-id="1" catchtap="router_productDetails">
+          <view class="fruit_img">
+            <image src="./../images/recommend_mall.png"></image>
+          </view>
+          <view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+          <view class="fruit_bottom">
+            <view class="price_now">¥200</view>
+            <view class="price_bef">¥300</view>
+          </view>
+        </view>
+      </block>
+    </view>
+	</view>
+</view>

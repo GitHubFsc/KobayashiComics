@@ -7,7 +7,12 @@ Page({
   data: {
 
   },
-
+  /*路由*/
+  router_homestayDetails(e){
+    wx.navigateTo({
+      url: '../homestayDetails/index?id='+e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

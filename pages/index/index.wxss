@@ -32,56 +32,6 @@
   padding-left: 74rpx;
 }
 
-/*轮播图*/
-.swiper_banner swiper {
-  width: 100%;
-  height: 380rpx;
-  position: relative;
-}
-
-.swiper_banner swiper .swiper_image image {
-  display: inline-block;
-  width: 100%;
-  height: 345rpx;
-}
-
-/* 设置点点的层级 */
-
-.swiper_banner swiper .wx-swiper-dots.wx-swiper-dots-horizontal {
-  position: absolute;
-  top: 365rpx;
-  z-index: 2;
-}
-
-/* 设置点点的样式 */
-
-.swiper_banner swiper .wx-swiper-dot {
-  width: 16rpx;
-  height: 6rpx;
-  border-radius: 0;
-  display: inline-flex;
-  margin-left: 8rpx;
-  justify-content: space-between;
-}
-
-.swiper_banner swiper .wx-swiper-dot::before {
-  content: '';
-  flex-grow: 1;
-  background-color: #C0C0C0;
-  opacity: 0.5;
-}
-
-/* 当前点点的样式 */
-.swiper_banner swiper .wx-swiper-dot-active::before {
-  background-color: #CB0101;
-  opacity: 0.9;
-  border-radius: 0;
-}
-
-.swiper_banner swiper .wx-swiper-dot.wx-swiper-dot-active {
-  width: 16rpx;
-}
-
 /*导航*/
 .navigates {
   width: 710rpx;
@@ -173,4 +123,12 @@
   font-size:30rpx;
   color:rgba(255,255,255,1);
   z-index: 2;
+}
+/*发布*/
+.dynamic{
+  width: 120rpx;
+  height: 120rpx;
+  position: fixed;
+  right: 10rpx;
+  bottom: 20rpx;
 }

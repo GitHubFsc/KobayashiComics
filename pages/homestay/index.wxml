@@ -1,2 +1,48 @@
 <!--pages/homestay/index.wxml-->
-<text>pages/homestay/index.wxml</text>
+<view class="container homestay" >
+  <!-- 选择位置  -->
+  <view class="address">
+    <view>上海</view>
+    <view class="down"><image src="./../icon/downW.png"></image></view>
+  </view>
+  <!-- 轮播导航 -->
+	<view class="swiper_banner">
+		<swiper indicator-dots="true" autoplay="true">
+			<block wx:for="{{3}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper_image">
+						<image src="./../images/homestay{{item}}.png"></image>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+	</view>
+  <!-- 精品民宿 -->
+  <view class="homestay_Boutique">
+    <view class="homestay_title">精品民宿</view>
+    <view class="hb_boxs">
+      <block wx:for="{{3}}" wx:key="index">
+        <view class="hb_box" data-id="{{index}}" catchtap="router_homestayDetails">
+          <view class="homestay_top"><image src="./../images/hb_top.png"/></view>
+          <view class="hb_img"><image src="./../images/homestay{{item}}.png"/></view>
+          <view class="hb_txt">杏花|美式复古花园独栋别墅…</view>
+          <view class="hb_price">¥200/晚</view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 推荐民宿 -->
+  <view class="homestay_recommend">
+    <view class="homestay_title">推荐民宿</view>
+    <view class="hr_boxs">
+      <block wx:for="{{3}}" wx:key="index">
+        <view class="hr_box" data-id="{{index}}" catchtap="router_homestayDetails">
+          <view class="homestay_top"><image src="./../images/hb_top.png"/></view>
+          <view class="hr_img"><image src="./../images/homestay{{item}}.png"/></view>
+          <view class="hb_txt">杏花|美式复古花园独栋别墅…</view>
+          <view class="hr_bot"><view class="hr_address">上海-浦东新区</view><view class="hb_price">¥200/晚</view></view>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

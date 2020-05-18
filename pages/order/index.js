@@ -9,7 +9,12 @@ Page({
     currentTab : 0,
   },
   //路由
-
+  router_orderDetails(e){
+    console.log(e.currentTarget.dataset.order_no)
+    wx.navigateTo({
+      url: '../orderDetails/index?order_no='+e.currentTarget.dataset.order_no,
+    })
+  },
   //事件
   nav_tab(e){
   this.setData({

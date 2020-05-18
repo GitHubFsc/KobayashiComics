@@ -5,9 +5,27 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    Carousel :[1,2],
   },
-
+  //路由
+  //农家特产等
+  router_mallList(e){
+    wx.navigateTo({
+      url: '../mallList/index?index='+ e.currentTarget.dataset.index,
+    })
+  },
+  //消息
+  router_news(){
+    wx.switchTab({
+      url: '../news/index'
+    })
+  },
+  //商品详情
+  router_productDetails(e){
+    wx.navigateTo({
+      url: '../productDetails/index?id='+ e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

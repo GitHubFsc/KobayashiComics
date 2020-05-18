@@ -1,2 +1,5 @@
 <!--pages/route/index.wxml-->
-<text>pages/route/index.wxml</text>
+<!-- router_dynamic -->
+<view class="container" >
+
+</view>
