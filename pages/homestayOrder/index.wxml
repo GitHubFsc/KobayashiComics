@@ -1,0 +1,59 @@
+<!--pages/homestayOrder/index.wxml-->
+<view class="container homestayOrder">
+	<view class="tree_detail">
+		<view class="nav_tabs">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">{{item}}
+					<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+				</view>
+			</block>
+		</view>
+		<view class="tab_ctn">
+			<block wx:for="{{recommend}}" wx:key="*this">
+				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+					<block wx:for="{{5}}" wx:key="*this">
+						<view class="order" data-order_no="{{item}}" catchtap="router_homestayorderDetails">
+								<view class="title">
+									<view class="orderId">民宿编号：88888888</view>
+									<view class="shop_status">{{index==0?"待支付":index==1?"未住宿-商家已接单":index==2?"未住宿":index==3?"被拒绝":index==4?"退款":"已完成"}}</view>
+								</view>
+								<view wx:for="{{2}}" wx:key="index" class="mall">
+									<view class="mall_img">
+										<image src="./../images/mall1.png"></image>
+									</view>
+									<view class="mall_right">
+										<view class="mall_name">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
+										<view class="mall_txt">a户型</view>
+										<view class="mall_price">¥300</view>
+									</view>
+								</view>
+							<view class="btn">
+                <view wx:if="{{index==0}}">
+									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">取消</view>
+								</view>
+								<view wx:if="{{index==1||index==2}}">
+									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">申请退款</view>
+								</view>
+								<view wx:if="{{index==4}}">
+									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">再次申请</view>
+								</view>
+                	<view wx:if="{{index==4}}">
+									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">取消退款</view>
+								</view>
+                <view wx:if="{{index==0}}">
+									<view class="btnz">付款</view>
+								</view>
+                <!-- <view wx:if="{{index==3}}">
+									<view class="btnz">确认签收</view>
+								</view>
+                <view wx:if="{{index==4}}">
+									<view class="btnz">评价</view>
+								</view> -->
+							</view>
+						</view>
+					</block>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>

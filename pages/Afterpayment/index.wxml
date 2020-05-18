@@ -1,0 +1,7 @@
+<!--pages/Afterpayment/index.wxml-->
+<view class="container Afterpayment">
+	<view class="ap_img"><image src="./../icon/Bookok.png"></image></view>
+	<view class="ap_txt">{{type==1?'民宿':'路线'}}提交成功</view>
+	<view class="ap_txt">相关工作人员会和您联系</view>
+	<view class="tohome">返回首页</view>
+</view>

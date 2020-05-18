@@ -1,0 +1,125 @@
+<!--pages/homestaySubmitOrder/index.wxml-->
+<view class="container homestaySubmitOrder">
+	<view class="commoditys">
+		<view class="commodity_top">
+			<view class="ct_img">
+				<image src="./../images/homestay0.png"></image>
+			</view>
+			<view class="ct_right">
+				<view class="ct_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
+				<view class="ct_txt">a户型</view>
+				<view class="ct_price">
+					<view class="price">¥300</view>
+					<view>x1</view>
+				</view>
+			</view>
+		</view>
+		<view class="commodity_information">
+			<view class="ci_cell" catchtap="IntoOtu">
+				<view>入离时间</view>
+				<view>2020-12-12 入住 2020-12-12 离店</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="ci_cell">
+				<view>入住人数</view>
+				<view>
+					<picker mode="selector" header-text="请选择入住人数" bindchange="bindPickerChange" value="{{index}}" range="{{peopleNumList}}">
+						<view class="picker">{{peopleNum}}</view>
+					</picker>
+				</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="ci_cell" catchtap="Tenant">
+				<view>住客信息</view>
+				<view>{{Tenant_nmae}}{{Tenant_userId}}请添加住客信息</view>
+				<view></view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="ci_cell">
+				<view>联系方式</view>
+				<view><input type="number" placeholder="请输入联系方式" /></view>
+			</view>
+		</view>
+		<view class="commodity_discount">
+			<view class="cd_cell">
+				<view>住宿费</view>
+				<view>¥300</view>
+			</view>
+			<view class="cd_cell">
+				<view>优惠券</view>
+				<view class="cdc_txt">-¥10</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="cd_cell">
+				<view>积分</view>
+				<view>
+					<switch class="switch" type="switch" color="#CB0101" checked="{{switchChecked}}" bindchange="switchChange" />
+				</view>
+				<view>100积分可抵扣10元</view>
+				<view class="price">-¥10</view>
+			</view>
+			<view class="cd_cell" catchtap="router_invoice">
+				<view>发票</view>
+				<view class="cdc_txt">不要发票</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="cd_cell">
+				<view>商品总额</view>
+				<view class="price">¥280</view>
+			</view>
+		</view>
+	</view>
+	<view class="topay">
+		<view>实际支付：<text class="topay_price">¥280</text></view>
+		<view catchtap="router_topay">去支付</view>
+	</view>
+	<view class="peopleBox" hidden="{{peopleBox}}" catchtap="Tenant">
+		<view class="people_box">
+			<view class="pb_top">
+				<view catchtap="Tenant">取消</view>
+				<view class="pb_title">选择入住人信息</view>
+				<view catchtap="determine">确定</view>
+			</view>
+			<view class="pb_users">
+				<block wx:for="{{userList}}" wx:key="index">
+					<view class="pb_user" data-index="{{index}}" catchtap="Selected">
+						<view class="pbu_name"><text>{{item.name}}</text><text>{{item.userId}}</text> </view>
+						<view class="pbu_img"><image src="{{item.userflag ?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image></view>
+					</view>
+				</block>
+			</view>
+			<view class="addResident" catchtap="router_addResident">+ 添加入住人信息</view>
+		</view>
+	</view>
+	<view class="calendar_box" hidden="{{calendar_box}}" catchtap="close">
+		<view class="calendars">
+			<view class="calendar_top">
+				<view class="close" catchtap="close">
+					<image src="./../icon/close.png"></image>
+				</view>
+				<view>请选择日期</view>
+				<view class="calendar_txt" catchtap="">清空</view>
+			</view>
+			<view class="calendar_nav">
+				<view class="calendar_txt" data-index="0" catchtap="calendar">入住日期</view>
+				<view class="calendar_txt" data-index="1" catchtap="calendar">退房日期</view>
+			</view>
+			<view class="calendar" hidden="{{calendar}}">
+				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+			</view>
+			<view class="calendar" hidden="{{!calendar}}">
+				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+			</view>
+		</view>
+	</view>
+</view>

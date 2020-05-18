@@ -20,7 +20,11 @@
     "pages/productDetails/index",
     "pages/reply/index",
     "pages/commen/index",
-    "pages/homestayDetails/index"
+    "pages/homestayDetails/index",
+    "pages/homestaySubmitOrder/index",
+    "pages/Afterpayment/index",
+    "pages/homestayorderDetails/index",
+    "pages/homestayOrder/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -23,7 +23,7 @@
 	<view class="hd_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
 	<view class="hd_bot">
 		<view class="hd_price">¥200/晚</view>
-		<view class="hd_address">上海-浦东新区</view>
+		<view>上海-浦东新区</view>
 	</view>
 	<view class="hr"></view>
 	<view>
@@ -40,11 +40,11 @@
 	</view>
 	<view class="hr"></view>
 	<view class="hd_date">
-		<view class="hd_CheckIn">
+		<view class="hd_CheckIn" data-index="0" catchtap="OpenCalendar">
 			<view class="section_title">入住时间</view>
 			<view class="picker">02月03日</view>
 		</view>
-		<view class="hd_CheckOut">
+		<view class="hd_CheckOut" data-index="1" catchtap="OpenCalendar">
 			<view class="section_title">离店时间</view>
 			<view class="picker">02月02日</view>
 		</view>
@@ -54,9 +54,30 @@
 	<view class="hr"></view>
 	<view class="hd_address">地址： <text>上海市长宁区延安西路1088号</text></view>
 	<view class="hr"></view>
-	<view>
+	<view class="hd_description">
 		<view class="hd_title">房屋描述：</view>
 	</view>
-
+	<view class="hd_book" catchtap="router_book">预定</view>
+	<view class="calendar_box" hidden="{{calendar_box}}" catchtap="close">
+		<view class="calendars">
+			<view class="calendar_top">
+				<view class="close" catchtap="close">
+					<image src="./../icon/close.png"></image>
+				</view>
+				<view>请选择日期</view>
+				<view class="calendar_txt" catchtap="">清空</view>
+			</view>
+			<view class="calendar_nav">
+				<view class="calendar_txt" data-index="0" catchtap="calendar">入住日期</view>
+				<view class="calendar_txt" data-index="1" catchtap="calendar">退房日期</view>
+			</view>
+			<view class="calendar" hidden="{{calendar}}">
+				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+			</view>
+			<view class="calendar" hidden="{{!calendar}}">
+				<Calendar workerClockData="{{workerClockData}}" ></Calendar>
+			</view>
+		</view>
+	</view>
 
 </view>

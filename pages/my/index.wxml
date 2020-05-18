@@ -89,7 +89,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../homestayOrder/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/Myhomestay.png" style="width: 48rpx;height: 43rpx;" />
 					</view>

@@ -1,26 +1,13 @@
-// pages/order/index.js
+// pages/homestayorderDetails/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    recommend :['全部','待付款','待发货','待收货','待评价'],
-    currentTab : 0,
+
   },
-  //路由
-  router_orderDetails(e){
-    console.log(e.currentTarget.dataset.order_no)
-    wx.navigateTo({
-      url: '../orderDetails/index?order_no='+e.currentTarget.dataset.order_no,
-    })
-  },
-  //事件
-  nav_tab(e){
-    this.setData({
-      currentTab : e.target.dataset.index
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */

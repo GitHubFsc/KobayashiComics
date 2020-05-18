@@ -1,18 +1,18 @@
-// pages/order/index.js
+// pages/homestayOrder/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    recommend :['全部','待付款','待发货','待收货','待评价'],
+    recommend :['全部民宿','待支付','未住宿','被拒绝','退款'],
     currentTab : 0,
   },
   //路由
-  router_orderDetails(e){
+  router_homestayorderDetails(e){
     console.log(e.currentTarget.dataset.order_no)
     wx.navigateTo({
-      url: '../orderDetails/index?order_no='+e.currentTarget.dataset.order_no,
+      url: '../homestayorderDetails/index?order_no='+e.currentTarget.dataset.order_no,
     })
   },
   //事件

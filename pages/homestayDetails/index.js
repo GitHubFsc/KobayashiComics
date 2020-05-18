@@ -5,7 +5,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    UnittypeIdx : 0
+    homestayId :0,
+    UnittypeIdx : 0,
+    week: ['日', '一', '二', '三', '四', '五', '六'],
+    value: '2020-05-18',
+    selectInto: '',
+    selectOut: '',
+    calendar : true,
+    calendar_box : true
+  },
+  /*路由*/
+  router_book(){
+    wx.navigateTo({
+      url: './../homestaySubmitOrder/index?id' + this.data.homestayId
+    })
   },
   /*事件*/
   Unittype(e){
@@ -13,6 +26,29 @@ Page({
     that.setData({
       UnittypeIdx : e.currentTarget.dataset.index,
     })
+  },
+  calendar(e){
+    console.log(e.currentTarget.dataset.index)
+    let that = this;
+    that.setData({
+      calendar : e.currentTarget.dataset.index==0?false:true,
+    })
+  }, 
+  OpenCalendar(e){
+    let that = this;
+    that.setData({
+      calendar_box : !that.data.calendar_box,
+      calendar : e.currentTarget.dataset.index==0?false:true,
+    })
+  },
+  close(){
+    let that = this;
+    that.setData({
+      calendar_box : !that.data.calendar_box
+    })
+  },
+  workerClockData(e){
+    console.log(workerClockData);
   },
   /**
    * 生命周期函数--监听页面加载

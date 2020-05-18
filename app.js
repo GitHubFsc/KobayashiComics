@@ -37,3 +37,5 @@ App({
     userInfo: null
   }
 })
+
+/*router_mall*/

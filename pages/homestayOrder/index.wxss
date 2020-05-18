@@ -1,0 +1,15 @@
+/* pages/homestayOrder/index.wxss */
+.nav_tabs {
+  width: 100%;
+  height: 100rpx;
+  border: 1rpx solid #e5e5e5;
+  border-left: none;
+  border-right: none;
+  line-height: 90rpx;
+}
+.nav_tabs .nav_tab {
+  width: 20%;
+}
+.nav_tabs .nav_tabs_hr {
+  margin-top: 2rpx;
+}
