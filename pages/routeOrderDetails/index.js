@@ -1,30 +1,32 @@
-// pages/route/index.js
+// pages/routeOrderDetails/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchIdx : 0
+    order_no : null
   },
-  /*路由*/
-  router_routeDetalis(e){
-    wx.navigateTo({
-      url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,
-    })
-  },
-  /*事件*/
-  switch(e){
-    let that = this;
-    that.setData({
-      switchIdx : e.currentTarget.dataset.index,
-    })
-  },
+  // applyAgain(e){
+  //   wx.navigateTo({
+  //     url: '../applyForSale/index?order_no='+e.target.dataset.order_no,
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options)
+    this.setData({
+      order_no: options.order_no
+    })
+    // if (app.globalData.userid) {
+    //   this.getData()
+    // } else {
+    //   app.callbackuserid = res => {
+    //     this.getData()
+    //   }
+    // }
   },
 
   /**

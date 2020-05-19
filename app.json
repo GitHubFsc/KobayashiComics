@@ -24,7 +24,12 @@
     "pages/homestaySubmitOrder/index",
     "pages/Afterpayment/index",
     "pages/homestayorderDetails/index",
-    "pages/homestayOrder/index"
+    "pages/homestayOrder/index",
+    "pages/routeDetalis/index",
+    "pages/routeSubmitOrder/index",
+    "pages/routeOrder/index",
+    "pages/routeOrderDetails/index",
+    "pages/productSubmitOrder/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

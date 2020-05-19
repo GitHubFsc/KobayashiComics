@@ -1,0 +1,35 @@
+<!--pages/routeDetalis/index.wxml-->
+<view class="container routeDetalis">
+	<!-- 选择位置  -->
+	<view class="address">
+		<view>上海</view>
+		<view class="down">
+			<image src="./../icon/downW.png"></image>
+		</view>
+	</view>
+  <!-- 轮播导航 -->
+	<view class="swiper_banner">
+		<swiper  autoplay="true" bindchange="swiperChange">
+			<block wx:for="{{4}}" wx:key="*this">
+				<swiper-item>
+					<view class="swiper_image">
+						<image src="./../images/route0.png"></image>
+					</view>
+				</swiper-item>
+			</block>
+		</swiper>
+    <view class="imageCount">{{current+1}}/4</view>
+	</view>
+  <view class="route_txt">
+    <view>三天两日短途旅游</view>
+    <view>无锡灵山波罗蜜多酒店位于太湖明珠…</view>
+    <view>上海-南京</view>
+    <view>¥200</view>
+  </view>
+  <view class="hr"></view>
+  <view class="Introduction">
+    <view class="tille">路线简介：</view>
+    <view>简介</view>
+  </view>
+  <view class="destine" data-id="1" catchtap="router_routeSubmitOrder">预定</view>
+</view>

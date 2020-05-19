@@ -1,25 +1,27 @@
-// pages/route/index.js
+// pages/routeDetalis/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchIdx : 0
+    current :0,
   },
   /*路由*/
-  router_routeDetalis(e){
+  //分享
+  router_routeSubmitOrder(e){
     wx.navigateTo({
-      url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,
+      url: '../routeSubmitOrder/index?id='+e.currentTarget.dataset.id,
     })
   },
   /*事件*/
-  switch(e){
-    let that = this;
+  //轮播图
+  swiperChange: function (e) {
+    var that = this;
     that.setData({
-      switchIdx : e.currentTarget.dataset.index,
+      current: e.detail.current
     })
-  },
+  }, 
   /**
    * 生命周期函数--监听页面加载
    */

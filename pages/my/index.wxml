@@ -80,7 +80,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../routeOrder/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/route.png" style="width: 48rpx;height: 40rpx;" />
 					</view>

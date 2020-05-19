@@ -90,12 +90,14 @@ Page({
     })
   },
   //确认 加入购物车/立即购买
-  confirm(){
+  confirm(e){
     let that = this;
     if(that.data.pul_confirm){
       console.log("加入购物车")
     }else{
-      console.log("立即购买")
+      wx.navigateTo({
+        url: '../productSubmitOrder/index?id='+e.currentTarget.dataset.id,
+      })
     }
   },
   /**

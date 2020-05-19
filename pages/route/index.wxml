@@ -1,5 +1,44 @@
 <!--pages/route/index.wxml-->
-<!-- router_dynamic -->
-<view class="container" >
-
+<view class="container">
+	<view class="route_top">
+		<view class="rt_img">
+			<image src="./../icon/dingweiH.png"></image>
+		</view>
+		<view class="rt_city">上海</view>
+		<text catchtap="router_dynamic">[切换]</text>
+	</view>
+	<view class="route_boxs">
+		<block wx:for="{{3}}" wx:key="index">
+			<view class="route_box" data-id="{{item}}" catchtap="router_routeDetalis">
+				<view class="rb_img">
+					<image src="./../images/route{{item+1}}.png"></image>
+				</view>
+				<view class="rb_txt">三天两晚线路图</view>
+			</view>
+		</block>
+	</view>
+	<view class="route_list">
+		<view class="rl_top">
+			<view class="rl_title">路线列表</view>
+			<view class="rl_right">
+				<text class="{{switchIdx==0?'rl_txt':''}}" data-index="0" catchtap="switch">最新</text>
+				<text class="{{switchIdx==1?'rl_txt':''}}" data-index="1" catchtap="switch">最热</text>
+			</view>
+		</view>
+		<view class="routes">
+			<block wx:for="{{3}}" wx:key="index">
+				<view class="route" data-id="{{item}}" catchtap="router_routeDetalis">
+					<view class="route_img">
+						<image src="./../images/route{{item+1}}.png"></image>
+					</view>
+					<view class="route_right">
+						<view>三天两日短途旅游</view>
+						<view>无锡灵山波罗蜜多酒店位于太湖明珠…</view>
+						<view>上海-南京</view>
+						<view>¥200</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</view>
 </view>

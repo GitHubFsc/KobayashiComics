@@ -1,0 +1,58 @@
+<!--pages/productSubmitOrder/index.wxml-->
+<view class="container productSubmitOrder">
+	<view class="commoditys">
+    <view class="ChooseAddress">
+      
+
+    </view>
+		<view class="commodity_top">
+			<view class="ct_img">
+				<image src="./../images/homestay0.png"></image>
+			</view>
+			<view class="ct_right">
+				<view class="ct_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
+				<view class="ct_txt">a户型</view>
+				<view class="ct_price">
+					<view class="price">¥300</view>
+					<view>x1</view>
+				</view>
+			</view>
+		</view>
+		<view class="commodity_discount">
+			<view class="cd_cell">
+				<view>住宿费</view>
+				<view>¥300</view>
+			</view>
+			<view class="cd_cell">
+				<view>优惠券</view>
+				<view class="cdc_txt">-¥10</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="cd_cell">
+				<view>积分</view>
+				<view>
+					<switch class="switch" type="switch" color="#CB0101" checked="{{switchChecked}}" bindchange="switchChange" />
+				</view>
+				<view>100积分可抵扣10元</view>
+				<view class="price">-¥10</view>
+			</view>
+			<view class="cd_cell" catchtap="router_invoice">
+				<view>发票</view>
+				<view class="cdc_txt">不要发票</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
+			</view>
+			<view class="cd_cell">
+				<view>商品总额</view>
+				<view class="price">¥280</view>
+			</view>
+		</view>
+	</view>
+	<view class="topay">
+		<view>实际支付：<text class="topay_price">¥280</text></view>
+		<view catchtap="router_topay">去支付</view>
+	</view>
+</view>

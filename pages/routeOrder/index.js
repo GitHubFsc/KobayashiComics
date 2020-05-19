@@ -1,25 +1,27 @@
-// pages/route/index.js
+// pages/routeOrder/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchIdx : 0
+    recommend :['全部线路','未支付','未游玩','被拒绝','售后'],
+    currentTab : 0,
   },
-  /*路由*/
-  router_routeDetalis(e){
+  //路由
+  router_homestayorderDetails(e){
+    console.log(e.currentTarget.dataset.order_no)
     wx.navigateTo({
-      url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,
+      url: '../routeOrderDetails/index?order_no='+e.currentTarget.dataset.order_no,
     })
   },
-  /*事件*/
-  switch(e){
-    let that = this;
-    that.setData({
-      switchIdx : e.currentTarget.dataset.index,
+  //事件
+  nav_tab(e){
+    this.setData({
+      currentTab : e.target.dataset.index
     })
   },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -1,25 +1,46 @@
-// pages/route/index.js
+// pages/routeSubmitOrder/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchIdx : 0
+    Tenant_nmae :'',
+    Tenant_userId :'',
+    Tenant_phone:'',
+    switchChecked : false,
+    calendar_box : true,
+    IntoTime : '',
   },
-  /*路由*/
-  router_routeDetalis(e){
+  /**路由 */
+  //支付
+  router_topay(){
     wx.navigateTo({
-      url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,
+      url: './../Afterpayment/index?index=2'
     })
+  },
+  //发票
+  router_invoice(){
+    console.log("开发票")
   },
   /*事件*/
-  switch(e){
+  IntoOtu(){
     let that = this;
     that.setData({
-      switchIdx : e.currentTarget.dataset.index,
+      calendar_box: !that.data.calendar_box
     })
   },
+  close(){
+    let that = this;
+    that.setData({
+      calendar_box : !that.data.calendar_box
+    })
+  },
+  switchChange(e){
+    let that = this;
+    console.log('switch发生change事件，携带值为', e.detail.value)
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

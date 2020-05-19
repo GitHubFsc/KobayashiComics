@@ -1,0 +1,103 @@
+<!--pages/routeOrderDetails/index.wxml-->
+<view class="container">
+	<view class="refund">
+		<view class="refund_left {{order_no==0||order_no==1?'Tobepaid':'refund_img'}}">
+			<image src="../icon/wait{{order_no!=0?order_no:1}}.png"></image>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==0||order_no==1}}">
+			<text>待支付</text>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==2}}">
+			<text>已支付-未游玩</text>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==3}}">
+			<view>被拒绝-订单已退款</view>
+			<view class="refund_txt">退款已经通过微信原路返回</view>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==4}}">
+			<view>退款中</view>
+			<view class="refund_txt">稍后会有工作人员审核处理</view>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==5}}">
+			<view>退款成功</view>
+			<view class="refund_txt">退款已经通过微信原路返回</view>
+		</view>
+		<view class="refund_right" wx:if="{{order_no==6}}">
+			<text>退款失败</text><text></text>
+		</view>
+	</view>
+	<view class="bgcolor">
+		<view class="Refund" wx:if="{{order_no==4||order_no==5||order_no==6}}">
+			<view class="reason_tex">申请退款时间：2019-12-12 12:00</view>
+			<view class="reason_tex">退款金额：¥380</view>
+			<view class="reason_tex" wx:if="{{order_no!=0}}">退款原因：日期选错了</view>
+			<view class="reason_tex" wx:if="{{order_no!=0}}">退款说明：我们日程有调整 想换个日期预定</view>
+		</view>
+		<view class="bookInformation">
+			<view class="bi_title">预定信息</view>
+      <view>预定人姓名：张三</view>
+      <view>联系方式：18888888888</view>
+      <view>入住人数：2人</view>
+      <view>预定开始时间：2020-12-12</view>
+		</view>
+		<view class="commoditys">
+			<view class="commodity" wx:for="{{2}}" wx:key="*this">
+				<view class="commodity_left">
+					<image src="./../images/route0.png"></image>
+				</view>
+				<view class="commodity_right">
+					<view class="commodity_title">去南山竹海品茶五日四晚自由行</view>
+					<view class="commodity_property">10人</view>
+					<view class="commodity_money">
+						<text>¥200</text>
+						<!-- <text class="commodity_num">x1</text> -->
+						<!-- <text class="commodity_aftersale_btn" data-order_no="index" catchtap="applyAgain">售后</text> -->
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="amount">
+			<view style="border:none;">
+				<text>路线总费用</text>
+				<text>¥200</text>
+			</view>
+			<view>
+				<text>积分</text>
+				<text>¥20</text>
+			</view>
+			<view>
+				<text>优惠券</text>
+				<text class="jifen">-20</text>
+			</view>
+			<view>
+				<text>发票</text>
+				<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
+			</view>
+			<view>
+				<text>实际需支付金额</text>
+				<text class="jine">¥380</text>
+			</view>
+		</view>
+		<view class="order">
+			<view class="reason_tex">订单编号：89898988</view>
+			<view class="reason_tex">下单时间：2019-12-12 12:00</view>
+			<view class="reason_tex" wx:if="{{order_no!=0}}">付款时间: 2019-12-12 12:00</view>
+      <view class="reason_tex" wx:if="{{order_no!=0}}">付款方式：微信支付</view>
+      <view class="reason_tex" wx:if="{{order_no==3}}">拒绝时间：2020-02-02 12:00</view>
+			<view class="reason_tex" wx:if="{{order_no==3}}">退款路径：原路退回</view>
+		</view>
+		<view class="refund_btn" wx:if="{{order_no==0||order_no == 1||order_no == 2||order_no == 4||order_no == 6}}">
+			<view class="Quantity" wx:if="{{order_no==0||order_no == 1}}">需支付</view>
+			<view class="Amount" wx:if="{{order_no==0||order_no == 1}}">¥200</view>
+      <view class="prompt" wx:if="{{order_no == 2}}">如有路线退款问题请提前5个工作日申请，否则将不受理</view>
+      <view class="btns">
+        <view class="btnz" catchtap="" wx:if="{{order_no == 0||order_no == 1}}">取消预定</view>      
+				<view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">付款</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 2}}">行程退款</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 2}}">确认游玩</view>
+				<view class="btnz" catchtap="" wx:if="{{order_no == 4}}">取消退款</view>
+        <view class="btnz" catchtap="" wx:if="{{order_no == 6}}">再次申请</view>
+      </view>
+		</view>
+	</view>
+</view>

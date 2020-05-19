@@ -129,7 +129,7 @@
 					<view class="pul_plus" data-index="2" catchtap="Update_num">+</view>
 				</view>
 			</view>
-			<view class="pul_confirm" catchtap="confirm">{{pul_confirm?'确认加入':'确认购买'}}</view>
+			<view class="pul_confirm" data-id="1" catchtap="confirm">{{pul_confirm?'确认加入':'确认购买'}}</view>
 		</view>
 	</view>
 </view>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "Calendar": "../../Components/Calender/index"
+  },
+  "navigationBarTitleText" : "提交订单"
+}
