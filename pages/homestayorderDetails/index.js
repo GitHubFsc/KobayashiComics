@@ -5,16 +5,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    order_no : null
   },
-
+  // applyAgain(e){
+  //   wx.navigateTo({
+  //     url: '../applyForSale/index?order_no='+e.target.dataset.order_no,
+  //   })
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options)
+    this.setData({
+      order_no: options.order_no
+    })
+    // if (app.globalData.userid) {
+    //   this.getData()
+    // } else {
+    //   app.callbackuserid = res => {
+    //     this.getData()
+    //   }
+    // }
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

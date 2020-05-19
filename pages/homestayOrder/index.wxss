@@ -13,3 +13,12 @@
 .nav_tabs .nav_tabs_hr {
   margin-top: 2rpx;
 }
+.mall .mall_img {
+  width:240rpx;
+  height:156rpx;
+  margin-right: 20rpx;
+}
+.mall .mall_right .mall_txt {
+  margin-bottom: 6rpx;
+}
+  

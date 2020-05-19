@@ -358,8 +358,7 @@ image {
   display: flex;
 }
 
-.commodity_left image {
-  display: inline-block;
+.commodity_left {
   width: 180rpx;
   height: 180rpx;
 }

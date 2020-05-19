@@ -11,15 +11,15 @@
 		<view class="tab_ctn">
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
-					<block wx:for="{{5}}" wx:key="*this">
+					<block wx:for="{{8}}" wx:key="*this">
 						<view class="order" data-order_no="{{item}}" catchtap="router_homestayorderDetails">
 								<view class="title">
 									<view class="orderId">民宿编号：88888888</view>
-									<view class="shop_status">{{index==0?"待支付":index==1?"未住宿-商家已接单":index==2?"未住宿":index==3?"被拒绝":index==4?"退款":"已完成"}}</view>
+									<view class="shop_status">{{index==0?"已完成":index==1?"待支付":index==2?"未住宿":index==3?"未住宿-商家已接单":index==4?"被拒绝":index==5?"退款中":index==6?"退款成功":index==7?"退款失败":"已完成"}}</view>
 								</view>
 								<view wx:for="{{2}}" wx:key="index" class="mall">
 									<view class="mall_img">
-										<image src="./../images/mall1.png"></image>
+										<image src="./../images/homestay0.png"></image>
 									</view>
 									<view class="mall_right">
 										<view class="mall_name">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
@@ -28,27 +28,21 @@
 									</view>
 								</view>
 							<view class="btn">
-                <view wx:if="{{index==0}}">
+                <view wx:if="{{index==0||index==1}}">
 									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">取消</view>
 								</view>
-								<view wx:if="{{index==1||index==2}}">
+								<view wx:if="{{index==2||index==3}}">
 									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">申请退款</view>
 								</view>
-								<view wx:if="{{index==4}}">
-									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">再次申请</view>
-								</view>
-                	<view wx:if="{{index==4}}">
-									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">取消退款</view>
-								</view>
-                <view wx:if="{{index==0}}">
+                <view wx:if="{{index==0||index==1}}">
 									<view class="btnz">付款</view>
 								</view>
-                <!-- <view wx:if="{{index==3}}">
-									<view class="btnz">确认签收</view>
+                <view wx:if="{{index==5}}">
+									<view class="btnz">取消退款</view>
 								</view>
-                <view wx:if="{{index==4}}">
-									<view class="btnz">评价</view>
-								</view> -->
+                <view wx:if="{{index==7}}">
+									<view class="btnz">再次申请</view>
+								</view>
 							</view>
 						</view>
 					</block>
