@@ -1,0 +1,124 @@
+/* pages/Feedback/index.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background-color: #F9F9FB;
+}
+.container{
+  width: 100%;
+  height: 100%;
+}
+.Feedback_top{
+  width: 670rpx;
+  height: auto;
+  padding: 20rpx;
+  margin:  20rpx auto;
+  background:rgba(255,255,255,1);
+}
+.Feedback_textarea{
+  width: 630rpx;
+  height: 270rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(187,187,195,1);
+}
+.Feedback_textarea textarea{
+  width: 100%;
+  height: 100%;
+  padding: 20rpx;
+}
+.problemImgs{
+  width: 100%;
+  height: auto;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(112,112,124,1);
+}
+.problem_txt{
+  margin-top: 34rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(112,112,124,1);
+}
+.problemImg{
+  width: 100%;
+  height: auto;
+  padding-bottom: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.problem_img{
+  width: 140rpx;
+  height: 140rpx;
+  margin: 20rpx  20rpx 0 0;
+}
+.addImg{
+  width: 140rpx;
+  height: 140rpx;
+  text-align: center;
+  margin: 20rpx  20rpx 0 0;
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(187,187,195,1);
+  background:rgba(249,249,251,1);
+}
+.add_img{
+  width: 56rpx;
+  height: 56rpx;
+  margin: 0 auto;
+  margin-top: 25rpx;
+  margin-bottom: 10rpx;
+}
+.tel{
+  width:710rpx;
+  height:100rpx;
+  background:rgba(255,255,255,1);
+  border-radius:10rpx;
+  display: flex;
+  margin: 20rpx auto;
+}
+.tel_txt{
+  width: 140rpx;
+  height: 100rpx;
+  padding-left: 20rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(112,112,124,1);
+  line-height: 100rpx;
+}
+.tel_input{
+  width: 480rpx;
+  height: 100rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color: rgba(187,187,195,1);
+}
+.tel_input input{
+  width: 100%;
+  height: 100%;
+} 
+.tel_img{
+  width: 36rpx;
+  height: 36rpx;
+  margin-top: 32rpx;
+}
+.submit{
+  text-align: center;
+  line-height: 88rpx;
+  margin: 150rpx auto;
+  width:710rpx;
+  height:88rpx;
+  background:rgba(203,1,1,1);
+  border-radius:44rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}

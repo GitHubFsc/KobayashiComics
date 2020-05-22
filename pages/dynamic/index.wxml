@@ -1,2 +1,33 @@
 <!--pages/dynamic/index.wxml-->
-<text>pages/dynamic/index.wxml</text>
+<view class="container dynamic">
+	<view class="dynamic_textarea">
+		<textarea bindblur="textareaBlur" bindconfirm="textareaConfirm" placeholder="你想说点什么？" auto-height="true"></textarea>
+	</view>
+	<view class="dynamicImg">
+		<view class="dynamic_imgs">
+			<block wx:for="{{dynamicImgList}}" wx:key="index">
+        <view class="dynamic_img">
+          <view class="dy_img" data-src="{{item.img_url}}" catchtap="preview">
+            <image src="{{item.img_url}}" mode="aspectFit"></image>
+          </view>
+          <view class="del" data-index="{{index}}" catchtap="delete">
+            <image src="./../icon/delete.png"></image>
+          </view>
+        </view>
+			</block>
+      <view class="addimg" catchtap="addimg">
+        <image src="./../icon/addimg.png"></image>
+      </view>
+		</view>
+	</view>
+  <view class="link" data-id="1" catchtap="router_productDetails">
+		<view class="link_img">
+			<image src="./../images/referral.png"></image>
+		</view>
+		<view class="link_right">
+			<view class="lr_top">创意个性马克杯</view>
+			<view class="lr_bot">¥20</view>
+		</view>
+	</view>
+  <view class="release" catchtap="router_shareSuccess">发布</view>
+</view>

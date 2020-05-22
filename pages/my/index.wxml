@@ -2,21 +2,21 @@
 <view class="container">
 	<!--user  -->
 	<view class="user">
-		<view class="user_top">
+		<view class="user_top" catchtap="router_personalInformation">
 			<view class="user_img">
 				<image src="./../images/userimg.png"></image>
 			</view>
 			<view class="user_right">
 				<view class="user_name">张三<text>一级会员</text></view>
-				<view class="user_signature">这个人很懒什么也没有留下</view>
+				<view class="user_signature" catchtap="router_signature">这个人很懒什么也没有留下</view>
 			</view>
 		</view>
 		<view class="user_bot">
-			<view class="user_coupon">
+			<view class="user_coupon" catchtap="router_shoppingVoucher">
 				<view>0</view>
 				<view>优惠券</view>
 			</view>
-			<view class="user_integral">
+			<view class="user_integral" catchtap="router_integral">
 				<view>0</view>
 				<view>积分</view>
 			</view>
@@ -97,7 +97,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../invoice/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/invoice.png" style="width: 48rpx;height: 39rpx;" />
 					</view>
@@ -105,7 +105,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../address/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/address.png" style="width: 36rpx;height: 51rpx;" />
 					</view>
@@ -113,7 +113,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../mycollection/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/mycollection.png" style="width: 48rpx;height: 48rpx;" />
 					</view>
@@ -121,7 +121,7 @@
 				</navigator>
 			</view>
 			<view class="myother">
-				<navigator url="../mall/index" hover-class="none">
+				<navigator url="../Feedback/index" hover-class="none">
 					<view class="myother_img">
 						<image src="./../icon/Feedback.png" style="width: 44rpx;height: 45rpx;" />
 					</view>

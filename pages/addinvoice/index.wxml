@@ -1,0 +1,29 @@
+<!--pages/addinvoice/index.wxml-->
+<view class="container addinvoice">
+  <view class="sections">
+    <view class="section">
+        <view class="section_txt">选择发票类型</view>
+        <view class="section_sex">
+          <view class="sex_img" data-index="1" catchtap="selected"><image src="{{type==1?'./../icon/sex.png':'./../icon/Unselected.png'}}" /></view>单位发票
+          <view class="sex_img" data-index="0" catchtap="selected"><image src="{{type==0?'./../icon/sex.png':'./../icon/Unselected.png'}}" /></view>个人发票
+        </view>
+    </view>
+    <view class="section">
+      <view class="section_txt">发票抬头</view>
+      <view class="section_input"><input type="view" placeholder="请输入发票抬头"></input></view>
+    </view>
+    <view class="section" wx:if="{{type==1}}">
+      <view class="section_txt">企业税号</view>
+      <view class="section_input"><input type="view"  placeholder="请输入企业税号"></input></view>
+    </view>
+     <view class="section" wx:if="{{type==1}}">
+      <view class="section_txt" >企业税号</view>
+      <view class="section_input"><input type="view"  placeholder="请输入企业税号"></input></view>
+    </view>
+     <view class="section">
+      <view class="section_txt">邮箱地址</view>
+      <view class="section_input"><input type="view"  placeholder="请输入发送邮箱地址"></input></view>
+    </view>
+    <view class="save" catchtap="router_back">确定</view>
+  </view>
+</view>

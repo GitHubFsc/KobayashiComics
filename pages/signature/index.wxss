@@ -1,0 +1,40 @@
+/* pages/signature/index.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background-color:rgba(250,250,252,1);
+}
+.container{
+  width: 710rpx;
+  height: cale(100% - 20rpx);
+  padding: 20rpx;
+}
+.signature_txt{
+  width:710rpx;
+  height:200rpx;
+  background:rgba(255,255,255,1);
+  border-radius:10rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.signature_txt textarea{
+  width: 100%;
+  height: 100%;
+  padding: 20rpx;
+}
+.determine{
+  width:280rpx;
+  height:88rpx;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 88rpx;
+  background:rgba(203,1,1,1);
+  border-radius:44rpx;
+  font-size:30rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  margin-top: 580rpx;
+}

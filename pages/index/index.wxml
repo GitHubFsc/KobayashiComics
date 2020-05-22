@@ -2,7 +2,7 @@
 <view class="container">
 	<!-- 头部 定位+搜索 -->
 	<view class="top">
-		<view class="top_left">
+		<view class="top_left" catchtap="router_city">
 			<text>上海</text>
 			<image src="./../icon/down.png"></image>
 		</view>
@@ -26,19 +26,19 @@
 	<!-- 分类导航 -->
 	<view class="navigates">
 		<view catchtap="router_mall" class="navigate">
-			<image src="./../images/mall.png" style="width:70rpx;height:68rpx;margin-left:49rpx;margin-top:10rpx;"></image>
+			<image src="./../icon/mall.png" style="width:70rpx;height:68rpx;margin-left:49rpx;margin-top:10rpx;"></image>
 			<view>商城</view>
 		</view>
 		<view catchtap="router_homestay" class="navigate">
-			<image src="./../images/homestay.png" style="width:100rpx;height:70rpx;margin-left:44rpx;"></image>
+			<image src="./../icon/homestay.png" style="width:100rpx;height:70rpx;margin-left:44rpx;"></image>
 			<view>民宿</view>
 		</view>
 		<view catchtap="router_route" class="navigate">
-			<image src="./../images/route.png" style="width:90rpx;height:49rpx;margin-left:49rpx;margin-top:20rpx;"></image>
+			<image src="./../icon/routes.png" style="width:90rpx;height:49rpx;margin-left:49rpx;margin-top:20rpx;"></image>
 			<view>路线</view>
 		</view>
 		<view catchtap="router_livebroadcast" class="navigate">
-			<image src="./../images/live.png" style="width:40rpx;height:73rpx;margin-left:66rpx;margin-top:10rpx;"></image>
+			<image src="./../icon/live.png" style="width:40rpx;height:73rpx;margin-left:66rpx;margin-top:10rpx;"></image>
 			<view>直播</view>
 		</view>
 	</view>
@@ -68,16 +68,16 @@
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
 					<block wx:for="{{4}}" wx:key="*this">
-						<view class="fruit" data-id="index" catchtap="router_communityDetails">
-							<view class="fruit_img">
+						<view class="advisory" data-id="index" catchtap="router_communityDetails">
+							<view class="advisory_img">
 								<image src="./../images/mall1.png"></image>
 							</view>
-							<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
-							<view class="fruit_bottom">
-								<view class="fb_left"> 
+							<view class="advisory_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+							<view class="advisory_bottom">
+								<view class="advisory_left"> 
 									<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
 								</view>
-								<view class="fb_right">
+								<view class="advisory_right">
 									<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
 								</view>
 							</view>
@@ -89,6 +89,6 @@
 	</view>
 	<!-- 发布动态 -->
 	<view class="dynamic" catchtap="router_dynamic">
-		<image src="./../images/dynamic.png"></image>
+		<image src="./../icon/dynamic.png"></image>
 	</view>
 </view>

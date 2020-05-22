@@ -1,0 +1,90 @@
+/* pages/address/index.wxss */
+page {
+  width: 100%;
+  height: 100%;
+  background: rgba(250, 250, 252, 1);
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  border-top: 1rpx solid #e5e5e5;
+}
+
+.carempty {
+  width: 190rpx;
+  height: 170rpx;
+  margin: 0 auto;
+  margin-top: 124rpx;
+  margin-bottom: 40rpx;
+  
+}
+
+.carempty_txt {
+  width: 100%;
+  text-align: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  line-height: 40rpx;
+}
+.invoice_box {
+  width: 710rpx;
+  height: 260rpx;
+  background-color: #ffffff;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.ib_top {
+  width: 670rpx;
+  height: 170rpx;
+  line-height: 80rpx;
+  padding: 0 20rpx;
+}
+
+.ib_txt {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+}
+
+.ib_bot {
+  width: 670rpx;
+  height: 50rpx;
+  padding: 20rpx;
+  border-top: 1rpx solid #e5e5e5;
+  display: flex;
+  justify-content: flex-end;
+  line-height: 38rpx;
+}
+
+.edit,
+.del {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.select {
+  margin: 0 20rpx 0 0;
+}
+
+.edit {
+  margin: 0 43rpx 0 380rpx;
+}
+
+.address {
+  width: 320rpx;
+  height: 88rpx;
+  background: rgba(203, 1, 1, 1);
+  border-radius: 44px;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 88rpx;
+  margin: 150rpx auto;
+}

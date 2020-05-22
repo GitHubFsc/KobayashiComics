@@ -11,6 +11,12 @@ Page({
     currentTab : 0
   },
   /*路由*/
+  //粉丝+关注
+  router_followFans(e){
+    wx.navigateTo({
+      url: '../followFans/index?type='+ e.currentTarget.dataset.type,
+    })
+  },
   //更多回复
   router_reply(e){
     wx.navigateTo({
@@ -21,6 +27,12 @@ Page({
   router_communityDetails(e){
     wx.navigateTo({
       url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
+    })
+  },
+  //分享 + 动态 
+  router_dynamic(e){
+    wx.navigateTo({
+      url: './../dynamic/index',
     })
   },
   /*事件*/

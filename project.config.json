@@ -109,6 +109,14 @@
 					"id": -1,
 					"name": "民宿",
 					"pathName": "pages/homestay/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/shoppingcart/index",
+					"query": "",
 					"scene": null
 				}
 			]

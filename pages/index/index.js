@@ -43,6 +43,16 @@ Page({
       url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
     })
   },
+  router_search(){
+    wx.navigateTo({
+      url: '../search/index',
+    })
+  },
+  router_city(){
+    wx.navigateTo({
+      url: '../city/index',
+    })
+  },
   //事件
   nav_tab(e){
     this.setData({

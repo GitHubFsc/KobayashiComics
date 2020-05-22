@@ -7,7 +7,19 @@ Page({
   data: {
 
   },
-
+  /*路由*/
+  //系统消息
+  router_systemXiaoxi() {
+    wx.navigateTo({
+      url: '../systemXiaoxi/index',
+    })
+  },
+  //评论消息
+  router_commentMessage() {
+    wx.navigateTo({
+      url: '../commentMessage/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

@@ -1,0 +1,14 @@
+<!--pages/followFans/index.wxml-->
+<view class="container">
+	<view class="hr"></view>
+	<view class="user_list">
+		<block wx:for="{{3}}" wx:key="index">
+			<view class="user" data-id="{{index}}" catchtap="router_homepage">
+				<view class="user_img"><image src="./../images/userimg2.png"></image></view>
+				<view class="user_name">张三</view>
+				<view class="followFans" wx:if="{{type==0}}" data-id="{{index}}" catchtap="unsubscribe">取消关注</view>
+				<view class="UnfollowFans" wx:if="{{type==1}}" data-id="{{index}}" catchtap="attention">关注</view>
+			</view>
+		</block>
+	</view>
+</view>

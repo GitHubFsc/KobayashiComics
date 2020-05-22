@@ -1,0 +1,213 @@
+/* pages/Logistics/index.wxss */
+page {
+  background: #FAFAFC;
+}
+
+.g_con {
+  width: 100%;
+  height: auto;
+}
+
+.topExpress {
+  width: 670rpx;
+  height: 155rpx;
+  background: #fff;
+  margin: 10rpx auto;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.topExpress-company{
+  margin-left: 50rpx;
+}
+.topExpress-phone text{
+  color: #218DFF;
+}
+
+.expressRecord {
+  width: 670rpx;
+  padding: 30rpx 20rpx;
+  background: #fff;
+  margin: 10rpx auto;
+  border-radius: 10rpx;
+}
+
+.expressRecord .topExpress-phone{
+  border-bottom: 1rpx solid #e5e5e5;
+  padding-bottom: 20rpx;
+}
+.expressRecord-getAddress {
+  width: 100%;
+  font-size: 22rpx;
+  color: #999;
+  display: flex;
+}
+
+.expressRecord-top {
+  width: 100%;
+
+}
+.getAddress-icon {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background: rgba(203,1,1,1);
+  margin-top: 10rpx;
+}
+
+.getAddress-text {
+  margin-left: 20rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.getAddress-time{
+  margin-top: 12rpx;
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.noReach-online-top-close {
+  width: 1rpx;
+  height: 50rpx;
+  background: #d7d7d7;
+  margin-left: 95rpx;
+}
+
+.expressRecord-single-close {
+  width: 100%;
+  height: 200rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.expressRecord-single-noReach-online-top-close {
+  display: flex;
+  flex-direction: column;
+}
+
+.online-top-closing {
+  width: 1rpx;
+  height: 50rpx;
+  background: #d7d7d7;
+  margin-left: 95rpx;
+}
+
+.online-top-close {
+  width: 1rpx;
+  height: 100rpx;
+  background: #999;
+  margin-left: 30rpx;
+}
+
+.dot-closing {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  margin-left: 20rpx;
+  margin-top: 8rpx;
+  margin-bottom: 6rpx;
+  background: #fe4f33;
+}
+
+.dot-close {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-left: 23rpx;
+  margin-top: 6rpx;
+  margin-bottom: 6rpx;
+  background: #999;
+}
+
+.online-bottom {
+  width: 1rpx;
+  height: 120rpx;
+  background: #999;
+  margin-left: 30rpx;
+}
+
+.online-bottom-start {
+  width: 1rpx;
+  height: 50rpx;
+  /* background: #999; */
+  margin-left: 30rpx;
+}
+
+.expressRecord-text {
+  width: 610rpx;
+  height: 160rpx;
+  padding: 20rpx 0;
+  margin-left: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.expressRecord-text:last-child {
+  border-bottom: none;
+}
+.expressRecord-text .getAddress-time{
+  margin-left: 18rpx;
+}
+
+.expressRecord-statusing {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.expressRecord-status-addressing {
+  font-size: 22rpx;
+  color: #333;
+}
+
+
+.expressRecord-status {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.expressRecord-status-address {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.expressRecord-dating {
+  position: absolute;
+  height: 100%;
+  /* top: 0;
+  bottom: 0; */
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #333;
+}
+
+.expressRecord-date {
+  position: absolute;
+  height: 100%;
+  /* top: 0;
+  bottom: 0; */
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #999;
+}
+
+.expressRecord-date-text {
+  font-size: 24rpx;
+}
+
+.expressRecord-date-time {
+  font-size: 18rpx;
+}

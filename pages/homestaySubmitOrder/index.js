@@ -42,9 +42,9 @@ Page({
   },
   //添加入住人
   router_addResident(){
-    // wx.navigateTo({
-    //   url: './../homestaySubmitOrder/index?id' + this.data.homestayId
-    // })
+    wx.navigateTo({
+      url: './../addResident/index'
+    })
   },
   /*事件*/
   bindPickerChange(e){

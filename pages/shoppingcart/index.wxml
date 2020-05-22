@@ -1,2 +1,51 @@
 <!--pages/shoppingcart/index.wxml-->
-<text>pages/shoppingcart/index.wxml</text>
+<view class="container shoppingcart">
+	<view wx:if="{{carList.length==0}}">
+		<view class="carempty">
+			<image src="./../icon/carempty.png"></image>
+		</view>
+		<view class="carempty_txt">购物车空空如也～～</view>
+	</view>
+	<view wx:if="{{carList.length>0}}">
+		<view class="car_top" catchtap="editcar">{{editcar?'编辑':'完成'}}</view>
+		<view class="carList">
+			<view class="carLists">
+				<block wx:for="{{carList}}" wx:key="index">
+					<view class="car">
+						<view class="select" data-index="{{index}}" catchtap="select">
+							<image src="{{item.car?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image>
+						</view>
+						<view class="car_img">
+							<image src="{{item.sp_img}}"></image>
+						</view>
+						<view class="car_txt">
+							<view>经典马克杯</view>
+							<view>白色</view>
+							<view>¥200</view>
+						</view>
+						<view class="carplusLess">
+							<view data-type="0" data-index="{{index}}" catchtap="editspNum">-</view>
+							<view>{{item.sp_num}}</view>
+							<view data-type="1" data-index="{{index}}" catchtap="editspNum">+</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+
+	</view>
+  <view class="car_bot">
+		<view class="cb_left" >
+			<view class="carbot_select" catchtap="allselect">
+				<image src="{{allselect?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image>
+			</view>
+      全选
+		</view>
+    <view class="car_hj" hidden="{{!editcar}}">
+      <view>合计：</view>
+      <view class="price_now">¥2000</view>
+    </view>
+		<view class="delete" catchtap="router_topay" hidden="{{!editcar}}">结算</view>
+		<view class="delete" hidden="{{editcar}}">删除</view>
+	</view>
+</view>

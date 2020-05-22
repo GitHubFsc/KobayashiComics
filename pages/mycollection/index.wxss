@@ -1,0 +1,11 @@
+/* pages/mycollection/index.wxss */
+.fruit{
+  position: relative;
+}
+.fruit_collection{
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+  width:38rpx;
+  height:36rpx;
+}

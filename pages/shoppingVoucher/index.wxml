@@ -1,0 +1,35 @@
+<!--pages/shoppingVoucher/index.wxml-->
+<view class="container">
+  <!--推荐咨询 -->
+	<view class="tree_detail">
+		<view class="nav_tabs">
+			<block wx:for="{{3}}" wx:key="*this">
+				<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">
+          {{index==0?'未使用':index==1?'已使用':index==2?'已过期':''}}
+					<view wx:if="{{index==currentTab}}" class="nav_tabs_hr"></view>
+				</view>
+			</block>
+		</view>
+		<view class="tab_ctn">
+			<block wx:for="{{3}}" wx:key="*this">
+				<view class="shoppingVouchers" wx:if="{{index==currentTab}}">
+          <block wx:for="{{2}}">
+             <view class="shoppingVoucher">
+              <view class="bg_img">
+                <image src="./../images/bg_img.png"></image>
+              </view>
+              <view class="sv_box">
+                <view class="{{currentTab==0?'priceR':'priceG'}}">¥30</view>
+                <view class="sv_box_txt">
+                  <view class="sv_title">满40使用</view>
+                  <view class="sv_txt">有效期至：2020.12.12</view>
+                </view>
+                <view class="{{currentTab==0?'svb_btnR':'svb_btnG'}}">{{currentTab==0?'未使用':currentTab==1?'已使用':currentTab==2?'已过期':''}}</view>
+              </view>
+             </view>
+          </block>
+				</view>
+			</block>
+		</view>
+	</view>
+</view>

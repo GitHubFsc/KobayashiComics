@@ -10,7 +10,38 @@
   padding: 20rpx;
   background-color: #fafafc;
 }
-
+.ChooseAddress{
+  width: 670rpx;
+  height: auto;
+  padding: 20rpx;
+  display: flex;
+  background:rgba(255,255,255,1);
+  border-radius:10rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height: 50rpx;
+  }
+.ca_img{
+  width: 30rpx;
+  height: 38rpx;
+  margin-top: 38rpx;
+  margin-right: 30rpx;
+}
+.ChooseAddress .more{
+  position: absolute;
+  top: 46rpx;
+  right: 20rpx;
+}
+.ca{
+  width: auto;
+  height: 110rpx;
+  line-height: 110rpx;
+  color:rgba(153,153,153,1);
+}
 .commoditys .more {
   width: 14rpx;
   height: 24rpx;
@@ -25,18 +56,21 @@
 }
 
 .ct_img {
-  width: 240rpx;
-  height: 156rpx;
+  width: 180rpx;
+  height: 180rpx;
   margin-right: 20rpx;
 }
 
 .ct_right {
-  width: auto;
+  flex: 1;
   height: auto;
-  line-height: 40rpx;
+  line-height: 60rpx;
 }
 
 .ct_title {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   font-size: 30rpx;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
@@ -49,9 +83,6 @@
 }
 
 .ct_price {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
   font-size: 28rpx;
   font-weight: 500;
   color: rgba(51, 51, 51, 1);

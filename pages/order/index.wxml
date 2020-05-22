@@ -31,27 +31,30 @@
 									共1件商品 <text>¥200</text>
 								</view>
 							<view class="btn">
-                <view wx:if="{{index==1}}">
+                <block wx:if="{{index==1}}">
 									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">取消订单</view>
-								</view>
-								<view wx:if="{{index==2||index==3||index==4}}">
+								</block>
+								<block wx:if="{{index==2||index==3||index==4}}">
 									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">申请售后</view>
-								</view>
-								<view wx:if="{{index==3}}">
-									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">查看物流</view>
-								</view>
-                <view wx:if="{{index==1}}">
+								</block>
+								<block wx:if="{{index==3}}">
+									<view catchtap="router_Logistics" data-order_no="{{item.order_no}}" class="btnz" >查看物流</view>
+								</block>
+								<!-- <view >
+									<view catchtap="router_Evaluation" data-order_no="{{item.order_no}}" class="btnz" >评价</view>
+								</view> -->
+                <block wx:if="{{index==1}}">
 									<view class="btnz">付款</view>
-								</view>
-								<view wx:if="{{index==2}}">
+								</block>
+								<block wx:if="{{index==2}}">
 									<view class="btnz">提醒发货</view>
-								</view>
-                <view wx:if="{{index==3}}">
+								</block>
+                <block wx:if="{{index==3}}">
 									<view class="btnz">确认签收</view>
-								</view>
-                <view wx:if="{{index==4}}">
-									<view class="btnz">评价</view>
-								</view>
+								</block>
+                <block wx:if="{{index==4}}">
+									<view class="btnz" data-order_no="{{item.order_no}}" catchtap="router_Evaluation">评价</view>
+								</block>
 							</view>
 						</view>
 					</block>

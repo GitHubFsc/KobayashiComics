@@ -64,7 +64,7 @@
 				</view>
 			</view>
 		</block>
-		<view class="more">
+		<view class="more" catchtap="router_appraise">
 			<view class="more_txt">更多评价</view>
 			<view class="more_img">
 				<image src="./../icon/comment_more.png" />

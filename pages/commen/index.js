@@ -5,9 +5,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inputValue :''
   },
-
+  /*路由*/
+  //更多回复
+  router_reply(e){
+    wx.navigateTo({
+      url: '../reply/index?id='+ e.currentTarget.dataset.id,
+    })
+  },
+  /*事件*/
+  //评论
+  getValue(e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
+  //点赞
+  like(e) {
+    console.log(e)
+  },
+  //确定
+  define(e){
+    console.log(e)
+  },
   /**
    * 生命周期函数--监听页面加载
    */

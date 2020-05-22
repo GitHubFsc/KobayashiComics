@@ -5,9 +5,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inputValue :''
   },
-
+  /*路由*/
+  /*事件*/
+  //评论
+  getValue(e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
+  //点赞
+  like(e) {
+    console.log(e)
+  },
+  //确定
+  define(e){
+    console.log(e)
+  },
   /**
    * 生命周期函数--监听页面加载
    */

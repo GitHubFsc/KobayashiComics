@@ -7,6 +7,19 @@ Page({
   data: {
     mallList: ['农家特产','个性优品','生活用品','手工产品','活动商品']
   },
+  /*路由*/
+  //商品详情
+  router_productDetails(e) {
+    wx.navigateTo({
+      url: '../productDetails/index?id=' + e.currentTarget.dataset.id,
+    })
+  },
+  //事件
+  nav_tab(e){
+    this.setData({
+      currentTab : e.target.dataset.index
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

@@ -14,6 +14,11 @@ Page({
       url: '../mallList/index?index='+ e.currentTarget.dataset.index,
     })
   },
+  router_search(){
+    wx.navigateTo({
+      url: '../search/index'
+    })
+  },
   //消息
   router_news(){
     wx.switchTab({

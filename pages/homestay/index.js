@@ -13,6 +13,11 @@ Page({
       url: '../homestayDetails/index?id='+e.currentTarget.dataset.id,
     })
   },
+  router_city(){
+    wx.navigateTo({
+      url: '../city/index'
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

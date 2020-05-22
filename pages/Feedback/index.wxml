@@ -1,0 +1,32 @@
+<!--pages/Feedback/index.wxml-->
+<view class="container">
+	<view class="Feedback_top">
+		<view class="Feedback_textarea">
+			<textarea placeholder="请输入您要反馈的问题（200字以内）" value="{{problemVal}}" number="200" bindblur="TextAreaBlur" bindconfirm="TextAreaConfirm"></textarea>
+		</view>
+		<view class="problemImgs">
+			<view class="problem_txt">请提供问题的截图或照片（选填）</view>
+			<view class="problemImg">
+				<block wx:for="{{problemImgs}}" wx:key="index">
+					<view class="problem_img" data-src="{{item.img_url}}" catchtap="previewImage">
+						<image src="{{item.img_url}}" mode="aspectFit"></image>
+					</view>
+				</block>
+				<view class="addImg" catchtap="addImg">
+					<view class="add_img">
+						<image src="./../icon/xj.png"></image>
+					</view>
+					<view>添加图片</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="tel">
+		<view class="tel_txt">联系方式</view>
+		<view class="tel_input"><input typr="number"  value="{{telVal}}" placeholder="请输入手机号" bindblur="TelBlur" /></view>
+		<view class="tel_img" catchtap="teldel">
+			<image src="./../icon/delete.png" />
+		</view>
+	</view>
+	<view class="submit" catchtap="submit">提交</view>
+</view>

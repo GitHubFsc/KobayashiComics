@@ -1,0 +1,18 @@
+<!--pages/addResident/index.wxml-->
+<view class="container addResident">
+	<view class="sections">
+		<view class="section">
+			<view class="section_txt">姓名</view>
+			<view class="section_input"><input type="text" placeholder="请输入姓名"></input></view>
+		</view>
+		<view class="section">
+			<view class="section_txt">证件类型</view>
+			<view class="section_input"><input type="number" placeholder="选择证件类型"></input></view>
+		</view>
+		<view class="section">
+			<view class="section_txt">证件号码</view>
+			<view class="section_input"><input type="idcard" placeholder="请输入证件号码"></input></view>
+		</view>
+		<view class="save" catchtap="router_back">提交</view>
+	</view>
+</view>

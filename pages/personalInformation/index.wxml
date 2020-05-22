@@ -1,0 +1,37 @@
+<!--pages/personalInformation/index.wxml-->
+<view class="container">
+  <view class="hr"></view>
+  <view class="user_img">
+    <view class="img" catchtap="modify">
+      <image src="{{user_img}}" mode="aspectFit"></image>
+    </view>
+    <view class="modify" catchtap="modify">修改头像</view>
+  </view>
+  <view class="hr"></view>
+  <view class="sections">
+    <view class="section">
+      <view class="section_txt">昵称</view>
+      <view class="section_input"><input type="view" placeholder="请输入昵称"></input></view>
+    </view>
+    <view class="section">
+      <view class="section_txt">电话</view>
+      <view class="section_input"><input type="view"  placeholder="请输入昵称"></input></view>
+    </view>
+    <view class="section">
+      <view class="section_txt">性别</view>
+      <view class="section_sex">
+        <view class="sex_img" data-index="0" catchtap="selected"><image src="{{selected?'./../icon/sex.png':'./../icon/Unselected.png'}}" /></view>男
+        <view class="sex_img" data-index="1" catchtap="selected"><image src="{{selected?'./../icon/Unselected.png':'./../icon/sex.png'}}" /></view>女
+      </view>
+    </view>
+    <view class="section">
+      <view class="section_txt">生日</view>
+      <picker mode="date" value="{{date}}"  bindchange="bindDateChange">
+        <view class="picker">{{date==''?'请选择出生年月':date}}</view>
+      </picker>
+      <view class="more"><image src="./../icon/gengduo.png"></image></view>
+    </view>
+  </view>
+  <view class="save">保存</view>
+  <view class="hr"></view>
+</view>

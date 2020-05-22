@@ -1,0 +1,68 @@
+/* pages/addinvoice/index.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background-color: #FAFAFC;
+}
+.container{
+  width: 100%;
+  height: 100%;
+}
+.save{
+  width:480rpx;
+  height:88rpx;
+  margin: 200rpx auto;
+  text-align: center;
+  line-height: 88rpx;
+  background:rgba(203,1,1,1);
+  border-radius:44rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+
+.sections{
+  width: 710rpx;
+  height: 897rpx;
+  margin: 20rpx auto;
+  background-color: #FFFFFF;
+}
+.section{
+  width: 670rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  position: relative;
+}
+.section_input{
+  width: 400rpx;
+  height: 100rpx;
+  margin-left: 112rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+
+input{
+  width: 100%;
+  height: 100%;
+}
+.section_sex{
+  display: flex;
+  line-height: 100rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.sex_img{
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 49rpx;
+  margin-top: 10rpx;
+  margin-right: 10rpx;
+}

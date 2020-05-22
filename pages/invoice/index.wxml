@@ -1,0 +1,42 @@
+<!--pages/invoice/index.wxml-->
+<view class="container invoice">
+	<!-- 个人发票 -->
+	<view class="invoice_box">
+		<view class="ib_top">
+			<view class="ib_txt">个人发票</view>
+			<view class="ib_txt">张三</view>
+		</view>
+		<view class="ib_bot">
+			<view class="select">
+				<image src="./../icon/Unselected.png"></image>
+			</view>
+			<view class="ib_txt">设为默认</view>
+			<view class="edit" data-type="0" data-id="0" catchtap="router_addinvoice">
+				<image src="./../icon/edit.png"></image>
+			</view>
+			<view class="del">
+				<image src="./../icon/del1.png"></image>
+			</view>
+		</view>
+	</view>
+  <!--单位发票  -->
+	<view class="invoice_box">
+		<view class="ib_top">
+			<view class="ib_txt">单位发票</view>
+			<view class="ib_txt">上海abc科技有限公司</view>
+		</view>
+		<view class="ib_bot">
+			<view class="select">
+				<image src="./../icon/Unselected.png"></image>
+			</view>
+			<view class="ib_txt">设为默认</view>
+			<view class="edit" data-type="1"  data-id="1" catchtap="router_addinvoice">
+				<image src="./../icon/edit.png"></image>
+			</view>
+			<view class="del">
+				<image src="./../icon/del1.png"></image>
+			</view>
+		</view>
+	</view>
+	<view class="addinvoice" catchtap="router_addinvoice">新增发票</view>
+</view>

@@ -84,22 +84,24 @@
 	<view class="guessyou">
 		<view class="guessyou_title">猜你感兴趣</view>
 		<view class="guessyou_list">
-			<block wx:for="{{4}}" wx:key="*this">
-				<view class="fruit" data-id="index" catchtap="router_communityDetails">
-					<view class="fruit_img">
-						<image src="./../images/mall1.png"></image>
-					</view>
-					<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
-					<view class="fruit_bottom">
-						<view class="fb_left">
-							<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+			<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
+					<block wx:for="{{4}}" wx:key="*this">
+						<view class="advisory" data-id="index" catchtap="router_communityDetails">
+							<view class="advisory_img">
+								<image src="./../images/mall1.png"></image>
+							</view>
+							<view class="advisory_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+							<view class="advisory_bottom">
+								<view class="advisory_left"> 
+									<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+								</view>
+								<view class="advisory_right">
+									<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+								</view>
+							</view>
 						</view>
-						<view class="fb_right">
-							<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
-						</view>
-					</view>
+					</block>
 				</view>
-			</block>
 		</view>
 	</view>
   <!-- 评论+点赞+输入 -->

@@ -6,7 +6,27 @@ Page({
    */
   data: {
   },
-
+  /*路由*/
+  router_personalInformation(){
+    wx.navigateTo({
+      url: '../personalInformation/index',
+    })
+  },
+  router_signature(){
+    wx.navigateTo({
+      url: '../signature/index',
+    })
+  },
+  router_shoppingVoucher(){
+    wx.navigateTo({
+      url: '../shoppingVoucher/index',
+    })
+  },
+  router_integral(){
+    wx.navigateTo({
+      url: '../integral/index',
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

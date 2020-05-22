@@ -1,20 +1,28 @@
 <!--pages/news/index.wxml-->
 <view class="container">
 	<view class="newsList">
-		<view class="news">
-			<view class="news_img"><image src="./../icon/systemNews.png"></image></view>
+		<view class="news" catchtap="router_systemXiaoxi">
+			<view class="news_img">
+				<image src="./../icon/systemNews.png"></image>
+			</view>
 			<view class="news_title">系统消息</view>
 			<view class="news_num">1</view>
 		</view>
-		<view class="news">
-			<view class="news_img"><image src="./../icon/commentNews.png"></image></view>
+		<view class="news" catchtap="router_commentMessage">
+			<view class="news_img">
+				<image src="./../icon/commentNews.png"></image>
+			</view>
 			<view class="news_title">评论消息</view>
 			<view class="news_num">1</view>
 		</view>
-    <view class="news">
-			<view class="news_img"><image src="./../icon/serviceNews.png"></image></view>
-			<view class="news_title">客服消息</view>
-			<view class="news_num">1</view>
+		<view class="news">
+			<button open-type="contact">
+				<view class="news_img">
+					<image src="./../icon/serviceNews.png"></image>
+				</view>
+				<view class="news_title">客服消息</view>
+				<view class="news_num">1</view>
+			</button>
 		</view>
 	</view>
 </view>

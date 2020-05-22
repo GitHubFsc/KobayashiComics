@@ -29,7 +29,28 @@
     "pages/routeSubmitOrder/index",
     "pages/routeOrder/index",
     "pages/routeOrderDetails/index",
-    "pages/productSubmitOrder/index"
+    "pages/productSubmitOrder/index",
+    "pages/search/index",
+    "pages/city/index",
+    "pages/appraise/index",
+    "pages/postNews/index",
+    "pages/personalInformation/index",
+    "pages/integral/index",
+    "pages/shoppingVoucher/index",
+    "pages/signature/index",
+    "pages/invoice/index",
+    "pages/mycollection/index",
+    "pages/address/index",
+    "pages/Feedback/index",
+    "pages/followFans/index",
+    "pages/addinvoice/index",
+    "pages/addAddress/index",
+    "pages/addResident/index",
+    "pages/shareSuccess/index",
+    "pages/Logistics/index",
+    "pages/Evaluation/index",
+    "pages/commentMessage/index",
+    "pages/systemXiaoxi/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -66,6 +87,11 @@
         "text": "我的"
       }
     ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

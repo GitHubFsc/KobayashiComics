@@ -1,0 +1,56 @@
+/* pages/systemXiaoxi/index.wxss */
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background:rgba(250,250,252,1);
+}
+
+.systemXiaoxi_boxs {
+  width: 100%;
+  height: auto;
+  margin: 10rpx 0 20rpx 0;
+}
+
+.systemXiaoxi_time {
+  text-align: center;
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(179, 188, 207, 1);
+}
+
+.systemXiaoxi_box {
+  width: 670rpx;
+  height: 200rpx;
+  padding: 10rpx 20rpx;
+  margin:  10rpx auto;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 10rpx;
+}
+
+.systemXiaoxi_box view:nth-child(1) {
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+}
+
+.systemXiaoxi_box view:nth-child(2) {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(179, 188, 207, 1);
+  margin: 8rpx 0;
+}
+
+.systemXiaoxi_box view:nth-child(3) {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(109, 116, 132, 1);
+}

@@ -1,1 +1,92 @@
 /* pages/commen/index.wxss */
+.user {
+  width: 710rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  display: flex;
+}
+.avatar {
+  width: 64rpx;
+  height: 64rpx;
+  margin-top: 18rpx;
+  margin-right: 20rpx;
+}
+.user_name {
+  font-size: 28rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  margin-top: 17rpx;
+}
+
+.user_time {
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+.like {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  display: flex;
+  margin-top: 30rpx;
+  margin-left: 315rpx;
+  line-height: 40rpx;
+}
+
+.like_img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+.comment_body{
+  width: 100%;
+  height: 1108rpx;
+  overflow: scroll;
+  padding-bottom: 20rpx;
+  border-top: 1rpx solid #e5e5e5;
+}
+.comment_txt{
+  width: 640rpx;
+  margin-left: 70rpx;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.comment_reply{
+  width: 600rpx;
+  padding: 20rpx;
+  margin-left: 70rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(16,103,224,1);
+  line-height: 46rpx;
+  background-color: #fafafc;
+}
+.comment_reply text{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.comment_reply .reply{
+  display: inline-block;
+  width: 76rpx;
+  text-align: center;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.comment_morereplies{
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+.comment_morereplies .gengduo,.commentMore .gengduo{
+  width: 15rpx;
+  height: 26rpx;
+  margin-left: 14rpx;
+  margin-top: 4rpx;
+}

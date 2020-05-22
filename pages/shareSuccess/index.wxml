@@ -1,0 +1,8 @@
+<!--pages/shareSuccess/index.wxml-->
+<view class="container shareSuccess">
+	<view class="apok_img">
+		<image src="./../icon/shareSuccess.png"></image>
+	</view>
+	<view class="ap_txt">发布成功</view>
+	<view class="tohome" catchtap="router_homepage">查看我的发布</view>
+</view>

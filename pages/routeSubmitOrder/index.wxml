@@ -78,14 +78,7 @@
 				<view>请选择日期</view>
 				<view class="calendar_txt" catchtap="">清空</view>
 			</view>
-			<view class="calendar_nav">
-				<view class="calendar_txt" data-index="0" catchtap="calendar">入住日期</view>
-				<view class="calendar_txt" data-index="1" catchtap="calendar">退房日期</view>
-			</view>
 			<view class="calendar" hidden="{{calendar}}">
-				<Calendar workerClockData="{{workerClockData}}"></Calendar>
-			</view>
-			<view class="calendar" hidden="{{!calendar}}">
 				<Calendar workerClockData="{{workerClockData}}"></Calendar>
 			</view>
 		</view>

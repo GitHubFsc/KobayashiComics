@@ -1,34 +1,35 @@
 <!--pages/productSubmitOrder/index.wxml-->
 <view class="container productSubmitOrder">
 	<view class="commoditys">
-    <view class="ChooseAddress">
-      
-
-    </view>
+		<view class="ChooseAddress">
+			<view class="ca_img">
+				<image src="./../icon/dingwei.png"></image>
+			</view>
+			<view class="ca_right" wx:if="{{true}}">
+				<view>张三   18888888888</view>
+				<view>上海市长宁区延安西路1088号1903</view>
+			</view>
+			<view class="ca" wx:if="{{false}}">
+				<view>选择地址</view>
+			</view>
+			<view class="more" catchtap="router_address"><image src="./../icon/gengduo.png"></image></view>
+		</view>
 		<view class="commodity_top">
 			<view class="ct_img">
-				<image src="./../images/homestay0.png"></image>
+				<image src="./../images/mall1.png"></image>
 			</view>
 			<view class="ct_right">
-				<view class="ct_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
-				<view class="ct_txt">a户型</view>
+				<view class="ct_title"><view>经典马克杯</view><view>x1</view></view>
+				<view class="ct_txt">白色</view>
 				<view class="ct_price">
 					<view class="price">¥300</view>
-					<view>x1</view>
 				</view>
 			</view>
 		</view>
 		<view class="commodity_discount">
 			<view class="cd_cell">
-				<view>住宿费</view>
+				<view>运费</view>
 				<view>¥300</view>
-			</view>
-			<view class="cd_cell">
-				<view>优惠券</view>
-				<view class="cdc_txt">-¥10</view>
-				<view class="more">
-					<image src="./../icon/gengduo.png"></image>
-				</view>
 			</view>
 			<view class="cd_cell">
 				<view>积分</view>
@@ -37,6 +38,13 @@
 				</view>
 				<view>100积分可抵扣10元</view>
 				<view class="price">-¥10</view>
+			</view>
+			<view class="cd_cell">
+				<view>优惠券</view>
+				<view class="cdc_txt">-¥10</view>
+				<view class="more">
+					<image src="./../icon/gengduo.png"></image>
+				</view>
 			</view>
 			<view class="cd_cell" catchtap="router_invoice">
 				<view>发票</view>

@@ -1,0 +1,27 @@
+<!--pages/addAddress/index.wxml-->
+<view class="container addAddress">
+	<view class="sections">
+		<view class="section">
+			<view class="section_txt">姓名</view>
+			<view class="section_input"><input type="view" placeholder="请输入姓名"></input></view>
+		</view>
+		<view class="section">
+			<view class="section_txt">联系电话</view>
+			<view class="section_input"><input type="view" placeholder="请输入联系电话"></input></view>
+		</view>
+		<view class="section">
+			<view class="section_txt">地区</view>
+			<picker mode="region" value="{{address}}" bindchange="bindRegionChange">
+				<view class="picker">{{address==''?'请输入地区':address}}</view>
+			</picker>
+			<view class="more">
+				<image src="./../icon/gengduo.png"></image>
+			</view>
+		</view>
+		<view class="section">
+			<view class="section_txt">详细地址</view>
+			<view class="section_input"><input type="view" placeholder="请输入详细地址"></input></view>
+		</view>
+		<view class="save" catchtap="router_back">新增地址</view>
+	</view>
+</view>

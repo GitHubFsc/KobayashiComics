@@ -1,2 +1,36 @@
 <!--pages/reply/index.wxml-->
-<text>pages/reply/index.wxml</text>
+<view class="container reply">
+	<view class="comment_body">
+		<view class="content">
+			<view class="user">
+				<view class="avatar">
+					<image src="./../images/userimg.png" />
+				</view>
+				<view class="synopsis">
+					<view class="user_name">熙和</view>
+					<view class="user_time">2020年3月20日 20:00</view>
+				</view>
+				<view class="like">
+					<view class="like_img" data-id="1" catchtap="like">
+						<image src="./../icon/like.png"></image>
+					</view>
+					<view>122</view>
+				</view>
+			</view>
+			<view class="comment_txt">
+				这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论
+			</view>
+			<view class="comment_reply">
+				<view>李莎：<text>心态崩溃</text></view>
+				<view>李白<text class="reply">回复</text>李莎：<text>心态崩溃心态崩溃</text></view>
+        <view>李莎：<text>心态崩溃</text></view>
+        <view>李莎：<text>心态崩溃</text></view>
+			</view>
+		</view>
+	</view> 
+  <!-- 评论+点赞+输入 -->
+  <view class="comment_bot">
+			<view><input type="text" placeholder="请输入评论" bindinput="getValue" bindconfirm="comment" /></view>
+      <view class="define" catchtap="define">确定</view>
+  </view>
+</view>

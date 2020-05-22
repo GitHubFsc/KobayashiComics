@@ -1,0 +1,29 @@
+<!--pages/address/index.wxml-->
+<view class="container">
+	<view class="hr"></view>
+	<view wx:if="{{address}}">
+		<view class="carempty">
+			<image src="./../icon/addressNone.png"></image>
+		</view>
+		<view class="carempty_txt">暂无地址～</view>
+	</view>
+	<view wx:if="{{!address}}">
+		<block wx:for="{{3}}" wx:key="index">
+			<view class="invoice_box">
+				<view class="ib_top">
+					<view class="ib_txt">张三 18888888888</view>
+					<view class="ib_txt">上海市长宁区延安西路1088号1903</view>
+				</view>
+				<view class="ib_bot">
+					<view class="edit" data-type="0" data-id="0" catchtap="router_addAddress">
+						<image src="./../icon/edit.png"></image>
+					</view>
+					<view class="del">
+						<image src="./../icon/del1.png"></image>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view class="address" catchtap="router_addAddress">新增地址</view>
+</view>

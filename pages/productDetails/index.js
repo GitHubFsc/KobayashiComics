@@ -32,6 +32,12 @@ Page({
       url: '../shoppingcart/index',
     })
   },
+  //更多评价
+  router_appraise(){
+    wx.navigateTo({
+      url: '../appraise/index',
+    })
+  },
   /*事件*/
   //轮播图
   swiperChange: function (e) {

@@ -1,0 +1,113 @@
+/* pages/personalInformation/index.wxss */
+.container{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(250,250,252,1);
+}
+.user_img{
+  width: 100%;
+  height: 200rpx;
+  padding-top: 40rpx;
+  position: relative;
+  background-color: #FFFFFF;
+}
+.img{
+  width: 160rpx;
+  height: 160rpx;
+  margin: auto;
+  
+}
+.img image{
+  border-radius: 50%;
+}
+.modify{
+  width: 120rpx;
+  height: 36rpx;
+  text-align: center;
+  line-height: 40rpx;
+  background:rgba(203,1,1,1);
+  border-radius:10rpx;
+  font-size:20rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  position: absolute;
+  top: 174rpx;
+  left: 320rpx;
+}
+.save{
+  width:480rpx;
+  height:88rpx;
+  margin: 100rpx auto;
+  text-align: center;
+  line-height: 88rpx;
+  background:rgba(203,1,1,1);
+  border-radius:44rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+
+.sections{
+  width: 710rpx;
+  height: auto;
+  padding: 0 20rpx;
+  background-color: #FFFFFF;
+}
+.section{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  position: relative;
+}
+.section:last-child{
+  border-bottom: none;
+}
+.section_input{
+  width: 400rpx;
+  height: 100rpx;
+  margin-left: 84rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.picker{
+  width: 560rpx;
+  height: 100rpx;
+  margin-left: 84rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+input{
+  width: 100%;
+  height: 100%;
+}
+.section_sex{
+  display: flex;
+  line-height: 100rpx;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.sex_img{
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 84rpx;
+  margin-top: 10rpx;
+  margin-right: 10rpx;
+}
+.more{
+  width: 16rpx;
+  height: 26rpx;
+  margin-left: 116rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 20rpx;
+}

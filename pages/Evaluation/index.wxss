@@ -1,0 +1,177 @@
+/* pages/Evaluation/index.wxss */
+page {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: #F9F9FB;
+}
+.Evaluation{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 1);
+}
+.Evaluation_box {
+  width: 670rpx;
+  height: auto;
+  padding: 20rpx;
+  margin: 20rpx auto;
+  background: rgba(255, 255, 255, 1);
+}
+
+.commodity {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin: 0 ;
+  padding: 0;
+  margin-bottom: 30rpx;
+}
+
+.commodity_img {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.commodity_right {
+  flex: 1;
+  line-height: 40rpx;
+}
+
+.commodity_right view:nth-child(1) {
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+}
+
+.commodity_right view:nth-child(2) {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+
+.commodity_right view:nth-child(3) {
+  font-size: 26rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(203, 1, 1, 1);
+}
+.starList{
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+.star{
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 20rpx;
+}
+
+
+.Feedback_textarea {
+  width: 630rpx;
+  height: 270rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(187, 187, 195, 1);
+}
+
+.Feedback_textarea textarea {
+  width: 100%;
+  height: 100%;
+  padding: 20rpx 0;
+}
+
+.problemImgs {
+  width: 100%;
+  height: auto;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(112, 112, 124, 1);
+}
+.problem_txt {
+  margin-top: 34rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(112, 112, 124, 1);
+}
+
+.problemImg {
+  width: 100%;
+  height: auto;
+  padding-bottom: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+.problem_Img{
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx 20rpx 0 0;
+  position: relative;
+}
+.del{
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  right: -15rpx;
+  top: -15rpx;
+}
+.problem_img {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.addImg {
+  width: 160rpx;
+  height: 160rpx;
+  text-align: center;
+  margin: 20rpx 20rpx 0 0;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(187, 187, 195, 1);
+  border:1rpx solid rgba(229,229,229,1);
+}
+
+.add_img {
+  width: 56rpx;
+  height: 56rpx;
+  margin: 0 auto;
+  margin-top: 25rpx;
+  margin-bottom: 10rpx;
+}
+
+.submit {
+  text-align: center;
+  line-height: 88rpx;
+  margin: 50rpx auto;
+  width: 320rpx;
+  height: 88rpx;
+  background: rgba(203, 1, 1, 1);
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+}
+.Evaluation_img{
+  width: 177rpx;
+  height: 201rpx;
+  margin: 150rpx auto;
+}
+.Evaluation_txt{
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  margin-top: 0 auto;
+  text-align: center;
+}

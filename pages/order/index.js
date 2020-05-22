@@ -15,7 +15,19 @@ Page({
       url: '../orderDetails/index?order_no='+e.currentTarget.dataset.order_no,
     })
   },
-  //事件
+  //查看物流
+  router_Logistics(e){
+    wx.navigateTo({
+      url: '../Logistics/index?order_no='+e.currentTarget.dataset.order_no,
+    })
+  },
+  //评价
+  router_Evaluation(e){
+    wx.navigateTo({
+      url: '../Evaluation/index?order_no='+e.currentTarget.dataset.order_no,
+    })
+  },
+  /**事件*/
   nav_tab(e){
     this.setData({
       currentTab : e.target.dataset.index

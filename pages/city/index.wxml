@@ -1,0 +1,33 @@
+<!--pages/city/index.wxml-->
+<view class="container city">
+	<view class='city_top'>
+		<view class="city_txt">定位</view>
+		<view class="city_address">
+			<view class="city_dw">
+				<image src="./../icon/dingweiH.png"></image>
+			</view>
+			<view>{{address}}</view>
+		</view>
+		<!-- <view>当前选中 {{city}}</view> -->
+		<view class="city_txt">选择城市</view>
+	</view>
+	<!-- 城市列表 -->
+	<view class='list-city' hidden="{{!true}}">
+		<scroll-view scroll-y="true" style="height:100%;" scroll-into-view="{{scrollTopId}}" scroll-with-animation="true" enable-back-to-top="true">
+			<!-- 全部 -->
+			<view class='item' wx:for="{{cityData}}" wx:for-index="idx" wx:for-item="group" wx:key="key" id="{{idx}}">
+				<view class='py' >{{idx}}</view>
+				<view class="fullname" wx:for="{{group}}" wx:key="key" data-fullname="{{item.fullname}}" data-lat="{{item.location.lat}}" data-lng="{{item.location.lng}}" bindtap='selectCity'>{{item.fullname}}
+				</view>
+			</view>
+		</scroll-view>
+		<!-- 首字母 -->
+		<view class='city-py' bindtouchstart="tStart" bindtouchend="tEnd" catchtouchmove="tMove">
+			<view wx:for="{{_py}}" wx:key="key" bindtouchstart="getPy" bindtouchend="setPy" id="{{item}}">{{item}}
+			</view>
+		</view>
+	</view>
+	<!--选择显示-->
+	<view hidden="{{hidden}}" class="showPy">{{showPy}}</view>
+
+</view>

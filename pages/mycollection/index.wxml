@@ -1,0 +1,22 @@
+<!--pages/mycollection/index.wxml-->
+<view class="container">
+	<view class="recommend">
+    <view class="recommend_bot">
+      <block wx:for="{{4}}" wx:key="index">
+        <view class="fruit">
+          <view class="fruit_collection" data-id="{{index}}" catchtap="collection">
+            <image src="{{collection?'./../icon/collectH.png':'./../icon/mycollection.png'}}"></image>
+          </view>
+          <view class="fruit_img">
+            <image src="./../images/recommend_mall.png"></image>
+          </view>
+          <view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+          <view class="fruit_bottom">
+            <view class="price_now">¥200</view>
+            <view class="price_bef">¥300</view>
+          </view>
+        </view>
+      </block>
+    </view>
+	</view>
+</view>

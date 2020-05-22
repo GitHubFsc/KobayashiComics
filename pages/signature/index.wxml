@@ -1,0 +1,7 @@
+<!--pages/signature/index.wxml-->
+<view class="container">
+  <view class="signature_txt">
+    <textarea placeholder="请编辑您的个性签名" auto-height="true" value="{{inputVal}}"></textarea>
+  </view>
+  <view class="determine" catchtap="router_my">确定</view>
+</view>

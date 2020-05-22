@@ -1,2 +1,38 @@
 <!--pages/commen/index.wxml-->
-<text>pages/commen/index.wxml</text>
+<view class="container commen">
+	<view class="comment_body">
+		<block wx:for="{{3}}" wx:key="{{index}}">
+			<view class="content">
+				<view class="user">
+					<view class="avatar">
+						<image src="./../images/userimg.png" />
+					</view>
+					<view class="synopsis">
+						<view class="user_name">熙和</view>
+						<view class="user_time">2020年3月20日 20:00</view>
+					</view>
+					<view class="like">
+						<view class="like_img" data-id="1" catchtap="like">
+							<image src="./../icon/like.png"></image>
+						</view>
+						<view>122</view>
+					</view>
+				</view>
+				<view class="comment_txt">
+					这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论
+				</view>
+				<view class="comment_reply">
+					<view>李莎：<text>心态崩溃</text></view>
+					<view>李白<text class="reply">回复</text>李莎：<text>心态崩溃心态崩溃</text></view>
+					<view class="comment_morereplies" wx:if="{{index==1}}" data-id="1" catchtap="router_reply">
+						<view>查看更多回复 </view>
+						<view class="gengduo">
+							<image src="./../icon/gengduoB.png" />
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+
+	</view>
+</view>

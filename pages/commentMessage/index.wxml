@@ -1,0 +1,16 @@
+<!--pages/commentMessage/index.wxml-->
+<view class="container">
+  <view class="hr"></view>
+  <block wx:for="{{2}}" wx:key="index">
+    <view class="comment_box">
+      <view class="cb_time">2020-02-02 12:00</view>
+      <view class="cb_title"><text>张三</text>评论我：“我对别人的评论”</view>
+      <view class="cb_bot">
+        <view  class="cb_bot_img">
+          <image src="./../images/mall1.png"></image>
+        </view >
+        <view class="cb_txt">强烈安利这款马克杯，好看拿着也舒服…</view>
+      </view>
+    </view>
+  </block>
+</view>

@@ -109,7 +109,7 @@
 .nav_tabs .nav_tab .nav_tabs_hr{
   margin-top: 2rpx;
 }
-.fruit{
+.advisory{
   position: relative;
 }
 .fruit_del{

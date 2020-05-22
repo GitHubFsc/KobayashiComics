@@ -1,7 +1,35 @@
 <!--pages/Afterpayment/index.wxml-->
 <view class="container Afterpayment">
-	<view class="ap_img"><image src="./../icon/Bookok.png"></image></view>
-	<view class="ap_txt">{{type==1?'民宿':'路线'}}提交成功</view>
-	<view class="ap_txt">相关工作人员会和您联系</view>
-	<view class="tohome" catchtap="router_home">返回首页</view>
+	<block wx:if="{{type!=0}}">
+		<view class="ap_img">
+			<image src="./../icon/Bookok.png"></image>
+		</view>
+		<view class="ap_txt">{{type==1?'民宿':'路线'}}提交成功</view>
+		<view class="ap_txt">相关工作人员会和您联系</view>
+		<view class="tohome" catchtap="router_home">返回首页</view>
+	</block>
+	<block wx:else>
+		<view class="apok_img">
+			<image src="./../icon/payok.png"></image>
+		</view>
+		<view class="ap_txt">付款成功</view>
+		<view class="tohome" catchtap="router_home">返回首页</view>
+		<view class="recommend">
+			<view class="recommend_tilte">猜你喜欢</view>
+			<view class="recommend_bot">
+				<block wx:for="{{8}}" wx:key="index">
+					<view class="fruit">
+						<view class="fruit_img">
+							<image src="./../images/recommend_mall.png"></image>
+						</view>
+						<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+						<view class="fruit_bottom">
+							<view class="price_now">¥200</view>
+							<view class="price_bef">¥300</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+	</block>
 </view>
