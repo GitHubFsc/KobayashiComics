@@ -37,14 +37,14 @@
 			<image src="./../icon/routes.png" style="width:90rpx;height:49rpx;margin-left:49rpx;margin-top:20rpx;"></image>
 			<view>路线</view>
 		</view>
-		<view catchtap="router_livebroadcast" class="navigate">
+		<view catchtap="router_livebroadcastList" class="navigate">
 			<image src="./../icon/live.png" style="width:40rpx;height:73rpx;margin-left:66rpx;margin-top:10rpx;"></image>
 			<view>直播</view>
 		</view>
 	</view>
 	<view class="hr"></view>
 	<!-- 直播 -->
-	<view class="livebroadcast">
+	<view class="livebroadcast" catchtap="router_livebroadcast">
 		<view class="live_top">正在直播</view>
 		<image src="./../images/livebroadcast.png" class="bgimg"></image>
 		<image src="./../icon/play.png" class="bgplay"></image>

@@ -1,1 +1,232 @@
 /* pages/livebroadcast/index.wxss */
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.bgImg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.user {
+  width: auto;
+  height: 80rpx;
+  padding: 0 30rpx 0 4rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  border-radius: 40rpx;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  z-index: 2;
+}
+
+.user_img {
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 12rpx;
+  margin-top: 4rpx;
+}
+
+.user_right {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  z-index: 2;
+}
+
+.leaveMessages {
+  width: auto;
+  height: auto;
+  padding: 20rpx;
+  position: absolute;
+  left: 0;
+  top: 60%;
+  z-index: 2;
+}
+
+.leaveMessage {
+  width: auto;
+  height: auto;
+  line-height: 40rpx;
+  padding: 20rpx;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-bottom: 20rpx;
+}
+
+.leaveMessages text {
+  color: #FFAA00;
+}
+
+.lb_bot {
+  width: 710rpx;
+  height: 80rpx;
+  padding: 20rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+}
+
+.lb_commodity {
+  width: 62rpx;
+  height: 62rpx;
+  margin-top: 10rpx;
+  position: relative;
+}
+
+.lbc_img {
+  position: absolute;
+  width: 62rpx;
+  height: 62rpx;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.lbc_num {
+  width: 30rpx;
+  height: 40rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  position: absolute;
+  top: 26rpx;
+  left: 17rpx;
+  z-index: 3;
+}
+
+.lb_leaveMessages {
+  width: 420rpx;
+  height: 80rpx;
+  margin: 0 46rpx 0 18rpx;
+}
+
+.lb_leaveMessages input {
+  width: 390rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 27rpx;
+  padding-left: 30rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+
+.lb_share {
+  width: 72rpx;
+  height: 72rpx;
+  margin-top: 4rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+}
+
+.lb_like {
+  width: 72rpx;
+  height: 72rpx;
+  margin-top: 4rpx;
+  margin-left: 20rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+}
+
+.lb_share image,
+.lb_like image {
+  width: 40rpx;
+  height: 40rpx;
+  margin: 16rpx;
+}
+
+/*直播商品列表*/
+.commodityList {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.commodityBoxs {
+  width: 100%;
+  height: 60%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 1);
+  overflow: scroll;
+}
+.cb_title{
+  padding-left: 49rpx;
+  margin-top: 30rpx;
+  font-size:32rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+}
+.cb_title::before {
+  position: absolute;
+  top: 36rpx;
+  left: 20rpx;
+  content: "";
+  display: inline-block;
+  width:9rpx;
+  height:35rpx;
+  background:rgba(216,30,6,1);
+}
+.commodity_box{
+  width: 710rpx;
+  height: auto;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  margin:  0 auto;
+}
+.cb_img{
+  width:160rpx;
+  height:160rpx;
+  margin-right: 20rpx;
+}
+.cb_right{
+  flex: 1;
+}
+.cbr_title{
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.cbr_price{
+  display: flex;
+  margin-top: 46rpx;
+}
+.cb_price{
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(203,1,1,1);
+  margin-right: 20rpx;
+}
+.cb_OriginalPrice{
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  text-decoration:line-through;
+}

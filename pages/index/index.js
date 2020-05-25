@@ -13,41 +13,55 @@ Page({
   },
   
   //路由
+  //商城
   router_mall(){
     wx.navigateTo({
       url: '../mall/index',
     })
   },
+  //民宿
   router_homestay(){
     wx.navigateTo({
       url: '../homestay/index',
     })
   },
+  //路线
   router_route(){
     wx.navigateTo({
       url: '../route/index',
     })
   },
+  //直播列表
+  router_livebroadcastList(){
+    wx.navigateTo({
+      url: '../livebroadcastList/index',
+    })
+  },
+  //直播
   router_livebroadcast(){
     wx.navigateTo({
       url: '../livebroadcast/index',
     })
   },
+  //分享
   router_dynamic(){
     wx.navigateTo({
       url: '../dynamic/index',
     })
   },
+  //社区详情
   router_communityDetails(e){
     wx.navigateTo({
       url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
     })
   },
+  //搜索
   router_search(){
     wx.navigateTo({
       url: '../search/index',
     })
   },
+  //定位
   router_city(){
     wx.navigateTo({
       url: '../city/index',

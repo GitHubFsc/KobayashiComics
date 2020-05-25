@@ -1,2 +1,55 @@
 <!--pages/livebroadcast/index.wxml-->
-<text>pages/livebroadcast/index.wxml</text>
+<view class="container">
+	<view class="bgImg">
+		<image src="./../images/big.jpg"></image>
+	</view>
+	<view class="user">
+		<view class="user_img">
+			<image src="./../images/userimg.png" mode="aspectFit"></image>
+		</view>
+		<view class="user_right">
+			<view>张小小</view>
+			<view>19219人</view>
+		</view>
+	</view>
+	<view class="leaveMessages">
+		<view class="leaveMessage"><text>刘二</text>：好厉害哦</view>
+		<view class="leaveMessage"><text>张三</text>：这个东西很好吃吗？怎么卖的呢？</view>
+	</view>
+	<view class="lb_bot">
+		<view class="lb_commodity" catchtap="commodity">
+			<view class="lbc_img"><image src="./../icon/ShoppingBag.png"></image></view>
+			<view class="lbc_num">15</view>
+		</view>
+		<view class="lb_leaveMessages">
+			<input type="text" placeholder="请输入您的留言～"></input>
+		</view>
+		<view class="lb_share" data-id="1" catchtap="share">
+			<image src="./../icon/share.png"></image>
+		</view>
+		<view class="lb_like" data-id="1" catchtap="like">
+			<image src="./../icon/like.png"></image>
+		</view>
+	</view>
+	<view class="commodityList" hidden="{{commodityFlag}}" catchtap="commodity">
+		<view class="commodityBoxs">
+			<view class="cb_title">全部商品</view>
+			<view class="commodity_boxs">
+				<block wx:for="{{8}}" wx:key:="index">
+					<view class="commodity_box" data-id="1" catchtap="router_productDetails">
+						<view class="cb_img">
+							<image src="./../images/mall1.png"></image>
+						</view>
+						<view class="cb_right">
+							<view class="cbr_title">经典马克杯值得推荐经典马克杯值得推荐经典马克杯值得推荐</view>
+							<view class="cbr_price">
+								<view class="cb_price">¥200</view>
+								<view class="cb_OriginalPrice">¥300</view>
+							</view>
+						</view>
+					</view>
+				</block>
+			</view>
+		</view>
+	</view>
+</view>

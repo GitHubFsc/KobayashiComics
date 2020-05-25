@@ -50,7 +50,8 @@
     "pages/Logistics/index",
     "pages/Evaluation/index",
     "pages/commentMessage/index",
-    "pages/systemXiaoxi/index"
+    "pages/systemXiaoxi/index",
+    "pages/livebroadcastList/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

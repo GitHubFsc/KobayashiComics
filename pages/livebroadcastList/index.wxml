@@ -1,0 +1,20 @@
+<!--pages/livebroadcastList/index.wxml-->
+<view class="container">
+	<view class="banner">
+		<image src="./../images/banner1.png"></image>
+	</view>
+	<view class="livebroadcastList">
+		<block wx:for="{{5}}" wx:key="index">
+			<view class="livebroadcast_box" data-id="{{item}}" catchtap="router_livebroadcast">
+				<view class="liveing" wx:if="{{index==0}}">
+					<view>直播中</view>
+					<view>100人观看</view>
+				</view>
+				<view class="lb_over" wx:if="{{index!=0}}">已结束</view>
+				<view class="lb_replay" wx:if="{{index!=0}}">查看回放</view>
+				<view class="lb_img"><image src="./../images/mall1.png"></image></view>
+				<view class="lb_name">直播间的名字</view>
+			</view>
+		</block>
+	</view>
+</view>

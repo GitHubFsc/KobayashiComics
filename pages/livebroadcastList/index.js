@@ -1,36 +1,17 @@
-// pages/livebroadcast/index.js
+// pages/livebroadcastList/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    commodityFlag : true
+
   },
   /**路由 */
-  //商品链接
-  router_productDetails(e){
+  router_livebroadcast(e){
     wx.navigateTo({
-      url: '../productDetails/index?id='+ e.currentTarget.dataset.id,
+      url: '../livebroadcast/index?id='+e.currentTarget.dataset.id,
     })
-  },
-  /**事件 */
-  //打开+关闭商品列表
-  commodity(){
-    let that = this;
-    that.setData({
-      commodityFlag : !that.data.commodityFlag
-    })
-  },
-  //分享
-  share(e){
-    let that = this;
-    console.log(e);
-  },
-  //点赞
-  like(e){
-    let that = this;
-    console.log(e);
   },
   /**
    * 生命周期函数--监听页面加载
