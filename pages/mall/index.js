@@ -1,17 +1,22 @@
 // pages/mall/index.js
+import { GetGoodsBanner, GetGoodsCategory, GetHomeActiveGoods, GetRecommendGoods, getSign } from '../../utils/axios.js';
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    Carousel :[1,2],
+    Banner :[],
+    page : 1,
+    pagesize : 10
   },
   //路由
   //农家特产等
   router_mallList(e){
+    // console.log(e)
     wx.navigateTo({
-      url: '../mallList/index?index='+ e.currentTarget.dataset.index,
+      url: '../mallList/index?id='+ e.currentTarget.dataset.id + '&title=' +  e.currentTarget.dataset.title,
     })
   },
   router_search(){
@@ -35,6 +40,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getGoodsBanner();
+    this.getGoodsCategory();
+    this.getHomeActiveGoods();
+    this.getRecommendGoods();
 
   },
 
@@ -85,5 +94,83 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //商城banner
+  getGoodsBanner(){
+    GetGoodsBanner({
+      rnd : 1,
+      sign: getSign(`rnd=1`)
+    }).then(res =>{
+      if(res.data.ErrCode==0){
+        console.log(res)
+        this.setData({
+          Banner : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //商品类型
+  getGoodsCategory(){
+    GetGoodsCategory({
+      rnd : 1,
+      sign: getSign(`rnd=1`)
+    }).then(res =>{
+      if(res.data.ErrCode==0){
+        console.log(res)
+        this.setData({
+          Category : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //首页-活动商品
+  getHomeActiveGoods(){
+    GetHomeActiveGoods({
+      rnd : 1,
+      sign: getSign(`rnd=1`)
+    }).then(res =>{
+      if(res.data.ErrCode==0){
+        console.log(res)
+        this.setData({
+          ActiveGoods : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //推荐商品
+  getRecommendGoods(){
+    let {page,pagesize} = this.data;
+    GetRecommendGoods({
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`page=${page}&pagesize=${pagesize}`)
+    }).then(res=>{  
+      if(res.data.ErrCode==0){
+        this.setData({
+          RecommendGoods : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

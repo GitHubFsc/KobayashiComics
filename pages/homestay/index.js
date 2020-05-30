@@ -8,6 +8,7 @@ Page({
 
   },
   /*路由*/
+  //民宿详情
   router_homestayDetails(e){
     wx.navigateTo({
       url: '../homestayDetails/index?id='+e.currentTarget.dataset.id,

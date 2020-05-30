@@ -3,16 +3,16 @@
 	<view class="user">
 		<view class="user_top">
 			<view class="user_avatar">
-				<image src="./../images/userimg.png" />
+				<image src="{{userInfo.avatar}}" />
 			</view>
 			<view class="user_right">
-				<view class="user_name">张三</view>
-				<view class="user_signature">超级个性的签名</view>
+				<view class="user_name">{{userInfo.nickname}}</view>
+				<view class="user_signature">{{userInfo.signature}}</view>
 			</view>
 		</view>
 		<view class="user_bot">
-			<view class="user_attention" data-type="0" catchtap="router_followFans">关注<text>20</text></view>
-			<view class="user_fan" data-type="1" catchtap="router_followFans">粉丝<text>20</text></view>
+			<view class="user_attention" data-type="0" catchtap="router_followFans">关注<text>{{userInfo.focus_count}}</text></view>
+			<view class="user_fan" data-type="1" catchtap="router_followFans">粉丝<text>{{userInfo.fans_count}}</text></view>
 			<view class="user_btn" wx:if="{{type==1}}" data-id="2" catchtap="attention">关注</view>
 		</view>
 	</view>
@@ -30,41 +30,46 @@
 				<block wx:for="{{recommend}}" wx:key="*this">
 					<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
 						<block wx:if="{{currentTab==0||currentTab==2}}">
-							<block wx:for="{{4}}" wx:key="*this">
-								<view class="advisory" data-id="index" catchtap="router_communityDetails">
-									<view class="fruit_del" data-id="{{index}}" catchtap="communityDel">
+							<block wx:for="{{MyNewsList}}" wx:key="*this">
+								<view class="advisory" data-id="{{item.id}}" catchtap="router_communityDetails">
+									<view class="fruit_del" data-id="{{item.id}}" catchtap="communityDel">
 										<image src="./../icon/del.png"></image>
 									</view>
-									<view class="fruit_play" wx:if="{{index==3}}">
+									<view class="fruit_play" wx:if="{{item.path_type==1}}">
 										<image src="./../icon/play.png"></image>
 									</view>
-									<view class="advisory_img">
-										<image src="./../images/mall1.png"></image>
+									<view class="advisory_img" wx:if="{{item.path_type==1}}">
+										<image src="{{item.video_img_url}}"></image>
 									</view>
-									<view class="advisory_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+									<view class="advisory_img" wx:if="{{item.path_type==2}}">
+										<image src="{{item.img_url}}"></image>
+									</view>
+									<view class="advisory_txt">{{item.title}}</view>
 									<view class="advisory_bottom">
 										<view class="advisory_left">
-											<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+											<image data-id="" src="{{item.avatar}}"></image><text>{{item.nickname}}</text>
 										</view>
 										<view class="advisory_right">
-											<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+											<image data-id="" src="./../icon/comment.png"></image><text>{{item.comments.count}}</text>
 										</view>
 									</view>
 								</view>
 							</block>
 						</block>
-						<block wx:for="{{4}}" wx:key="*this" wx:if="{{currentTab==1}}">
-							<view class="comment" data-id="1" catchtap="router_reply">
+						<block wx:for="{{MyCommentsList}}" wx:key="*this" wx:if="{{currentTab==1}}">
+							<view class="comment" data-id="{{item.news_id}}" catchtap="router_reply">
 								<view class="comment_top">
-									<view class="ct_time">2020-02-02 12:00</view>
-									<view wx:if="{{index%2==0}}" class="ct_txt">评论：“我对别人的评论”</view>
-									<view wx:if="{{index%2==1}}" class="ct_txt">回复<text>张三</text>“我对别人的很多的评论，巴拉巴拉吧啦啦”</view>
+									<view class="ct_time">{{item.add_timespan}}</view>
+									<view class="ct_txt">{{item.content}}</view>
+									<!-- <view wx:if="{{index%2==0}}" class="ct_txt">评论：“我对别人的评论”</view> -->
+
+									<!-- <view wx:if="{{index%2==1}}" class="ct_txt">回复<text>张三</text>“我对别人的很多的评论，巴拉巴拉吧啦啦”</view> -->
 								</view>
 								<view class="comment_bot">
 									<view class="cb_img">
-										<image src="./../images/mall1.png" />
+										<image src="{{item.img_url}}" />
 									</view>
-									<view class="cb_txt">强烈安利这款马克杯，好看拿着也舒服…</view>
+									<view class="cb_txt">{{item.content}}</view>
 								</view>
 							</view>
 						</block>

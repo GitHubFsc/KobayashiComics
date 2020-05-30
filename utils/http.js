@@ -1,11 +1,12 @@
-const sign = '4c911e8b85fdbda6e79dcae85b6b33cc';
-const base = 'https://xingyunkepuapi.zztv021.com/';
+const sign = '5876a4999aefdc0790ffdd7d9a26ec3b';
+const base = 'https://xiaolinmanhua.zztv021.com/';
+const utilMd5 = require('./md5.js');
 // 封装post请求
-const post = (url, data) => {
+const post = (url,data,datas) => {
   var promise = new Promise((resolve, reject) => {
     //网络请求
     wx.request({
-      url: base+url+'?sign='+sign,
+      url: base+url + '?' + datas.join('&'),
       data: {
         ...data
       },
@@ -31,7 +32,6 @@ const get = (url, data) => {
     wx.request({
       url: base + url,
       data: {
-        sign,
         ...data
       },
       header: {
@@ -51,9 +51,27 @@ const get = (url, data) => {
   });
   return promise;
 }
+function getSign(params) {
+  if (typeof params == "string") {
+    return paramsStrSort(params);
+  } else if (typeof params == "object") {
+    var arr = [];
+    for (var i in params) {
+      arr.push((i + "=" + params[i]));
+    }
+    return paramsStrSort(arr.join(("&")));
+  }
+}
 
+function paramsStrSort(paramsStr) {
+  var urlStr = paramsStr.split("&").sort().join("&");
+  var reg = new RegExp("&", "g");
+  var reg2 = new RegExp("=", "g");
+  var reg3 = new RegExp(",", "g");
+  return utilMd5.hexMD5(sign + urlStr.replace(reg, "").replace(reg2, "") + sign);
+}
 export{
   post,
   get,
-  sign,
+  getSign,
 }

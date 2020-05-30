@@ -1,11 +1,18 @@
 // pages/mallList/index.js
+import { GetGoodsList,GetActiveGoods, getSign } from '../../utils/axios.js';
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    mallList: ['农家特产','个性优品','生活用品','手工产品','活动商品']
+    currentTab :'',
+    mallList:[],
+    category_id : '',
+    keywords :'',
+    page : 1,
+    pagesize : 10,
   },
   /*路由*/
   //商品详情
@@ -16,18 +23,34 @@ Page({
   },
   //事件
   nav_tab(e){
+    let category_id = this.data.category_id;
     this.setData({
       currentTab : e.target.dataset.index
     })
+    if(category_id<0){
+      this.getActiveGoods()
+    }else{
+      this.getGoodsList()
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log(mallList[options.index])
     wx.setNavigationBarTitle({
-      title: this.data.mallList[options.index]
+      title: options.title
     })
+    
+    this.setData({
+      category_id : options.id,
+      keywords :options.title
+    })
+    if(options.id<0){
+      this.getActiveGoods()
+    }else{
+      this.getGoodsList()
+    }
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -76,5 +99,50 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //商品列表
+  getGoodsList(){
+    let {category_id,keywords,currentTab,page,pagesize} = this.data;
+    let type = currentTab+1;
+    GetGoodsList({
+      category_id: category_id,
+      keywords: keywords,
+      type: type,
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`category_id=${category_id}&keywords=${keywords}&type=${type}&page=${page}&pagesize=${pagesize}`)
+    }).then(res=>{
+      if(res.data.ErrCode ==0){
+        this.setData({
+          mallList : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //活动商品-更多
+  getActiveGoods(){
+    let {page,pagesize} = this.data;
+    GetActiveGoods({
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`page=${page}&pagesize=${pagesize}`)
+    }).then(res=>{
+      if(res.data.ErrCode ==0){
+        this.setData({
+          mallList : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

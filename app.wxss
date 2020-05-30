@@ -699,3 +699,102 @@ image {
   margin-left: 102rpx;
   margin-right: 20rpx;
 }
+/* 步进条 */
+.stepsBox{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+.steps_box{
+  width: 710rpx;
+  height: auto;
+  background: #fff;
+  padding: 50rpx 20rpx;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.steps_title{
+
+}
+.steps{
+  width: 100%;
+  height: 90rpx;
+  padding: 18rpx 0;
+  color: #999999;
+  display: flex;
+  justify-content: space-between;
+}
+.steps_txt{
+  width: 100%;
+  height: 30rpx;
+  margin: 60rpx 0 10rpx 0;
+  font-size: 26rpx;
+  color: #999999;
+  display: flex;
+  justify-content: space-between;
+}
+.stepsbox{
+  width: 30rpx;
+  height: 30rpx;
+  margin-top: -10rpx;
+}
+.steps_circle{
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #999999;
+  margin: 6rpx auto;
+}
+.steps_true{
+  width: 24rpx;
+  height: 24rpx;
+  margin: 0rpx auto;
+  margin-top: -8rpx;
+}
+.steps_line{
+  width: 300rpx;
+  height: 4rpx;
+  background-color: #999999;
+}
+.carryColor{
+  color: #CB0101;
+}
+.carryBgColor{
+  background-color: #CB0101;
+}
+.steps_btn{
+  width: 90%;
+  height: 60rpx;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 60rpx;
+  background-color: #CB0101;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  border-radius: 8rpx;
+}
+.steps_btn button{
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  text-align: center !important;
+  line-height: 60rpx !important;
+  background-color: #CB0101 !important;
+  border-radius: 8rpx !important;
+  font-size: 26rpx !important;
+  color: #fff !important;
+}
+.loading{
+  width: 36rpx;
+  height: 36rpx;
+  margin: 10rpx 20rpx;
+}

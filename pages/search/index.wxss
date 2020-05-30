@@ -83,4 +83,10 @@
   display: flex;
   flex-wrap: wrap;
 }
-
+.fruit_play{
+  width: 88rpx;
+  height: 88rpx;
+  position: absolute;
+  top: 149rpx;
+  left: 129rpx;
+}

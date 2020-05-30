@@ -71,6 +71,14 @@ Page({
   //     }
   //   });
   // },
+  //选择定位城市
+  positionCity(){
+    let city = this.data.city;
+    wx.setStorageSync('city', city);
+    wx.switchTab({
+      url: '../index/index'
+    })
+  },
   //选择城市
   selectCity: function (e) {
     var dataset = e.currentTarget.dataset;
@@ -81,7 +89,10 @@ Page({
         longitude: dataset.lng
       }
     });
-    
+    wx.setStorageSync('city', dataset.fullname);
+    wx.switchTab({
+      url: '../index/index'
+    })
   },
   //获取文字信息
   getPy: function (e) {

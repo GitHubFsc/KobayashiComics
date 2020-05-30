@@ -1,11 +1,19 @@
 // pages/referralDetails/index.js
+import { GetNewsDetail, GetMyLikeNews,  getSign } from '../../utils/axios.js';
+
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    inputValue:''
+    inputValue:'',
+    steps : 3,
+    loading: false,
+    page :1,
+    pagesize :10
   },
   /*路由*/
   //他人主页
@@ -62,10 +70,70 @@ Page({
   like(e){
     console.log(e)
   },
+  /**API */
+  //获取手机号
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+      loading: true,
+    })
+    app.getPhoneNumber(e,(data)=>{
+      console.log("手机号回调",data)
+      if(data){
+        that.setData({
+          steps : 1 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //获取用户信息
+  getUserInfo(e) {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+    app.getUserInfo(e,(data)=>{
+      console.log("用户回调",data)
+      if(data){
+        that.setData({
+          steps : 2 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //用户登录
+  UserLogin() {
+    var that = this;
+    app.login((data)=>{
+      console.log("登录成功",data)
+      if(data){
+        that.setData({
+          steps : 3 ,
+          loading: false,
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let user_id = wx.getStorageSync('userId');
+    if (user_id) {
+      this.setData({
+        steps : 3 ,
+        NewsId : options.id
+      })
+      this.getNewsDetail();
+      this.getMyLikeNews();
+    } else {
+      this.setData({
+        steps : 0,
+        NewsId : options.id
+      })
+    }
 
   },
 
@@ -116,5 +184,49 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //资讯详情
+  getNewsDetail(){
+    let userId = wx.getStorageSync('userId');
+    let NewsId = this.data.NewsId;
+    GetNewsDetail({
+      user_id : userId,
+      news_id : NewsId,
+      sign : getSign(`user_id=${userId}&news_id=${NewsId}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          NewsDetail : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //猜你感兴趣
+  getMyLikeNews(){
+    let userId = wx.getStorageSync('userId');
+    let {page,pagesize} = this.data;
+    GetMyLikeNews({
+      user_id : userId,
+      page : page,
+      pagesize : pagesize,
+      sign : getSign(`user_id=${userId}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          NewsList: res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

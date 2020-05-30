@@ -1,35 +1,37 @@
 <!--pages/productSubmitOrder/index.wxml-->
 <view class="container productSubmitOrder">
 	<view class="commoditys">
-		<view class="ChooseAddress">
+		<view class="ChooseAddress" catchtap="getAddress">
 			<view class="ca_img">
 				<image src="./../icon/dingwei.png"></image>
 			</view>
-			<view class="ca_right" wx:if="{{true}}">
-				<view>张三   18888888888</view>
-				<view>上海市长宁区延安西路1088号1903</view>
+			<view class="ca_right" wx:if="{{Address}}">
+				<view>{{Address.userName}}   {{Address.telNumber}}</view>
+				<view>{{Address.Address}}</view>
 			</view>
-			<view class="ca" wx:if="{{false}}">
+			<view class="ca" wx:else catchtap="getAddress">
 				<view>选择地址</view>
 			</view>
 			<view class="more" catchtap="router_address"><image src="./../icon/gengduo.png"></image></view>
 		</view>
-		<view class="commodity_top">
-			<view class="ct_img">
-				<image src="./../images/mall1.png"></image>
-			</view>
-			<view class="ct_right">
-				<view class="ct_title"><view>经典马克杯</view><view>x1</view></view>
-				<view class="ct_txt">白色</view>
-				<view class="ct_price">
-					<view class="price">¥300</view>
+		<block wx:for="{{Goods.goods_list}}" wx:key="index">
+			<view class="commodity_top" data-id="{{item.goods_id}}">
+				<view class="ct_img">
+					<image src="{{item.goods_image}}"></image>
+				</view>
+				<view class="ct_right">
+					<view class="ct_title"><view>{{item.goods_name}}</view><view>x{{item.number}}</view></view>
+					<view class="ct_txt">{{item.goods_detail}}</view>
+					<view class="ct_price">
+						<view class="price">¥{{item.price}}</view>
+					</view>
 				</view>
 			</view>
-		</view>
+		</block>
 		<view class="commodity_discount">
 			<view class="cd_cell">
 				<view>运费</view>
-				<view>¥300</view>
+				<view>¥{{Goods.freight}}</view>
 			</view>
 			<view class="cd_cell">
 				<view>积分</view>
@@ -37,30 +39,32 @@
 					<switch class="switch" type="switch" color="#CB0101" checked="{{switchChecked}}" bindchange="switchChange" />
 				</view>
 				<view>100积分可抵扣10元</view>
-				<view class="price">-¥10</view>
+				<view class="price">-¥{{Goods.point_money}}</view>
 			</view>
-			<view class="cd_cell">
+			<view class="cd_cell" data-id="{{GoodsCoupon.id}}" catchtap="router_shoppingVoucher">
 				<view>优惠券</view>
-				<view class="cdc_txt">-¥10</view>
+				<view class="cdc_txt" wx:if="{{Goods.coupon_money==0||GoodsCoupon.length==0}}">暂无可用优惠券</view>
+				<view class="cdc_txt" wx::else>-¥{{GoodsCoupon.coupon_discount_money}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
 			</view>
-			<view class="cd_cell" catchtap="router_invoice">
+			<view class="cd_cell" data-id="{{Goods.invoice.id}}" catchtap="router_invoice">
 				<view>发票</view>
-				<view class="cdc_txt">不要发票</view>
+				<view class="cdc_txt">{{Goods.type==1?'单位发票':'个人发票'}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
 			</view>
 			<view class="cd_cell">
 				<view>商品总额</view>
-				<view class="price">¥280</view>
+				<view class="price">¥{{Goods.sumprice}}</view>
 			</view>
 		</view>
 	</view>
 	<view class="topay">
-		<view>实际支付：<text class="topay_price">¥280</text></view>
+		<view>共{{Goods.gong}}件</view>
+		<view>实际支付：<text class="topay_price">¥{{Goods.total_price}}</text></view>
 		<view catchtap="router_topay">去支付</view>
 	</view>
 </view>

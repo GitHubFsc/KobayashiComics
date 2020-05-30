@@ -1,6 +1,7 @@
 <!--pages/shoppingVoucher/index.wxml-->
 <view class="container">
-  <!--推荐咨询 -->
+  <view class="div"></view>
+  <!-- 优惠券 -->
 	<view class="tree_detail">
 		<view class="nav_tabs">
 			<block wx:for="{{3}}" wx:key="*this">
@@ -13,7 +14,7 @@
 		<view class="tab_ctn">
 			<block wx:for="{{3}}" wx:key="*this">
 				<view class="shoppingVouchers" wx:if="{{index==currentTab}}">
-          <block wx:for="{{2}}">
+          <block wx:for="{{CouponList}}" wx:key="*this">
              <view class="shoppingVoucher">
               <view class="bg_img">
                 <image src="./../images/bg_img.png"></image>
@@ -24,7 +25,7 @@
                   <view class="sv_title">满40使用</view>
                   <view class="sv_txt">有效期至：2020.12.12</view>
                 </view>
-                <view class="{{currentTab==0?'svb_btnR':'svb_btnG'}}">{{currentTab==0?'未使用':currentTab==1?'已使用':currentTab==2?'已过期':''}}</view>
+                <view class="{{currentTab==0?'svb_btnR':'svb_btnG'}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="useCoupon">{{currentTab==0?'去使用':currentTab==1?'已使用':currentTab==2?'已过期':''}}</view>
               </view>
              </view>
           </block>

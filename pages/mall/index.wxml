@@ -14,10 +14,10 @@
 	<!-- 轮播导航 -->
 	<view class="swiper_banner">
 		<swiper indicator-dots="true" autoplay="true">
-			<block wx:for="{{Carousel}}" wx:key="*this">
+			<block wx:for="{{Banner}}" wx:key="*this">
 				<swiper-item>
-					<view class="swiper_image">
-						<image src="./../images/banner{{item}}.png"></image>
+					<view class="swiper_image" data-id="{{item.obj_id}}" catchtap="router_productDetails">
+						<image src="{{item.img_url}}"></image>
 					</view>
 				</swiper-item>
 			</block>
@@ -25,24 +25,25 @@
 	</view>
 	<!-- 分类导航 -->
 	<view class="navigates">
-		<view catchtap="router_mallList"  data-index="0" class="navigate">
+		<view catchtap="router_mallList" data-id="{{Category[0].id}}" data-title="{{Category[0].title}}" class="navigate">
 			<image src="./../icon/farm.png" style="width:48rpx;height:48rpx;margin-left:48rpx;margin-top:10rpx;"></image>
 			<view>农家特产</view>
 		</view>
-		<view catchtap="router_mallList" data-index="1" class="navigate">
+		<view catchtap="router_mallList" data-id="{{Category[1].id}}" data-title="{{Category[1].title}}"  class="navigate">
 			<image src="./../icon/personalized.png" style="width:46rpx;height:46rpx;margin-left:44rpx;margin-top:10rpx;"></image>
 			<view>个性优品</view>
 		</view>
-		<view catchtap="router_mallList" data-index="2" class="navigate">
+		<view catchtap="router_mallList" data-id="{{Category[2].id}}" data-title="{{Category[2].title}}" class="navigate">
 			<image src="./../icon/life.png" style="width:48rpx;height:48rpx;margin-left:48rpx;margin-top:10rpx;"></image>
 			<view>生活用品</view>
 		</view>
-		<view catchtap="router_mallList"  data-index="3" class="navigate">
+		<view catchtap="router_mallList" data-id="{{Category[3].id}}" data-title="{{Category[3].title}}" class="navigate">
 			<image src="./../icon/manual.png" style="width:42rpx;height:53rpx;margin-left:66rpx;margin-top:10rpx;"></image>
 			<view>手工产品</view>
 		</view>
 	</view>
 	<view class="hr"></view>
+	<!-- 活动商品 -->
 	<view class="activity">
 		<view class="activity_top">
 			<view class="activity_left">
@@ -51,7 +52,7 @@
 				</view>
 				<view>活动商品</view>
 			</view>
-			<view class="activity_right" data-index="4" catchtap="router_mallList">
+			<view class="activity_right" data-id="-1" data-title="活动商品" catchtap="router_mallList">
 				<view>更多商品</view>
 				<view class="genduo">
 					<image src="./../icon/gengduo.png"></image>
@@ -59,17 +60,18 @@
 			</view>
 		</view>
 		<view class="activity_bot">
-			<block wx:for="{{4}}" wx:key="index">
-				<view class="activity_mall" data-id="1" catchtap="router_productDetails">
+			<block wx:for="{{ActiveGoods}}" wx:key="index">
+				<view class="activity_mall" data-id="{{item.id}}" catchtap="router_productDetails">
 					<view class="am_img">
-						<image src="./../images/mallmin.png"></image>
+						<image src="{{item.img_url}}"></image>
 					</view>
-					<view class="am_title">经典马克杯</view>
-					<view class="am_price">¥200</view>
+					<view class="am_title">{{item.title}}</view>
+					<view class="am_price">¥{{item.price}}</view>
 				</view>
 			</block>
 		</view>
 	</view>
+	<!-- 推荐商品 -->
 	<view class="recommend">
 		<view class="activity_top">
 			<view class="activity_left">
@@ -79,16 +81,16 @@
 				<view>推荐商品</view>
 			</view>
 		</view>
-    <view class="recommend_bot">
-      <block wx:for="{{8}}" wx:key="index">
-        <view class="fruit" data-id="1" catchtap="router_productDetails">
-          <view class="fruit_img">
-            <image src="./../images/recommend_mall.png"></image>
-          </view>
-          <view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
-          <view class="fruit_bottom">
-            <view class="price_now">¥200</view>
-            <view class="price_bef">¥300</view>
+		<view class="recommend_bot">
+			<block wx:for="{{RecommendGoods}}" wx:key="index">
+				<view class="fruit" data-id="{{item.id}}" catchtap="router_productDetails">
+					<view class="fruit_img">
+						<image src="{{item.img_url}}"></image>
+					</view>
+					<view class="fruit_txt">{{item.title}}</view>
+					<view class="fruit_bottom">
+						<view class="price_now">¥{{item.price}}</view>
+						<view class="price_bef">¥{{item.original}}</view>
           </view>
         </view>
       </block>

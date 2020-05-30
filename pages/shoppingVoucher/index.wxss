@@ -1,9 +1,21 @@
 /* pages/shoppingVoucher/index.wxss */
 .container{
-
   width: 100%;
   height: 100%;
   background-color: #FAFAFC;
+}
+.div{
+  width: 100%;
+  height: 1rpx;
+  background-color: #fff;
+}
+.tree_detail{
+  margin-top: 0;
+}
+.nav_tabs {
+  width: 100%;
+  height: 70rpx;
+  padding-top: 30rpx;
 }
 .nav_tabs_hr{
   width: 60rpx;

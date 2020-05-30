@@ -1,39 +1,28 @@
 // pages/productSubmitOrder/index.js
+import { PostGoodsSubmit ,GetGoodsCoupon, getSign } from '../../utils/axios.js';
+import utils from './../../utils/util'
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    IntoTime: '',
-    OutTime: '',
-    peopleNumList: ['1人', '2人', '3人'],
-    peopleNum: '1人',
-    Tenant_nmae: '',
-    Tenant_userId: '',
-    Tenant_phone: '',
+    body : [],
     switchChecked: false,
-    peopleBox: true,
-    calendar_box: true,
-    userList: [{
-      name: '张三',
-      userId: '410423200002061511',
-      userflag: false,
-    }, {
-      name: '李四',
-      userId: '410423200002061511',
-      userflag: false,
-    }, {
-      name: '王五',
-      userId: '410423200002061511',
-      userflag: false,
-    }]
+    Goods :[]
   },
   /**路由 */
   //支付
   router_topay() {
     wx.navigateTo({
       url: './../Afterpayment/index?index=0'
+    })
+  },
+  //优惠券
+  router_shoppingVoucher(){
+    wx.navigateTo({
+      url: './../shoppingVoucher/index'
     })
   },
   //发票
@@ -49,56 +38,31 @@ Page({
     })
   },
   /*事件*/
-  bindPickerChange(e) {
-    let that = this;
-    that.setData({
-      peopleNum: that.data.peopleNumList[e.detail.value]
+  //积分switch开关
+  switchChange(e){
+    this.setData({
+      switchChecked : e.detail.value
     })
   },
-  IntoOtu() {
-    let that = this;
-    that.setData({
-      calendar_box: !that.data.calendar_box
-    })
-  },
-  close() {
-    let that = this;
-    that.setData({
-      calendar_box: !that.data.calendar_box
-    })
-  },
-  Tenant() {
-    let that = this;
-    that.setData({
-      peopleBox: !that.data.peopleBox
-    })
-  },
-  determine() {
-    let that = this;
-    that.setData({
-      peopleBox: !that.data.peopleBox,
-    })
-    that.data.userList.map(item => {
-      if (item.userflag) {
-        console.log("选中", item.name)
-      } else {
-        console.log("未选中", item.name)
-      }
-    })
-  },
-  Selected(e) {
-    let that = this;
-    let userList = that.data.userList;
-    userList[e.currentTarget.dataset.index].userflag = !userList[e.currentTarget.dataset.index].userflag,
-      that.setData({
-        userList
-      })
-  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if(options){
+      this.setData({
+        body : JSON.parse(options.arr),
+        Address : wx.getStorageSync('Address')
+      })
+      this.postGoodsSubmit(res=>{
+        this.getGoodsCoupon(res,datas=>{
+          this.setData({
+            Goods : res.data.Response,
+            GoodsCoupon : datas.data.Response,
+          })
+        })
+      });
+    }
   },
 
   /**
@@ -112,7 +76,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let Coupon = wx.getStorageSync('Coupon');
+    if(Coupon){
+      this.setData({
+        GoodsCoupon : Coupon,
+      })
+    }
   },
 
   /**
@@ -148,5 +117,62 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //订单提交-预览
+  postGoodsSubmit(callback){
+    let user_id = wx.getStorageSync('userId'),
+    body = this.data.body;
+    let datas = [];
+    datas.push('user_id='+user_id)
+    datas.push('sign='+getSign(`user_id=${user_id}`))
+    PostGoodsSubmit({
+      body : body
+    },datas).then(res=>{
+      if(res.data.ErrCode==0){
+        callback && callback(res)
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //获取用户地址
+  getAddress(){
+    let that = this;
+    wx.chooseAddress({
+      success (res) {
+        let Address = {};
+        Address.userName = res.userName;
+        Address.telNumber = res.telNumber;
+        Address.Address = res.provinceName+res.cityName+res.countyName+res.detailInfo;
+        that.setData({
+          Address
+        })
+        wx.setStorageSync('Address', Address)
+      }
+    })
+  },
+  //获取用户可用优惠券
+  getGoodsCoupon(datas,callback){
+    let user_id = wx.getStorageSync('userId');
+    let  money = datas.data.Response.total_price;
+    GetGoodsCoupon({
+      user_id : user_id,
+      type : 1,
+      money : money,
+      sign: getSign(`user_id=${user_id}&type=1&money=${money}`)
+    }).then(res=>{
+      if(res.data.ErrCode==0){
+        callback && callback(res)
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

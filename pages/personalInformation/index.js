@@ -1,49 +1,122 @@
 // pages/personalInformation/index.js
+import {getSign,PostSetinfo,PostUploadFile} from '../../utils/axios.js';
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    date : '',
-    selected : true,
-    user_img : './../images/userimg2.png'
+    nickname: '',
+    mobile: '',
+    date: '',
+    selected: true,
+    user_img: './../images/userimg2.png'
   },
   /*事件*/
-  bindDateChange(e){
-    let that = this;
-    that.setData({
-      date : e.detail.value
+  //昵称失焦
+  nickname(e){
+    this.setData({
+      nickname : e.detail.value
     })
   },
-  selected(e){
+  //号码失焦
+  mobile(e){
+    this.setData({
+      mobile : e.detail.value
+    })
+  },
+  //选择日期
+  bindDateChange(e) {
     let that = this;
-    if(e.currentTarget.dataset.index==0){
+    that.setData({
+      date: e.detail.value
+    })
+  },
+  //选择性别
+  selected(e) {
+    let that = this;
+    if (e.currentTarget.dataset.index == 0) {
       that.setData({
-        selected : true
+        selected: true
       })
-    }else{
+    } else {
       that.setData({
-        selected : false
+        selected: false
       })
     }
   },
-  modify(){
+  //修改头像
+  modify() {
     let that = this;
     let user_img = that.data.user_img;
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
-      success (res) {
+      success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
-        user_img = res.tempFilePaths;
-        that.setData({
-          user_img
+        wx.uploadFile({
+          url: 'https://xiaolinmanhua.zztv021.com/api/Lib/PostUploadFile?rnd=1&sign=' + getSign(`rnd=1`),
+          filePath: res.tempFilePaths[0],
+          name: 'file',
+          formData: {},
+          success(res) {
+            let data = JSON.parse(res.data);
+            if(data.ErrCode == 0){
+              that.setData({
+                user_img : data.Response
+              })
+            } else {
+              wx.showToast({
+                title: data.ErrMsg,
+                icon: 'none'
+              })
+            }
+          }
         })
       },
-      fail(res){
+      fail(res) {
         console.log(res)
+      }
+    })
+  },
+  //保存
+  save(){
+    let openid = wx.getStorageSync('openid');
+    let user_id = wx.getStorageSync('userId');
+    let {nickname,mobile,date,selected,user_img} = this.data
+    let userInfo = wx.getStorageSync('userInfo');
+    let datas = [];
+    datas.push("user_id="+user_id)
+    datas.push('sign='+getSign(`user_id=${user_id}`))
+    PostSetinfo({
+      body: {
+        nickname : nickname,
+        avatar : user_img,
+        sex : selected?1:2,
+        mobile : mobile,
+        openid: openid,
+        birthday : new Date(date).getTime()
+      }
+    },datas).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res)
+        userInfo.nickname = nickname;
+        userInfo.avatar = user_img;
+        userInfo.sex = selected?1:2;
+        userInfo.mobile = mobile;
+        userInfo.openid = openid;
+        userInfo.birthday = new Date(date).getTime();
+        wx.setStorageSync('userInfo', userInfo)
+        wx.switchTab({
+          url: './../my/index'
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
       }
     })
   },
@@ -51,7 +124,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let userInfo = wx.getStorageSync('userInfo');
+    if (userInfo) {
+      this.setData({
+        user_img: userInfo.avatarUrl,
+        selected: userInfo.gender == 1 ? true : false
+      })
+    }
   },
 
   /**

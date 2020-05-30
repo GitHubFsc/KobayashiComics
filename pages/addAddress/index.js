@@ -1,4 +1,6 @@
 // pages/addAddress/index.js
+import {getSign, PostAddInvoice } from '../../utils/axios.js';
+const app = getApp()
 Page({
 
   /**

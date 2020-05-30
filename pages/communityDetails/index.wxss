@@ -108,7 +108,10 @@
 .swiper_banner swiper .wx-swiper-dot.wx-swiper-dot-active {
   width: 16rpx;
 }
-
+.myVideo{
+  width: 100%;
+  height: auto;
+}
 .title {
   width: 710rpx;
   margin-top: 15rpx;

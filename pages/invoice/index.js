@@ -1,24 +1,109 @@
 // pages/invoice/index.js
+import {getSign,GetMyInvoice,GetDefaultInvoice,GetDelInvoice} from '../../utils/axios.js';
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    MyInvoiceList: [],
+    page: 1,
+    pagesize: 10,
+    selected : null
   },
   //路由
   //新增发票
-  router_addinvoice(e){
-    if(e.currentTarget.dataset.id){
+  router_addinvoice(e) {
+    if (e.currentTarget.dataset.id) {
       wx.navigateTo({
-        url: '../addinvoice/index?id='+e.currentTarget.dataset.id + '&type='+e.currentTarget.dataset.type,
+        url: '../addinvoice/index?id=' + e.currentTarget.dataset.id + '&type=' + e.currentTarget.dataset.type,
       })
-    }else{
+    } else {
       wx.navigateTo({
         url: '../addinvoice/index',
       })
     }
+  },
+  /**事件 */
+  //设为默认
+  select(e){
+    let that = this;
+    console.log(e);
+    that.getDefaultInvoice(e.currentTarget.dataset.id,res=>{
+      console.log(res);
+      that.getMyInvoice();
+    })
+  },
+  //删除
+  del(e){
+    let that = this;
+    console.log(e.currentTarget.dataset.id);
+    that.getDelInvoice(e.currentTarget.dataset.id,res=>{
+      console.log(res);
+      that.getMyInvoice();
+    })
+  },
+  /**API */
+  //获取我的发票
+  getMyInvoice() {
+    let user_id = wx.getStorageSync('userId');
+    let { page, pagesize } = this.data;
+    GetMyInvoice({
+      user_id: user_id,
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          MyInvoiceList : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //设置默认发票
+  getDefaultInvoice(id , callback){
+    let user_id = wx.getStorageSync('userId');
+    GetDefaultInvoice({
+      user_id: user_id,
+      invoice_id : id,
+      sign: getSign(`user_id=${user_id}&invoice_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //删除发票
+  getDelInvoice(id , callback){
+    let user_id = wx.getStorageSync('userId');
+    GetDelInvoice({
+      user_id: user_id,
+      invoice_id : id,
+      sign: getSign(`user_id=${user_id}&invoice_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -38,7 +123,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getMyInvoice()
   },
 
   /**

@@ -8,7 +8,9 @@
   line-height: 72rpx;
   position: relative;
 }
-
+.top_left{
+  width: 30%;
+}
 .top image {
   width: 30rpx;
   height: 30rpx;
@@ -18,7 +20,8 @@
 }
 
 .search {
-  width: 570rpx;
+  width: 69%;
+  /* flex: 1; */
   height: 72rpx;
   border: 1rpx solid rgba(229, 229, 229, 1);
   border-radius: 10rpx;

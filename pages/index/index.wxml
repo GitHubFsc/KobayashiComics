@@ -3,7 +3,7 @@
 	<!-- 头部 定位+搜索 -->
 	<view class="top">
 		<view class="top_left" catchtap="router_city">
-			<text>上海</text>
+			<text>{{city}}</text>
 			<image src="./../icon/down.png"></image>
 		</view>
 		<view class="search" catchtap="router_search">
@@ -16,8 +16,8 @@
 		<swiper indicator-dots="true" autoplay="true">
 			<block wx:for="{{Carousel}}" wx:key="*this">
 				<swiper-item>
-					<view class="swiper_image">
-						<image src="./../images/banner{{item}}.png"></image>
+					<view class="swiper_image" data-id="{{item.obj_id}}" catchtap="router_productDetails">
+						<image src="{{item.img_url}}" ></image>
 					</view>
 				</swiper-item>
 			</block>
@@ -67,18 +67,24 @@
 		<view class="tab_ctn">
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
-					<block wx:for="{{4}}" wx:key="*this">
-						<view class="advisory" data-id="index" catchtap="router_communityDetails">
-							<view class="advisory_img">
-								<image src="./../images/mall1.png"></image>
+					<block wx:for="{{NewsList}}" wx:key="*this">
+						<view class="advisory" data-id="{{item.id}}" catchtap="router_communityDetails">
+							<view class="advisory_img" wx:if="{{item.path_type==1}}">
+								<image src="{{item.video_img_url}}"></image>
 							</view>
-							<view class="advisory_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+							<view class="fruit_play" wx:if="{{item.path_type==1}}">
+								<image src="./../icon/play.png"></image>
+							</view>
+							<view class="advisory_img" wx:if="{{item.path_type==2}}">
+								<image src="{{item.img_url}}"></image>
+							</view>
+							<view class="advisory_txt">{{item.content}}</view>
 							<view class="advisory_bottom">
 								<view class="advisory_left"> 
-									<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+									<image data-id="" src="{{item.avatar}}"></image><text>{{item.nickname}}</text>
 								</view>
 								<view class="advisory_right">
-									<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+									<image data-id="" src="./../icon/comment.png"></image><text>{{item.comments_count}}</text>
 								</view>
 							</view>
 						</view>
@@ -90,5 +96,40 @@
 	<!-- 发布动态 -->
 	<view class="dynamic" catchtap="router_dynamic">
 		<image src="./../icon/dynamic.png"></image>
+	</view>
+	<!-- 登录 -->
+	<view class="stepsBox" wx:if="{{steps<3}}">
+		<view class="steps_box">
+			<view class="steps_title">请您在下方同意授权</view>
+			<view class="steps_txt">
+				<view class="{{steps>0?'carryColor':''}}">手机号</view>
+				<view class="{{steps>1?'carryColor':''}}">身份信息</view>
+				<view class="{{steps==3?'carryColor':''}}">完成</view>
+			</view>
+			<view class="steps">
+				<view class="stepsbox">
+					<view class="steps_circle" wx:if="{{steps==0}}"></view>
+					<view class="steps_true" wx:if="{{steps>0}}"><image src="./../icon/true.png"></image></view>
+				</view>
+				<view class="steps_line {{steps>0?'carryBgColor':''}}"></view>
+				<view class="stepsbox">
+					<view></view>
+					<view class="steps_circle" wx:if="{{steps==0||steps==1}}"></view>
+					<view class="steps_true" wx:if="{{steps>1}}"><image src="./../icon/true.png"></image></view>
+				</view>
+				<view class="steps_line {{steps>1?'carryBgColor':''}}"></view>
+				<view class="stepsbox">
+					<view class="steps_circle" wx:if="{{steps==0||steps==1||steps==2}}"></view>
+					<view class="steps_true" wx:if="{{steps==3}}"><image src="./../icon/true.png"></image></view>
+				</view>
+			</view>
+			<view class="steps_btn" wx:if="{{steps==0&&loading==false}}"><button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >下一步</button></view>
+			<view class="steps_btn" wx:if="{{steps==1&&loading==false}}"><button open-type="getUserInfo" bindgetuserinfo="getUserInfo" >下一步</button></view>
+			<view class="steps_btn" wx:if="{{steps==2&&loading==false}}" catchtap="UserLogin">完成</view>
+			<view class="steps_btn" wx:if="{{loading}}">
+				<view class="loading"><image src="./../icon/loading.gif"></image></view>
+				<view>加载中...</view>
+			</view>
+		</view>
 	</view>
 </view>

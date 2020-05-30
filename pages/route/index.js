@@ -8,6 +8,7 @@ Page({
     switchIdx : 0
   },
   /*路由*/
+  //路线详情
   router_routeDetalis(e){
     wx.navigateTo({
       url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,

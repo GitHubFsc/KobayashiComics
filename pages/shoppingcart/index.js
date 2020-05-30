@@ -1,3 +1,4 @@
+import {GetMyCar,GetEditCar,PostDelCar,getSign} from '../../utils/axios.js';
 // pages/shoppingcart/index.js
 Page({
 
@@ -23,7 +24,9 @@ Page({
       sp_num : 1
     }],
     editcar : true,
-    allselect : false
+    allselect : false,
+    page : 1,
+    pagesize : 10
   },
   /*路由*/
   router_topay(){
@@ -32,13 +35,14 @@ Page({
     })
   },
   /* 事件 */
+  //编辑购物车
   editcar(){
     let that = this;
     that.setData({
       editcar : !that.data.editcar
     })
   },
-
+  //商品单选
   select(e){
     let that = this;
     let carList = that.data.carList;
@@ -47,6 +51,7 @@ Page({
       carList 
     })
   },
+  //修改数量
   editspNum(e){
     let that = this;
     let carList = that.data.carList;
@@ -59,9 +64,9 @@ Page({
       carList 
     })
   },
+  //全选
   allselect(){
     let that = this;
-
     let carList = that.data.carList;
     let allselect = ! that.data.allselect;
     carList.map(item=>{
@@ -76,9 +81,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getMyCar()
   },
+  getMyCar(){
+    let {page,pagesize} = this.data;
+    let user_id = wx.getStorageSync('userId');
+    GetMyCar({
+      user_id : user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res.data.Response)
+        this.setData({
+          carList : res.data.Response
+        })
 
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

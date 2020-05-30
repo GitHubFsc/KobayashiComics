@@ -2,7 +2,7 @@
 <view class="container city">
 	<view class='city_top'>
 		<view class="city_txt">定位</view>
-		<view class="city_address">
+		<view class="city_address" bindtap='positionCity'>
 			<view class="city_dw">
 				<image src="./../icon/dingweiH.png"></image>
 			</view>

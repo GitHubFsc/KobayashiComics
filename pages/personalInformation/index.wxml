@@ -11,11 +11,11 @@
   <view class="sections">
     <view class="section">
       <view class="section_txt">昵称</view>
-      <view class="section_input"><input type="view" placeholder="请输入昵称"></input></view>
+      <view class="section_input"><input type="text" placeholder="请输入昵称" maxlength="20" value="{{nickname}}" bindblur="nickname"></input></view>
     </view>
     <view class="section">
       <view class="section_txt">电话</view>
-      <view class="section_input"><input type="view"  placeholder="请输入昵称"></input></view>
+      <view class="section_input"><input type="number"  placeholder="请输入电话" maxlength="11" value="{{mobile}}" bindblur="mobile"></input></view>
     </view>
     <view class="section">
       <view class="section_txt">性别</view>
@@ -32,6 +32,6 @@
       <view class="more"><image src="./../icon/gengduo.png"></image></view>
     </view>
   </view>
-  <view class="save">保存</view>
+  <view class="save" catchtap="save">保存</view>
   <view class="hr"></view>
 </view>

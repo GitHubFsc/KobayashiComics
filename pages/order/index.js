@@ -1,4 +1,5 @@
 // pages/order/index.js
+const app = getApp()
 Page({
 
   /**
@@ -7,6 +8,8 @@ Page({
   data: {
     recommend :['全部','待付款','待发货','待收货','待评价'],
     currentTab : 0,
+    steps : 3,
+    loading: false
   },
   //路由
   router_orderDetails(e){
@@ -33,11 +36,66 @@ Page({
       currentTab : e.target.dataset.index
     })
   },
+  /**API */
+  //获取手机号
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+      loading: true,
+    })
+    app.getPhoneNumber(e,(data)=>{
+      console.log("手机号回调",data)
+      if(data){
+        that.setData({
+          steps : 1 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //获取用户信息
+  getUserInfo(e) {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+    app.getUserInfo(e,(data)=>{
+      console.log("用户回调",data)
+      if(data){
+        that.setData({
+          steps : 2 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //用户登录
+  UserLogin() {
+    var that = this;
+    app.login((data)=>{
+      console.log("登录成功",data)
+      if(data){
+        that.setData({
+          steps : 3 ,
+          loading: false,
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let user_id = wx.getStorageSync('userId');
+    if (user_id) {
+      this.setData({
+        steps : 3 
+      })
+    } else {
+      this.setData({
+        steps : 0
+      })
+    }
   },
 
   /**
