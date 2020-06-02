@@ -17,7 +17,7 @@
 		<view class="commodity_information">
 			<view class="ci_cell" catchtap="IntoOtu">
 				<view>入离时间</view>
-				<view>2020-12-12 入住 2020-12-12 离店</view>
+				<view>{{begin_time}} 入住 {{end_time}} 离店</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
@@ -108,17 +108,17 @@
 					<image src="./../icon/close.png"></image>
 				</view>
 				<view>请选择日期</view>
-				<view class="calendar_txt" catchtap="">清空</view>
+				<view class="calendar_txt" catchtap="empty">清空</view>
 			</view>
 			<view class="calendar_nav">
-				<view class="calendar_txt" data-index="0" catchtap="calendar">入住日期</view>
-				<view class="calendar_txt" data-index="1" catchtap="calendar">退房日期</view>
-			</view>
-			<view class="calendar" hidden="{{calendar}}">
-				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+				<view class="calendar_txt {{calendar?'calendarTxtR':'calendarTxtB'}}" data-index="0" catchtap="Switch">入住日期</view>
+				<view class="calendar_txt {{calendar?'calendarTxtB':'calendarTxtR'}}" data-index="1" catchtap="Switch">退房日期</view>
 			</view>
 			<view class="calendar" hidden="{{!calendar}}">
-				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+				<calendar id="calendarB" calendarConfig="{{calendarConfigB}}" bind:afterTapDay="afterTapDayB" bind:whenChangeMonth="whenChangeMonthB" bind:onTapDay="onTapDayB" bind:afterCalendarRender="afterCalendarRenderB"></calendar>
+			</view>
+			<view class="calendar" hidden="{{calendar}}">
+				<calendar id="calendarA" calendarConfig="{{calendarConfigA}}" bind:afterTapDay="afterTapDayA" bind:whenChangeMonth="whenChangeMonthA" bind:onTapDay="onTapDayA" bind:afterCalendarRender="afterCalendarRenderA"></calendar>
 			</view>
 		</view>
 	</view>

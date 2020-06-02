@@ -1,18 +1,22 @@
 // pages/integral/index.js
+import { GetMyPoint,GetPointLog,getSign} from '../../utils/axios.js';
+import utils from './../../utils/util'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    page : 1,
+    pagesize : 10,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getMyPoint();
+    this.getPointLog()
   },
 
   /**
@@ -62,5 +66,54 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  /**API */
+  //积分
+  getMyPoint(){
+    let  user_id = wx.getStorageSync('userId');
+    GetMyPoint({
+      user_id : user_id,
+      sign : getSign(`user_id=${user_id}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          MyPoint : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //积分记录
+  getPointLog(){
+    let  user_id = wx.getStorageSync('userId');
+    let {page,pagesize} = this.data;
+    GetPointLog({
+      user_id : user_id,
+      page :page,
+      pagesize :pagesize,
+      sign : getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        res.data.Response.map(item=>{
+          item.add_timespan = utils.formatTime(new Date(item.add_timespan))
+        })
+        this.setData({
+          PointLog : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
 })

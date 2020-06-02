@@ -8,11 +8,19 @@ const formatTime = date => {
 
   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
-
+const DateTime = date => {
+  const time = new Date(date);
+  const year = time.getFullYear()
+  const month = time.getMonth() + 1
+  const day = time.getDate()
+  return [month, day].map(formatNumber).join('月')+"日"
+}
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
 module.exports = {
   formatTime: formatTime,
+  DateTime : DateTime,
+  formatNumber : formatNumber
 }

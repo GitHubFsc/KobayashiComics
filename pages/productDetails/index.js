@@ -120,6 +120,9 @@ Page({
           title: res.data.ErrMsg,
           icon: "none"
         })
+        that.setData({
+          popUpLayerflag: true
+        })
       })
     } else {
       that.getGoodsSize(res=>{

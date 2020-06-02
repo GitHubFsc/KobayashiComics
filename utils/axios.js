@@ -70,6 +70,15 @@ const GetFansList = data => {
   return get('api/UserBase/GetFansList', data);
 }
 
+/**用户反馈 */
+//用户反馈
+const PostAddFeedback = (data, datas) => {
+  return post('api/Feedback/PostAddFeedback', data, datas);
+}
+
+
+
+
 /**资讯 */
 //我的资讯
 const GetMyNews = data => {
@@ -153,7 +162,65 @@ const PostSubmitOrder = (data, datas) => {
 
 
 /**路线 */
+
+
 /**民宿 */
+//民宿banner
+const GetHomestayBanner = data => {
+  return get('api/Homestay/GetHomestayBanner', data);
+}
+//精品民宿
+const GetBoutiqueHomestay = data => {
+  return get('api/Homestay/GetBoutiqueHomestay', data);
+}
+//推荐民宿
+const GetHomestay = data => {
+  return get('api/Homestay/GetHomestay', data);
+}
+//民宿详情
+const GetHomestayDetail = data => {
+  return get('api/Homestay/GetHomestayDetail', data);
+}
+//证件类型
+const GetCertificateType = data => {
+  return get('api/Homestay/GetCertificateType', data);
+}
+//添加入住人信息
+const GetAddHomestayInformation = data => {
+  return get('api/Homestay/GetAddHomestayInformation', data);
+}
+//民宿预定-时间列表
+const GetReservationTime = data => {
+  return get('api/Homestay/GetReservationTime', data);
+}
+//民宿预订-计算共入住夜晚数量
+const GetHomestayNight = data => {
+  return get('api/Homestay/GetHomestayNight', data);
+}
+//民宿-提交订单预览/计算金额
+const GetHomestayMarke = data => {
+  return get('api/Homestay/GetHomestayMarke', data);
+}
+//民宿-提交订单
+const PostHomestayReservation = (data, datas) => {
+  return post('api/Homestay/PostHomestayReservation', data, datas);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**积分 */
 //积分
 const GetMyPoint = data => {
@@ -297,6 +364,10 @@ export {
   GetSearchList,
   GetFansList,
 
+  /**用户反馈 */
+  PostAddFeedback,
+
+
 
   /**资讯 */
   GetMyNews,
@@ -323,6 +394,18 @@ export {
   PostSubmitOrder,
 
 
+
+  /**民宿 */
+  GetHomestayBanner,
+  GetBoutiqueHomestay,
+  GetHomestay,
+  GetHomestayDetail,
+  GetCertificateType,
+  GetAddHomestayInformation,
+  GetReservationTime,
+  GetHomestayNight,
+  GetHomestayMarke,
+  PostHomestayReservation,
 
 
 

@@ -3,15 +3,19 @@
 	<view class="sections">
 		<view class="section">
 			<view class="section_txt">姓名</view>
-			<view class="section_input"><input type="text" placeholder="请输入姓名"></input></view>
+			<view class="section_input"><input type="text" placeholder="请输入姓名" bindblur="nameVal" maxlength="20"></input></view>
 		</view>
 		<view class="section">
 			<view class="section_txt">证件类型</view>
-			<view class="section_input"><input type="number" placeholder="选择证件类型"></input></view>
+			<view class="section_input">
+				<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" bindchange="Category">
+					<view class="picker">{{typeid}}</view>
+				</picker>
+			</view>
 		</view>
 		<view class="section">
 			<view class="section_txt">证件号码</view>
-			<view class="section_input"><input type="idcard" placeholder="请输入证件号码"></input></view>
+			<view class="section_input"><input type="text" placeholder="请输入证件号码" bindblur="numberVal" maxlength="30"></input></view>
 		</view>
 		<view class="save" catchtap="router_back">提交</view>
 	</view>

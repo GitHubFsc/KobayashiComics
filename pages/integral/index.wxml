@@ -9,7 +9,7 @@
 				<view class="integral_img">
 					<image src="./../icon/integral.png"></image>
 				</view>
-				<view>1900</view>
+				<view>{{MyPoint.point}}</view>
 			</view>
 			<view class="it_txt">可用积分</view>
 		</view>
@@ -17,13 +17,13 @@
 	<view class="integral_recording">
 		<view class="ir_title">积分记录</view>
 		<view class="it_boxs">
-			<block wx:for="{{3}}">
+			<block wx:for="{{PointLog}}">
 				<view class="it_box">
 					<view class="box_left">
-						<view>购物</view>
-						<view>2020-12-12 12:00</view>
+						<view>{{item.remark}}</view>
+						<view>{{item.add_timespna}}</view>
 					</view>
-					<view class="box_right {{index==1?'price':''}}">+40</view>
+					<view class="box_right {{index==1?'price':''}}">{{item.point}}</view>
 				</view>
 			</block>
 		</view>

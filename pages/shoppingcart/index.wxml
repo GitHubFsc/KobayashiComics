@@ -11,7 +11,7 @@
 		<view class="carList">
 			<view class="carLists">
 				<block wx:for="{{carList}}" wx:key="index">
-					<view class="car">
+					<view class="car" data-id="{{item.id}}">
 						<view class="select" data-index="{{index}}" catchtap="select">
 							<image src="{{item.car?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image>
 						</view>
@@ -19,14 +19,14 @@
 							<image src="{{item.sp_img}}"></image>
 						</view>
 						<view class="car_txt">
-							<view>经典马克杯</view>
-							<view>白色</view>
-							<view>¥200</view>
+							<view>{{item.title}}</view>
+							<view>{{item.sku_parameter_type_title}}</view>
+							<view>¥{{item.sku_price}}</view>
 						</view>
 						<view class="carplusLess">
-							<view data-type="0" data-index="{{index}}" catchtap="editspNum">-</view>
-							<view>{{item.sp_num}}</view>
-							<view data-type="1" data-index="{{index}}" catchtap="editspNum">+</view>
+							<view data-type="2" data-index="{{index}}" data-id="{{item.id}}" catchtap="editspNum">-</view>
+							<view>{{item.num}}</view>
+							<view data-type="1" data-index="{{index}}" data-id="{{item.id}}" catchtap="editspNum">+</view>
 						</view>
 					</view>
 				</block>
@@ -43,9 +43,9 @@
 		</view>
     <view class="car_hj" hidden="{{!editcar}}">
       <view>合计：</view>
-      <view class="price_now">¥2000</view>
+      <view class="price_now">¥{{Totalprice}}</view>
     </view>
 		<view class="delete" catchtap="router_topay" hidden="{{!editcar}}">结算</view>
-		<view class="delete" hidden="{{editcar}}">删除</view>
+		<view class="delete" catchtap="delete" hidden="{{editcar}}">删除</view>
 	</view>
 </view>

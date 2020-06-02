@@ -190,8 +190,13 @@
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: rgba(153, 153, 153, 1);
   text-align: center;
+}
+.calendarTxtR{
+  color: #d40001;
+}
+.calendarTxtB{
+  color: rgba(153, 153, 153, 1);
 }
 .calendar_box .calendars .calendar_nav{
   width: 100%;

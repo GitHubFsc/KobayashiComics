@@ -1,5 +1,12 @@
 // pages/productSubmitOrder/index.js
-import { PostGoodsSubmit ,GetGoodsCoupon, getSign } from '../../utils/axios.js';
+import {
+  PostGoodsSubmit,
+  GetGoodsCoupon,
+  PostSumMoney,
+  GetPointRule,
+  PostSubmitOrder,
+  getSign
+} from '../../utils/axios.js';
 import utils from './../../utils/util'
 const app = getApp()
 Page({
@@ -8,19 +15,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    body : [],
+    body: [],
     switchChecked: false,
-    Goods :[]
+    Goods: []
   },
   /**路由 */
   //支付
   router_topay() {
-    wx.navigateTo({
-      url: './../Afterpayment/index?index=0'
-    })
+
+    // wx.navigateTo({
+    //   url: './../Afterpayment/index?index=0'
+    // })
   },
   //优惠券
-  router_shoppingVoucher(){
+  router_shoppingVoucher() {
     wx.navigateTo({
       url: './../shoppingVoucher/index'
     })
@@ -39,26 +47,26 @@ Page({
   },
   /*事件*/
   //积分switch开关
-  switchChange(e){
+  switchChange(e) {
     this.setData({
-      switchChecked : e.detail.value
+      switchChecked: e.detail.value
     })
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options){
+    if (options) {
       this.setData({
-        body : JSON.parse(options.arr),
-        Address : wx.getStorageSync('Address')
+        body: JSON.parse(options.arr),
+        Address: wx.getStorageSync('Address')
       })
-      this.postGoodsSubmit(res=>{
-        this.getGoodsCoupon(res,datas=>{
+      this.postGoodsSubmit(res => {
+        this.getGoodsCoupon(res, datas => {
           this.setData({
-            Goods : res.data.Response,
-            GoodsCoupon : datas.data.Response,
+            Goods: res.data.Response,
+            GoodsCoupon: datas.data.Response,
           })
         })
       });
@@ -77,9 +85,9 @@ Page({
    */
   onShow: function () {
     let Coupon = wx.getStorageSync('Coupon');
-    if(Coupon){
+    if (Coupon) {
       this.setData({
-        GoodsCoupon : Coupon,
+        GoodsCoupon: Coupon,
       })
     }
   },
@@ -120,18 +128,18 @@ Page({
   },
   /**API */
   //订单提交-预览
-  postGoodsSubmit(callback){
+  postGoodsSubmit(callback) {
     let user_id = wx.getStorageSync('userId'),
-    body = this.data.body;
+      body = this.data.body;
     let datas = [];
-    datas.push('user_id='+user_id)
-    datas.push('sign='+getSign(`user_id=${user_id}`))
+    datas.push('user_id=' + user_id)
+    datas.push('sign=' + getSign(`user_id=${user_id}`))
     PostGoodsSubmit({
-      body : body
-    },datas).then(res=>{
-      if(res.data.ErrCode==0){
+      body: body
+    }, datas).then(res => {
+      if (res.data.ErrCode == 0) {
         callback && callback(res)
-      }else{
+      } else {
         wx.showToast({
           title: res.data.ErrMsg,
           icon: "none"
@@ -140,14 +148,14 @@ Page({
     })
   },
   //获取用户地址
-  getAddress(){
+  getAddress() {
     let that = this;
     wx.chooseAddress({
-      success (res) {
+      success(res) {
         let Address = {};
         Address.userName = res.userName;
         Address.telNumber = res.telNumber;
-        Address.Address = res.provinceName+res.cityName+res.countyName+res.detailInfo;
+        Address.Address = res.provinceName + res.cityName + res.countyName + res.detailInfo;
         that.setData({
           Address
         })
@@ -156,23 +164,68 @@ Page({
     })
   },
   //获取用户可用优惠券
-  getGoodsCoupon(datas,callback){
+  getGoodsCoupon(datas, callback) {
     let user_id = wx.getStorageSync('userId');
-    let  money = datas.data.Response.total_price;
+    let money = datas.data.Response.total_price;
     GetGoodsCoupon({
-      user_id : user_id,
-      type : 1,
-      money : money,
+      user_id: user_id,
+      type: 1,
+      money: money,
       sign: getSign(`user_id=${user_id}&type=1&money=${money}`)
-    }).then(res=>{
-      if(res.data.ErrCode==0){
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
         callback && callback(res)
-      }else{
+      } else {
         wx.showToast({
           title: res.data.ErrMsg,
           icon: "none"
         })
       }
     })
-  }
+  },
+  //订单提交-计算总价
+  postSumMoney(callback) {
+    let user_id = wx.getStorageSync('userId'),
+      {
+        body,
+        GoodsCoupon
+      } = this.data.body;
+    let datas = [];
+    datas.push('user_id=' + user_id);
+    datas.push('user_coupon_id=' + user_id);
+    datas.push('is_deduction=' + user_id);
+    datas.push('sign=' + getSign(`user_id=${user_id}`))
+    PostSumMoney({
+
+    }, datas).then(res => {
+      if (res.data.ErrCode == 0) {
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //积分规则
+  getPointRule() {
+    GetPointRule({
+      rnd: 1,
+      sign: getSign(`rnd=1`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          MyPoint: res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
 })

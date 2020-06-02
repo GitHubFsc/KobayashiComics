@@ -90,8 +90,8 @@ Page({
       }
     });
     wx.setStorageSync('city', dataset.fullname);
-    wx.switchTab({
-      url: '../index/index'
+    wx.navigateBack({
+      delta: 1
     })
   },
   //获取文字信息
