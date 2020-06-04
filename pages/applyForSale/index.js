@@ -39,7 +39,7 @@ Page({
         for (let i = 0; i < imgArr.length; i++) {
           console.log(imgArr[i].img_url);
           wx.uploadFile({
-            url: 'https://xingyunkepuapi.zztv021.com/api/Lib/PostUploadFile?rnd=' + Rnd() + '&sign=' + sign,
+            url: 'https://xiaolinmanhua.zztv021.com/api/Lib/PostUploadFile?rnd=1&sign=' + getSign(`rnd=1`),
             filePath: imgArr[i].img_url,
             name: 'file',
             formData: {},

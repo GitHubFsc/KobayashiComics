@@ -23,7 +23,7 @@
 						<view>{{item.remark}}</view>
 						<view>{{item.add_timespna}}</view>
 					</view>
-					<view class="box_right {{index==1?'price':''}}">{{item.point}}</view>
+					<view class="box_right {{item.point>0?'price':''}}">{{item.point}}</view>
 				</view>
 			</block>
 		</view>

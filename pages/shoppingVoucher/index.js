@@ -1,5 +1,6 @@
 // pages/shoppingVoucher/index.js
 import { GetMyCouponList, getSign } from '../../utils/axios.js';
+import utils from '../../utils/util.js';
 Page({
 
   /**
@@ -59,7 +60,7 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         res.data.Response.map(item=>{
-          item.coupon_end_timespan = this.format(item.coupon_end_timespan);
+          item.coupon_end_timespan = utils.ymr(Number(item.coupon_end_timespan));
         })
         this.setData({
           CouponList: res.data.Response
@@ -71,17 +72,6 @@ Page({
         })
       }
     })
-  },
-  add : function (m) {
-    return m < 10 ? '0' + m : m
-  },
-  format : function (shijianchuo) {
-    //shijianchuo是整数，否则要parseInt转换
-    var time = new Date(shijianchuo);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
-    var d = time.getDate();
-    return y + '-' + add(m) + '-' + add(d)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

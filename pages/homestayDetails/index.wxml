@@ -30,10 +30,10 @@
 		<view class="hd_title">可选户型</view>
 		<view class="hd_boxs">
 			<block wx:for="{{homestay.skulist}}" wx:key="index">
-				<view class="hd_box {{UnittypeIdx==index?'select':''}}" data-index="{{index}}" catchtap="Unittype">
+				<view class="hd_box {{UnittypeIdx==index?'select':''}}" data-index="{{index}}" data-id="{{item.id}}" catchtap="Unittype">
 					<view>A户型</view>
-					<view>单个双人床</view>
-					<view>¥200</view>
+					<view>{{item.title}}</view>
+					<view>¥{{item.price}}</view>
 				</view>
 			</block>
 		</view>

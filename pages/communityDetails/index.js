@@ -43,13 +43,14 @@ Page({
   //社区详情
   router_communityDetails(e){
     wx.navigateTo({
-      url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
+      url: '../communityDetails/index?id='+e.currentTarget.dataset.id,
     })
   },
   //分享
   router_dynamic(e){
+    console.log(e);
     wx.navigateTo({
-      url: '../dynamic/index?id='+e.currentTarget.dataset.index,
+      url: '../dynamic/index?id='+e.currentTarget.dataset.id,
     })
   },
   /*事件*/

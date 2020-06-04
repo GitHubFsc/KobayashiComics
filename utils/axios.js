@@ -100,6 +100,10 @@ const GetNewsDetail = data => {
 const GetMyLikeNews = data => {
   return get('api/News/GetMyLikeNews', data);
 }
+//发布资讯
+const PostAddNews = (data, datas) => {
+  return post('api/News/PostAddNews', data, datas);
+}
 
 
 
@@ -188,6 +192,10 @@ const GetCertificateType = data => {
 //添加入住人信息
 const GetAddHomestayInformation = data => {
   return get('api/Homestay/GetAddHomestayInformation', data);
+}
+//入住人列表
+const GetHomestayList = data => {
+  return get('api/Homestay/GetHomestayList', data);
 }
 //民宿预定-时间列表
 const GetReservationTime = data => {
@@ -375,7 +383,7 @@ export {
   GetNewsList,
   GetNewsDetail,
   GetMyLikeNews,
-
+  PostAddNews,
 
 
 
@@ -401,6 +409,7 @@ export {
   GetHomestay,
   GetHomestayDetail,
   GetCertificateType,
+  GetHomestayList,
   GetAddHomestayInformation,
   GetReservationTime,
   GetHomestayNight,

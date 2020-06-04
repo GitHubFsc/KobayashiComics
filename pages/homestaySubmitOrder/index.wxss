@@ -31,9 +31,9 @@
 }
 
 .ct_right {
-  width: auto;
+  width: 430rpx;
   height: auto;
-  line-height: 40rpx;
+  line-height: 50rpx;
 }
 
 .ct_title {

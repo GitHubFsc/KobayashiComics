@@ -20,10 +20,10 @@
                 <image src="./../images/bg_img.png"></image>
               </view>
               <view class="sv_box">
-                <view class="{{currentTab==0?'priceR':'priceG'}}">¥30</view>
+                <view class="{{currentTab==0?'priceR':'priceG'}}">¥{{item.coupon_discount_money}}</view>
                 <view class="sv_box_txt">
-                  <view class="sv_title">满40使用</view>
-                  <view class="sv_txt">有效期至：2020.12.12</view>
+                  <view class="sv_title">{{item.coupon_title}}</view>
+                  <view class="sv_txt">有效期至：{{item.coupon_end_timespan}}</view>
                 </view>
                 <view class="{{currentTab==0?'svb_btnR':'svb_btnG'}}" data-id="{{item.id}}" data-index="{{index}}" catchtap="useCoupon">{{currentTab==0?'去使用':currentTab==1?'已使用':currentTab==2?'已过期':''}}</view>
               </view>

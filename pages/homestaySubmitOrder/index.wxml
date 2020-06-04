@@ -3,13 +3,13 @@
 	<view class="commoditys">
 		<view class="commodity_top">
 			<view class="ct_img">
-				<image src="./../images/homestay0.png"></image>
+				<image src="{{homestay.img_url}}"></image>
 			</view>
 			<view class="ct_right">
-				<view class="ct_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
-				<view class="ct_txt">a户型</view>
+				<view class="ct_title">{{homestay.title}}</view>
+				<view class="ct_txt">{{homestay.homesta_sku_title}}</view>
 				<view class="ct_price">
-					<view class="price">¥300</view>
+					<view class="price">¥{{homestay.price}}/{{homestay.price_unit}}</view>
 					<view>x1</view>
 				</view>
 			</view>
@@ -35,7 +35,7 @@
 			</view>
 			<view class="ci_cell" catchtap="Tenant">
 				<view>住客信息</view>
-				<view>{{Tenant_nmae}}{{Tenant_userId}}请添加住客信息</view>
+				<view>{{Tenant_nmae?Tenant_nmae:'请添加住客信息'}}</view>
 				<view></view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
@@ -43,17 +43,17 @@
 			</view>
 			<view class="ci_cell">
 				<view>联系方式</view>
-				<view><input type="number" placeholder="请输入联系方式" /></view>
+				<view><input type="number"  placeholder="请输入联系方式"  bindblur="mobileBlur" /></view>
 			</view>
 		</view>
 		<view class="commodity_discount">
 			<view class="cd_cell">
 				<view>住宿费</view>
-				<view>¥300</view>
+				<view>¥{{homestay.sum_price}}</view>
 			</view>
-			<view class="cd_cell">
+			<view class="cd_cell" catchtap="router_shoppingVoucher">
 				<view>优惠券</view>
-				<view class="cdc_txt">-¥10</view>
+				<view class="cdc_txt">-¥{{coupon_money}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
@@ -63,12 +63,12 @@
 				<view>
 					<switch class="switch" type="switch" color="#CB0101" checked="{{switchChecked}}" bindchange="switchChange" />
 				</view>
-				<view>100积分可抵扣10元</view>
-				<view class="price">-¥10</view>
+				<view>{{homestay.point}}积分可抵扣{{homestay.discount_point_money}}元</view>
+				<view class="price">-¥{{homestay.point_money}}</view>
 			</view>
 			<view class="cd_cell" catchtap="router_invoice">
 				<view>发票</view>
-				<view class="cdc_txt">不要发票</view>
+				<view class="cdc_txt">{{Invoice?Invoice.type==1?'单位发票':'个人发票':'不要发票'}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
@@ -80,7 +80,7 @@
 		</view>
 	</view>
 	<view class="topay">
-		<view>实际支付：<text class="topay_price">¥280</text></view>
+		<view>实际支付：<text class="topay_price">¥{{homestay.total_price}}</text></view>
 		<view catchtap="router_topay">去支付</view>
 	</view>
 	<view class="peopleBox" hidden="{{peopleBox}}" catchtap="Tenant">
@@ -91,9 +91,9 @@
 				<view catchtap="determine">确定</view>
 			</view>
 			<view class="pb_users">
-				<block wx:for="{{userList}}" wx:key="index">
-					<view class="pb_user" data-index="{{index}}" catchtap="Selected">
-						<view class="pbu_name"><text>{{item.name}}</text><text>{{item.userId}}</text> </view>
+				<block wx:for="{{HomestayList}}" wx:key="index">
+					<view class="pb_user" data-index="{{index}}" data-id="{{item.id}}" catchtap="Selected">
+						<view class="pbu_name"><text>{{item.name}}</text><text>{{item.num}}</text> </view>
 						<view class="pbu_img"><image src="{{item.userflag ?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image></view>
 					</view>
 				</block>

@@ -30,6 +30,11 @@ Page({
   select(e){
     let that = this;
     console.log(e);
+    let id = e.currentTarget.dataset.id,MyInvoiceList = that.data.MyInvoiceList;
+    let Invoice = MyInvoiceList.map(arr=>{
+      return arr.id == id;
+    })
+    wx.setStorageSync('Invoice', Invoice);
     that.getDefaultInvoice(e.currentTarget.dataset.id,res=>{
       console.log(res);
       that.getMyInvoice();
@@ -38,8 +43,8 @@ Page({
   //删除
   del(e){
     let that = this;
-    console.log(e.currentTarget.dataset.id);
-    that.getDelInvoice(e.currentTarget.dataset.id,res=>{
+    let id = e.currentTarget.dataset.id;
+    that.getDelInvoice(id,res=>{
       console.log(res);
       that.getMyInvoice();
     })
@@ -56,6 +61,11 @@ Page({
       sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
+        res.data.Response.map(arr=>{
+          if(arr.is_default==1){
+            wx.setStorageSync('Invoice', arr);
+          }
+        })
         this.setData({
           MyInvoiceList : res.data.Response
         })

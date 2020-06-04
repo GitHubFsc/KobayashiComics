@@ -1,5 +1,5 @@
 // pages/homestayDetails/index.js
-import { GetHomestayDetail, getSign} from '../../utils/axios.js';
+import { GetHomestayNight, GetReservationTime, GetHomestayDetail, getSign} from '../../utils/axios.js';
 import utils from '../../utils/util.js';
 const app = getApp()
 Page({
@@ -9,11 +9,12 @@ Page({
    */
   data: {
     homestayId: 0,
-    UnittypeIdx: 0,
+    UnittypeIdx: null,
+    homesta_sku_id : null,
     value: '',
     selectInto: '',
     selectOut: '',
-    days : 1,
+    days: 1,
     calendar: true,
     calendar_box: true,
     steps: 3,
@@ -43,9 +44,40 @@ Page({
   /*路由*/
   //民宿提交订单
   router_book() {
-    wx.navigateTo({
-      url: './../homestaySubmitOrder/index?id' + this.data.homestayId
+    let that = this;
+    let selectInto = that.data.selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2")+' 00:00:00',
+      selectOut = that.data.selectOut.replace(/(\d{2})\月(\d{2})\日/, "$1-$2")+' 00:00:00';
+    let year = new Date().getFullYear();
+    let begin_time = new Date(year + '-' + selectInto ).getTime();
+    let end_time = new Date(year + '-' + selectOut ).getTime();
+    that.getReservationTime(res=>{
+      console.log(res);
+      wx.navigateTo({
+        url: './../homestaySubmitOrder/index?id=' + that.data.homestayId + 
+        '&homesta_sku_id=' +that.data.homesta_sku_id + '&begin_time=' + begin_time
+        +'&end_time='+ end_time
+      })
+      res.data.Response.map(item=>{
+        let timespan = Number(item.timespan);
+        if(timespan>=begin_time&&timespan<=end_time){
+          if(item.num<1){
+            wx.showToast({
+              title: '该时间段房间不足',
+              icon: 'none',
+            })
+            return false
+          }else{
+          }
+        }
+      })
+      that.getHomestayNight(res=>{
+        console.log(res);
+         wx.navigateTo({
+          url: './../homestaySubmitOrder/index?id' + that.data.homestayId
+        })
+      })
     })
+   
   },
   /*事件*/
   //选择户型
@@ -53,6 +85,7 @@ Page({
     let that = this;
     that.setData({
       UnittypeIdx: e.currentTarget.dataset.index,
+      homesta_sku_id : e.currentTarget.dataset.id,
     })
   },
   //切换日历
@@ -127,25 +160,27 @@ Page({
   onLoad: function (options) {
     let user_id = wx.getStorageSync('userId');
     let homestayId = options.id;
-    let selectInto = utils.formatNumber(new Date().getMonth()+1) + "月" + utils.formatNumber(new Date().getDay())+'日', 
-    selectOut;
+    let selectInto = utils.formatNumber(new Date().getMonth() + 1) + "月" + utils.formatNumber(new Date().getDay()) + '日',
+      selectOut;
     let year = new Date().getFullYear();
-    let time1 = year+'-'+selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2");
+    let time1 = year + '-' + selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2");
     time1 = new Date(time1).getTime();
-    let time2 = Number(time1)+86400000;
+    let time2 = Number(time1) + 86400000;
     selectOut = utils.DateTime(time2)
     if (user_id) {
       this.setData({
         steps: 3,
         homestayId,
-        selectInto,selectOut
+        selectInto,
+        selectOut
       })
       this.getHomestayDetail(homestayId)
     } else {
       this.setData({
         steps: 0,
         homestayId,
-        selectInto,selectOut
+        selectInto,
+        selectOut
       })
     }
   },
@@ -268,5 +303,67 @@ Page({
         })
       }
     })
-  }
+  },
+  //民宿预定-时间列表
+  getReservationTime(callback) {
+    let { homestayId, homesta_sku_id } = this.data;
+    if(!homestayId){
+      wx.showToast({
+        title: '民宿id为空',
+        icon: 'none',
+      })
+      return false
+    }
+    if(!homesta_sku_id){
+      wx.showToast({
+        title: '请选择民宿规格',
+        icon: 'none',
+      })
+      return false
+    }
+    let user_id = wx.getStorageSync('userId')
+    GetReservationTime({
+      user_id: user_id,
+      homesta_id: homestayId,
+      homesta_sku_id: homesta_sku_id,
+      sign: getSign(`user_id=${user_id}&homesta_id=${homestayId}&homesta_sku_id=${homesta_sku_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      } 
+    })
+  },
+  //民宿预订-计算共入住夜晚数量
+  getHomestayNight() {
+    let { homestayId, homesta_sku_id} = this.data;
+    let user_id = wx.getStorageSync('userId')
+    let selectInto = this.data.selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2"),
+      selectOut = this.data.selectOut.replace(/(\d{2})\月(\d{2})\日/, "$1-$2");
+    let year = new Date().getFullYear();
+    let begin_time = new Date(year + '-' + selectInto).getTime();
+    let end_time = new Date(year + '-' + selectOut).getTime();
+    GetHomestayNight({
+      user_id: user_id,
+      homesta_id: homestayId,
+      homesta_sku_id: homesta_sku_id,
+      begin_time: begin_time,
+      end_time: end_time,
+      sign: getSign(`user_id=${user_id}&homesta_id=${homestayId}&homesta_sku_id=${homesta_sku_id}&begin_time=${begin_time}&end_time=${end_time}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        // return res;
+        callback && callback(res.data.Response)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      }
+    })
+  },
 })
