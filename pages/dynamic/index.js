@@ -243,6 +243,7 @@ Page({
   //发布资讯
   postAddNews(callback) {
     let user_id = wx.getStorageSync('userId');
+    let goods_id	= this.data.goods_id;
     let dynamicImgList = this.data.dynamicImgList.map(arr => {
         return arr.img_url;
       }),
@@ -254,9 +255,9 @@ Page({
       body: {
         img_url: dynamicImgList,
         content: textareaVal,
-        goods_id: 1,
+        goods_id: goods_id?goods_id:0,
         type: 2,
-        video: [],
+        video: '',
       }
     }, datas).then(res => {
       if (res.data.ErrCode == 0) {

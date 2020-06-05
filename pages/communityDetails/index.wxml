@@ -37,16 +37,21 @@
 
 	<view class="title">{{NewsDetail.content}}</view>
 	<!-- 链接 -->
-	<view class="link" data-id="{{NewsDetail.goods.id}}" catchtap="router_productDetails">
-		<view class="link_img">
-			<image src="{{NewsDetail.goods.img_url}}"></image>
+	<block wx:if="{{NewsDetail.goods}}">
+		<view class="link" data-id="{{NewsDetail.goods.id}}" catchtap="router_productDetails">
+			<view class="link_img">
+				<image src="{{NewsDetail.goods.img_url}}"></image>
+			</view>
+			<view class="link_right">
+				<view class="lr_top">{{NewsDetail.goods.title}}</view>
+				<view class="lr_bot">¥{{NewsDetail.goods.price}}</view>
+			</view>
 		</view>
-		<view class="link_right">
-			<view class="lr_top">{{NewsDetail.goods.title}}</view>
-			<view class="lr_bot">¥{{NewsDetail.goods.price}}</view>
-		</view>
-	</view>
-	<view class="hr"></view>
+		<view class="hr"></view>
+	</block>
+
+
+
 	<!-- 评论 -->
 	<view class="comment">
 		<view class="comment_title">评论（{{NewsDetail.sum_count}}）</view>
@@ -54,8 +59,9 @@
 			<view>
 				<image src="./../images/userimg2.png" />
 			</view>
-			<view><input type="text" placeholder="请输入评论" bindinput="getValue" bindconfirm="comment" /></view>
-			<view data-id="1" catchtap="like">
+			<!-- <view><input type="text" placeholder="请输入评论" bindblur="getValue" bindconfirm="comment" /></view> -->
+			<view data-id="{{NewsDetail.id}}" data-name="{{NewsDetail.nickname}}" catchtap="comment">请输入评论</view>
+			<view data-id="{{NewsDetail.id}}" catchtap="like">
 				<image src="./../icon/like.png" />
 			</view>
 		</view>
@@ -72,28 +78,30 @@
 							<!-- 2020年3月20日 20:00 -->
 						</view>
 						<view class="like">
-							<view class="like_img" data-id="1" catchtap="like">
-								<image src="./../icon/like.png"></image>
+							<view class="like_img" data-cid="{{item.id}}" catchtap="like">
+								<image src="{{item.is_like?'./../icon/likeR.png':'./../icon/like.png'}}"></image>
 							</view>
 							<view>122</view>
 						</view>
 					</view>
-					<view class="comment_txt">{{item.content}}</view>
-					<view class="comment_reply">
-						<block wx:for="{{item.reply}}" wx:for-item="arr" wx:key="index">
-							<view wx:if="{{arr.is_reply==0}}" data-id="{{arr.id}}">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
-							<view wx:if="{{arr.is_reply==1}}" data-id="{{arr.id}}">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
-							<view class="comment_morereplies" wx:if="{{index==1}}" data-id="1" catchtap="router_reply">
-								<view>查看更多回复 </view>
-								<view class="gengduo">
-									<image src="./../icon/gengduoB.png" />
+					<view class="comment_txt" data-cid="{{item.id}}" data-name="{{item.nickname}}" catchtap="Reply">{{item.content}}</view>
+					<block wx:if="{{item.reply.length>0}}">
+						<view class="comment_reply">
+							<block wx:for="{{item.reply}}" wx:for-item="arr" wx:key="index">
+								<view wx:if="{{arr.is_reply==0}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
+								<view wx:if="{{arr.is_reply==1}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
+								<view class="comment_morereplies" data-id="1" catchtap="router_reply" wx:if="{{item.reply.length>1}}">
+									<view>查看更多回复 </view>
+									<view class="gengduo">
+										<image src="./../icon/gengduoB.png" />
+									</view>
 								</view>
-							</view>
-						</block>
-					</view>
+							</block>
+						</view>
+					</block>
 				</view>
 			</block>
-			<view class="commentMore" data-id="1" catchtap="router_commen">
+			<view class="commentMore" data-id="{{NewsDetail.id}}" catchtap="router_commen" wx:if="{{NewsDetail.commentslist.length>2}}">
 				<view>查看更多评论</view>
 				<view class="gengduo">
 					<image src="./../icon/gengduo.png" />
@@ -101,6 +109,8 @@
 			</view>
 		</view>
 	</view>
+
+
 	<!--猜你感兴趣-->
 	<view class="guessyou">
 		<view class="guessyou_title">猜你感兴趣</view>
@@ -131,16 +141,23 @@
 			</view>
 		</view>
 	</view>
+
+
 	<!-- 评论+点赞+输入 -->
 	<view class="comment_bot">
-		<view><input type="text" placeholder="请输入评论" bindinput="getValue" bindconfirm="comment" /></view>
-		<view data-id="1" catchtap="like">
-			<image src="./../icon/like.png" />
+		<!-- <view><input type="text" placeholder="请输入评论" bindblur="getValue" bindconfirm="comment" /></view> -->
+		<view data-id="{{NewsDetail.id}}" data-name="{{NewsDetail.nickname}}" catchtap="comment">请输入评论</view>
+		<view data-id="{{NewsDetail.id}}" catchtap="like">
+			<image src="{{NewsDetail.is_like?'./../icon/likeR.png':'./../icon/like.png'}}" />
 		</view>
 		<view data-id="{{NewsDetail.goods.id}}" catchtap="router_dynamic">
 			<image src="./../icon/share.png" />
 		</view>
 	</view>
+
+
+
+
 	<!-- 登录 -->
 	<view class="stepsBox" wx:if="{{steps<3}}">
 		<view class="steps_box">
@@ -182,6 +199,16 @@
 				</view>
 				<view>加载中...</view>
 			</view>
+		</view>
+	</view>
+
+	<!-- 输入框 + 发布 -->
+	<view class="InputBox" hidden="{{InputBox}}" catchtap="InputClose">
+		<view class="Input_box" style="bottom:{{bottom}}px">
+			<view class="Input_user" wx:if="{{type==0}}">评论给   {{userName}}</view>
+			<view class="Input_user" wx:if="{{type==1}}">正在回复   {{userName}}</view>
+			<view class="Input_txt"><textarea focus="{{!InputBox}}" fixed="true" show-confirm-bar="{{false}}" adjust-position="{{false}}" auto-focus="true" placeholder="请输入评论" bindfocus="commentFoucus" bindblur="commentBlur" bindinput="commentInput"  value="{{commentValue}}"></textarea></view>
+			<view class="Input_btn" catchtap="InputBtn">发布</view>
 		</view>
 	</view>
 </view>

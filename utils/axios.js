@@ -1,7 +1,11 @@
 import {get,post,getSign} from './http.js';
+/**随机数 */
+//获取随机数
 const Rnd = () => {
   return Math.floor(Math.random() * 100)
 }
+
+
 
 
 /**会员中心 */
@@ -70,11 +74,17 @@ const GetFansList = data => {
   return get('api/UserBase/GetFansList', data);
 }
 
+
+
+
 /**用户反馈 */
 //用户反馈
 const PostAddFeedback = (data, datas) => {
   return post('api/Feedback/PostAddFeedback', data, datas);
 }
+
+
+
 
 
 
@@ -104,6 +114,35 @@ const GetMyLikeNews = data => {
 const PostAddNews = (data, datas) => {
   return post('api/News/PostAddNews', data, datas);
 }
+//添加评论
+const GetAddComments = data => {
+  return get('api/News/GetAddComments', data);
+}
+//更多评论
+const GetCommentsList = data => {
+  return get('api/News/GetCommentsList', data);
+}
+//评论点赞/取消点赞
+const GetAddLike = data => {
+  return get('api/News/GetAddLike', data);
+}
+//回复
+const GetAddReply = data => {
+  return get('api/News/GetAddReply', data);
+}
+//更多回复
+const GetReplyList = data => {
+  return get('api/News/GetReplyList', data);
+}
+//资讯点赞/取消点赞
+const GetNewsLike = data => {
+  return get('api/News/GetNewsLike', data);
+}
+
+
+
+
+
 
 
 
@@ -168,6 +207,14 @@ const PostSubmitOrder = (data, datas) => {
 /**路线 */
 
 
+
+
+
+
+
+
+
+
 /**民宿 */
 //民宿banner
 const GetHomestayBanner = data => {
@@ -213,9 +260,6 @@ const GetHomestayMarke = data => {
 const PostHomestayReservation = (data, datas) => {
   return post('api/Homestay/PostHomestayReservation', data, datas);
 }
-
-
-
 
 
 
@@ -280,6 +324,11 @@ const GetCategory = data => {
 }
 //
 
+
+
+
+
+
 /**我的*/
 //我的优惠券
 const GetMyCouponList = data => {
@@ -293,11 +342,17 @@ const GetGoodsCoupon = data => {
 
 
 
+
+
+
 /**收藏 */
 //我的收藏 //添加收藏/取消
 const GetMyCollection = data => {
   return get('api/Collection/GetMyCollection', data);
 }
+
+
+
 
 
 
@@ -321,6 +376,14 @@ const PostDelCar = (data, datas) => {
 const GetAddMyCar = data => {
   return get('api/ShopCar/GetAddMyCar', data);
 }
+//我的购物车数量
+const GetMyCarCount = data => {
+  return get('api/ShopCar/GetMyCarCount', data);
+}
+
+
+
+
 
 /**公用接口 */
 //获取分享信息
@@ -384,7 +447,12 @@ export {
   GetNewsDetail,
   GetMyLikeNews,
   PostAddNews,
-
+  GetAddComments,
+  GetCommentsList,
+  GetAddLike,
+  GetAddReply,
+  GetNewsLike,
+  GetReplyList,
 
 
   /**商城 */
@@ -444,6 +512,11 @@ export {
   GetEditCar,
   PostDelCar,
   GetAddMyCar,
+  GetMyCarCount,
+
+
+
+  
 
   /**收藏 */
   GetMyCollection,
