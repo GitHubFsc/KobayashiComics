@@ -74,8 +74,8 @@
 }
 
 .dialog .dialog_box {
-  width: 510rpx;
-  height: 480rpx;
+  /* width: 510rpx; */
+  /* height: 480rpx; */
   border-radius: 10rpx;
   position: absolute;
   top: 352rpx;
@@ -85,7 +85,7 @@
   padding: 45rpx 65rpx;
 }
 
-.dialog .cancel image {
+.dialog .cancel{
   width: 30rpx;
   height: 30rpx;
   position: absolute;
@@ -100,6 +100,13 @@
   text-align: center;
   margin-bottom: 60rpx;
 }
+.dialog .CourierCompany .down {
+  width: 24rpx;
+  height: 16rpx;
+  position: absolute;
+  top: 147rpx;
+  left: 400rpx;
+}
 
 .dialog .CourierCompany {
   width: 380rpx;
@@ -111,13 +118,7 @@
   padding-left: 14rpx;
 }
 
-.dialog .CourierCompany image {
-  width: 24rpx;
-  height: 16rpx;
-  position: absolute;
-  top: 176rpx;
-  left: 400rpx;
-}
+
 
 .dialog .SingleNumber {
   width: 380rpx;

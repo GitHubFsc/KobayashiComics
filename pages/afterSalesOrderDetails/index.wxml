@@ -2,32 +2,37 @@
 <view class="main">
 	<view class="refund">
 		<view class="refund_left">
-			<image src="../icon/refund{{order_no}}.png"></image>
+			<image src="../icon/refund{{orderDetails.status}}.png"></image>
 		</view>
-		<view class="refund_right" wx:if="{{order_no == 1}}">
-			<view class="refund_right_top">退款中</view>
-			<view class="refund_right_bom">如果退回请告知客服退回单号</view>
+		<view class="refund_right" wx:if="{{orderDetails.status == 1}}">
+			<block wx:if="{{orderDetails.return_type_title=='仅退款'}}">
+				<view class="refund_right_top">退款中-仅退款</view>
+				<view class="refund_right_bom">请耐心等待工作人员审核</view>
+			</block>
+			<block wx:if="{{orderDetails.return_type_title=='退款退货'}}">
+				<view class="refund_right_top">退款中-退货退款</view>
+				<view class="refund_right_bom">如果退回请填写退回单号</view>
+			</block>
 		</view>
-		<view class="refund_right" wx:elif="{{order_no == 2}}">
+		<view class="refund_right" wx:if="{{orderDetails.status == 2}}">
 			<view class="refund_right_ok">退款成功</view>
 		</view>
-		<view class="refund_right" wx:elif="{{order_no == 3}}">
-			<view class="refund_right_top">退款失败</view>
-			<view class="refund_right_bom">失败原因：货物还未退回</view>
+		<view class="refund_right" wx:if="{{orderDetails.status == 3}}">
+			<view class="refund_right_ok">退款失败</view>
 		</view>
 	</view>
 	<view class="reason">
-		<view class="reason_tex">售后编号：89898988</view>
-		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3||orderDetails.refund_status == 2}}">2019-12-12 12:00</view>
-		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3}}">退款失败原因：货物还未退回</view>
-		<view class="reason_tex" wx:if="{{orderDetails.refund_status == 3}}">退款金额：¥1000</view>
-		<view class="reason_tex">申请时间：2019-12-12 12:00</view>
-		<view class="reason_tex">申请金额：¥200</view>
-		<view class="reason_tex">申请类型：仅退款 退货退款</view>
-		<view class="reason_tex">申请原因：仅退款 退货退款</view>
-		<view class="reason_tex">退款说明：仅退款 退货退款</view>
-		<view class="reason_img" >
-			<image wx:for="{{3}}" src="./../images/mall1.png" mode='aspectFill'  wx:key="*this"></image>
+		<view class="reason_tex">售后编号：{{orderDetails.return_order_no}}</view>
+		<view class="reason_tex" wx:if="{{orderDetails.status == 3||orderDetails.status == 2}}">处理时间: {{orderDetails.status_timespan}}</view>
+		<view class="reason_tex" wx:if="{{orderDetails.status == 3}}">退款失败原因：{{orderDetails.content}}</view>
+		<view class="reason_tex" wx:if="{{orderDetails.status == 2}}">退款金额：¥{{orderDetails.money}}</view>
+		<view class="reason_tex">申请时间：{{orderDetails.add_timespan}}</view>
+		<view class="reason_tex">申请金额：¥{{orderDetails.money}}</view>
+		<view class="reason_tex">申请类型：{{orderDetails.return_type_title}}</view>
+		<view class="reason_tex">申请原因：{{orderDetails.reason_title}}</view>
+		<view class="reason_tex">退款说明：{{orderDetails.remark}}</view>
+		<view class="reason_img">
+			<image wx:for="{{orderDetails.imglist}}" src="{{item.img_url}}" mode='aspectFill' wx:key="*this"></image>
 		</view>
 	</view>
 	<view class="position">
@@ -35,21 +40,21 @@
 			<image src="../icon/dingwei.png"></image>
 		</view>
 		<view class="position_right">
-			<view>张三 18888888888</view>
-			<view>上海市长宁区延安西路1088号1903</view>
+			<view>{{orderDetails.name}} {{orderDetails.mobile}}</view>
+			<view>{{orderDetails.address}}</view>
 		</view>
 	</view>
 	<view class="commoditys">
-		<view class="commodity" wx:for="{{2}}" wx:key="*this">
+		<view class="commodity">
 			<view class="commodity_left">
-				<image src="./../images/mall1.png"></image>
+				<image src="{{orderDetails.goods_img_url}}"></image>
 			</view>
 			<view class="commodity_right">
-				<view class="commodity_title">经典马克杯</view>
-				<view class="commodity_property">白色</view>
+				<view class="commodity_title">{{orderDetails.goods_name}}</view>
+				<view class="commodity_property">{{orderDetails.sku_parameter_type_title}}{{orderDetails.size_title}}</view>
 				<view class="commodity_money">
-					<text>¥200</text>
-					<text class="commodity_num">x1</text>
+					<text>¥{{orderDetails.sku_price}}</text>
+					<text class="commodity_num">x{{orderDetails.num}}</text>
 				</view>
 			</view>
 		</view>
@@ -57,57 +62,58 @@
 	<view class="amount">
 		<view>
 			<text>商品总额</text>
-			<text>¥200</text>
+			<text>¥{{orderDetails.sum_price}}</text>
 		</view>
 		<view>
 			<text>运费</text>
-			<text>¥20</text>
+			<text>¥{{orderDetails.freight}}</text>
 		</view>
 		<view>
 			<text>积分</text>
-			<text class="jifen">-20</text>
+			<text class="jifen">-¥{{orderDetails.point_money}}</text>
 		</view>
 		<view>
 			<text>优惠券</text>
-			<text>-20</text>
+			<text>-¥{{orderDetails.coupon_money}}</text>
 		</view>
 		<view>
 			<text>发票</text>
-			<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
+			<text>{{orderDetails.user_invoice_type?"不要发票":orderDetails.user_invoice_type==1?"个人发票":"公司发票"}}</text>
 		</view>
 		<view>
 			<text>实际需支付金额  </text>
-			<text class="jine">  ¥20</text>
+			<text class="jine">  ¥{{orderDetails.pay_money}}</text>
 		</view>
 	</view>
 	<view class="order">
-		<view class="reason_tex">订单编号：89898988</view>
-		<view class="reason_tex">下单时间：2019-12-12 12:00</view>
-		<view class="reason_tex">付款时间: 2019-12-12 12:00</view>
+		<view class="reason_tex">订单编号：{{orderDetails.return_order_no}}</view>
+		<view class="reason_tex">下单时间：{{orderDetails.order_add_timespan}}</view>
+		<view class="reason_tex">付款时间: {{orderDetails.pay_add_timespan}}</view>
 		<view class="reason_tex">付款方式：微信</view>
-		<view class="reason_tex">发货时间：2019-12-12 12:00</view>
+		<view class="reason_tex">发货时间：{{orderDetails.delivery_timespan}}</view>
 	</view>
-	
+
 	<view class="refund_btn">
-		<view class="Quantity">共2件商品</view>
-		<view class="Amount">¥200</view>
-		<view class="SingleNumber" catchtap="SingleNumber" wx:if="{{orderDetails.refund_status == 1}}">填写寄回单号</view>
-		<view class="btnz" catchtap="CancelRefund"  wx:if="{{orderDetails.refund_status == 1}}">取消退款</view>
-		<view class="btnz" catchtap="applyAgain"  wx:if="{{orderDetails.refund_status == 3}}">再次申请</view>
+		<view class="Quantity">共{{orderDetails.num}}件商品</view>
+		<view class="Amount">¥{{orderDetails.pay_money}}</view>
+		<view class="SingleNumber" catchtap="SingleNumber" wx:if="{{orderDetails.status == 1&&orderDetails.return_type_title=='退款退货'}}">填写寄回单号</view>
+		<view class="btnz" catchtap="cancelOrder"  wx:if="{{orderDetails.status == 1}}">取消退款</view>
+		<view class="btnz" catchtap="router_applyAgain" data-gid="{{orderDetails.order_goods_id}}" wx:if="{{orderDetails.status == 3}}">再次申请</view>
 	</view>
 	<view class="dialog" wx:if="{{dialog_box}}">
 		<view class="dialog_box">
 			<view class="cancel" catchtap="cancel">
-				<image src="../img/guanbi.png"></image>
+				<image src="../icon/close.png"></image>
 			</view>
 			<view class="title">请填写寄回快递单号</view>
-			<view class="CourierCompany" catchtap="CourierCompany">{{CourierCompany}}<image src="../img/downB.png"></image>
+			<view class="CourierCompany" catchtap="CourierCompany">{{CourierCompany}}
+				<view class="down"><image src="../icon/downR.png"></image></view>
 			</view>
-			<view class="SingleNumber"><input type="text" placeholder="请填写快递单号" value="{{express_no}}" bindblur="bindKeyInput"/></view>
+			<view class="SingleNumber"><input type="text" placeholder="请填写快递单号" value="{{express_no}}" bindblur="bindKeyInput" /></view>
 			<view class="submit" catchtap="submit">提交</view>
 		</view>
 		<view class="select_box" wx:if="{{select_box}}">
-			<view catchtap="select_box" data-txt="{{item.name}}" data-id="{{item.id}}" wx:for="{{CourierCompanys}}">{{item.name}}</view>
+			<view catchtap="select_box" data-txt="{{item.title}}" data-id="{{item.id}}" wx:for="{{CourierCompanys}}">{{item.title}}</view>
 		</view>
 	</view>
 </view>

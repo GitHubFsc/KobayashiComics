@@ -2,6 +2,7 @@
 .refund_left {
   width: auto;
   height: auto;
+  padding-left: 20rpx;
 }
 
 .Tobepaid {
@@ -12,11 +13,12 @@
 .refund_img {
   width: 52rpx;
   height: 52rpx;
-
 }
 
 .refund_right {
+  margin-left: 20rpx;
   display: flex;
+  line-height: 60rpx;
 }
 
 .refund_right text:nth-child(1) {
@@ -83,10 +85,11 @@
   margin-bottom: 118rpx;
 }
 .refund_btn .btns{
-  width: 498rpx;
+  width: 488rpx;
   display: flex;
   justify-content: flex-end;
   margin-top: 19rpx;
+  padding-right: 10rpx;
 }
 .refund_btn .btns .btnz{
   height: 36rpx;

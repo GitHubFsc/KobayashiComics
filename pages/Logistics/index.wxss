@@ -10,20 +10,19 @@ page {
 
 .topExpress {
   width: 670rpx;
-  height: 155rpx;
+  height: auto;
   background: #fff;
   margin: 10rpx auto;
-  display: flex;
-  flex-wrap: wrap;
   border-radius: 10rpx;
   padding: 20rpx;
   font-size:28rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(51,51,51,1);
+  line-height: 70rpx;
 }
 .topExpress-company{
-  margin-left: 50rpx;
+  
 }
 .topExpress-phone text{
   color: #218DFF;

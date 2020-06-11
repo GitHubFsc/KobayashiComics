@@ -31,8 +31,8 @@
 		<view class="hd_boxs">
 			<block wx:for="{{homestay.skulist}}" wx:key="index">
 				<view class="hd_box {{UnittypeIdx==index?'select':''}}" data-index="{{index}}" data-id="{{item.id}}" catchtap="Unittype">
-					<view>A户型</view>
 					<view>{{item.title}}</view>
+					<view>{{item.sku_remark}}</view>
 					<view>¥{{item.price}}</view>
 				</view>
 			</block>
@@ -52,7 +52,7 @@
 	</view>
 
 	<view class="hr"></view>
-	<view class="hd_address">地址： <text>上海市长宁区延安西路1088号</text></view>
+	<view class="hd_address">地址： <text>{{homestay.province}}{{homestay.city}}{{homestay.area}}{{homestay.add_ress}}</text></view>
 	<view class="hr"></view>
 	<view class="hd_description">
 		<view class="hd_title">房屋描述：</view>

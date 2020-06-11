@@ -9,51 +9,51 @@
 			</block>
 		</view>
 		<view class="tab_ctn">
-			<block wx:for="{{recommend}}" wx:key="*this">
+			<block wx:for="{{recommend}}" wx:key="index">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
-					<block wx:for="{{5}}" wx:key="*this">
-						<view class="order" data-order_no="{{item}}" catchtap="router_orderDetails">
+					<block wx:for="{{MyOrder}}" wx:for-item="arr" wx:key="index">
+						<view class="order" data-order_no="{{arr.order_no}}" data-id="{{arr.id}}" catchtap="router_orderDetails">
 								<view class="title">
-									<view class="orderId">订单编号：88888888</view>
-									<view class="shop_status">{{index==0?"已完成":index==1?"待付款":index==2?"待发货":index==3?"待收货":index==4?"待评价":""}}</view>
+									<view class="orderId">订单编号：{{arr.order_no}}</view>
+									<view class="shop_status">{{arr.status==1?"待付款":arr.status==2?"待发货":arr.status==3?"待收货":arr.status==4?"待评价":arr.status==5?"已完成":"已取消"}}</view>
 								</view>
-								<view wx:for="{{2}}" wx:key="index" class="mall">
+								<view wx:for="{{arr.glist}}" wx:for-item="res" wx:key="index" class="mall">
 									<view class="mall_img">
-										<image src="./../images/mall1.png"></image>
+										<image src="{{res.goods_img_url}}"></image>
 									</view>
 									<view class="mall_right">
-										<view class="mall_name">经典马克杯</view>
-										<view class="mall_txt">白色</view>
-										<view class="mall_price">¥10<text>x1</text></view>
+										<view class="mall_name">{{res.goods_name}}</view>
+										<view class="mall_txt">{{res.sku_parameter_type_title}}  {{res.size_title}}</view>
+										<view class="mall_price">¥{{res.sku_price}}<text>x{{res.num}}</text></view>
 									</view>
 								</view>
 								<view class="mall_bot">
-									共1件商品 <text>¥200</text>
+									共{{arr.num}}件商品 <text>¥{{arr.price}}</text>
 								</view>
 							<view class="btn">
-                <block wx:if="{{index==1}}">
-									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">取消订单</view>
+                <block wx:if="{{arr.status==1}}">
+									<view catchtap="cancelOrder" data-id="{{arr.id}}"  data-order_no="{{arr.order_no}}" class="btnz">取消订单</view>
 								</block>
-								<block wx:if="{{index==2||index==3||index==4}}">
-									<view catchtap="applyForSale" data-order_no="{{item.order_no}}" class="btnz">申请售后</view>
-								</block>
-								<block wx:if="{{index==3}}">
-									<view catchtap="router_Logistics" data-order_no="{{item.order_no}}" class="btnz" >查看物流</view>
+								<!-- <block wx:if="{{arr.status==3||arr.status==4}}">
+									<view catchtap="applyForSale" data-id="{{arr.id}}" data-order_no="{{arr.order_no}}" class="btnz">申请售后</view>
+								</block> -->
+								<block wx:if="{{arr.status==3}}">
+									<view catchtap="router_Logistics" data-id="{{arr.id}}" class="btnz" >查看物流</view>
 								</block>
 								<!-- <view >
 									<view catchtap="router_Evaluation" data-order_no="{{item.order_no}}" class="btnz" >评价</view>
 								</view> -->
-                <block wx:if="{{index==1}}">
-									<view class="btnz">付款</view>
+                <block wx:if="{{arr.status==1}}">
+									<view catchtap="router_payment" class="btnz" data-id="{{arr.id}}" data-order_no="{{arr.order_no}}" data-price="{{arr.price}}">付款</view>
 								</block>
-								<block wx:if="{{index==2}}">
+								<!-- <block wx:if="{{arr.status==2}}">
 									<view class="btnz">提醒发货</view>
+								</block> -->
+                <block wx:if="{{arr.status==3}}">
+									<view catchtap="OrderSign"  class="btnz"  data-id="{{arr.id}}" data-order_no="{{arr.order_no}}" >确认签收</view>
 								</block>
-                <block wx:if="{{index==3}}">
-									<view class="btnz">确认签收</view>
-								</block>
-                <block wx:if="{{index==4}}">
-									<view class="btnz" data-order_no="{{item.order_no}}" catchtap="router_Evaluation">评价</view>
+                <block wx:if="{{arr.status==4}}">
+									<view  catchtap="router_Evaluation" class="btnz" data-arr="{{arr.glist}}" data-order_no="{{arr.order_no}}" >评价</view>
 								</block>
 							</view>
 						</view>

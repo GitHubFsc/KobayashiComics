@@ -29,19 +29,19 @@
 								</view>
 							<view class="btn">
                 <view wx:if="{{index==0||index==1}}">
-									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">取消</view>
+									<view catchtap="cancelOrder" data-order_no="{{item.order_no}}" class="btnz">取消</view>
 								</view>
 								<view wx:if="{{index==2||index==3}}">
-									<view catchtap="" data-order_no="{{item.order_no}}" class="btnz">申请退款</view>
+									<view catchtap="router_applyAgain" data-order_no="{{item.order_no}}" class="btnz">申请退款</view>
 								</view>
                 <view wx:if="{{index==0||index==1}}">
-									<view class="btnz">付款</view>
+									<view catchtap="payment" class="btnz">付款</view>
 								</view>
                 <view wx:if="{{index==5}}">
-									<view class="btnz">取消退款</view>
+									<view  class="btnz">取消退款</view>
 								</view>
                 <view wx:if="{{index==7}}">
-									<view class="btnz">再次申请</view>
+									<view catchtap="router_applyAgain" class="btnz">再次申请</view>
 								</view>
 							</view>
 						</view>

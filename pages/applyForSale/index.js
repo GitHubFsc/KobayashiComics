@@ -1,4 +1,6 @@
 // pages/applyForSale/index.js
+import { GetRefoundMoney, GetRefoundType, PostOrderRefound, getSign } from '../../utils/axios.js';
+var utils = require('../../utils/util.js');
 const app = getApp()
 Page({
 
@@ -11,83 +13,63 @@ Page({
     refund_voucher: [],
     boolean: false,
     refund: false,
-    reason_text: "仅退款",
-    reason_reason: "七天无理由退款",
-    refund_type: 1,
-    refund_reason_id: 11,
+    reason_text: '',
+    reason_reason: '',
+    refund_type: '',
+    refund_reason_id: '',
+    ImgList : [],
     amount: "",
     refund_instruction: "",
     refundReasonList: []
   },
+
+  /**事件 */
+  //文件上传
   file() {
-    let that = this
+    let that = this;
     wx.chooseImage({
-      count: 3,
+      count: 9,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success(res) {
-        console.log("res1111", res);
-        let imgArr = [];
-        for (let i = 0; i < res.tempFilePaths.length; i++) {
-          let item = res.tempFilePaths[i];
-          imgArr.push({
-            "img_url": item
-          })
-        }
-        console.log(imgArr);
-        let refund_voucher = that.data.refund_voucher;
-        for (let i = 0; i < imgArr.length; i++) {
-          console.log(imgArr[i].img_url);
-          wx.uploadFile({
-            url: 'https://xiaolinmanhua.zztv021.com/api/Lib/PostUploadFile?rnd=1&sign=' + getSign(`rnd=1`),
-            filePath: imgArr[i].img_url,
-            name: 'file',
-            formData: {},
-            success(res) {
-              console.log("res2222", res);
-              var p = JSON.parse(res.data);
-              console.log(p)
-              if(p.ErrCode == 0){
-                refund_voucher.push({
-                  "img_url": p.Response
-                })
-                console.log("refund_voucher", refund_voucher);
-                that.setData({
-                  refund_voucher
-                })
-              } else {
-                wx.showToast({
-                  title: p.ErrMsg,
-                  icon: 'none'
-                })
-              }
-            }
-          })
-        }
+        // tempFilePath可以作为img标签的src属性显示图片
+        console.log(res.tempFilePaths)
+        wx.showLoading({
+          title: '文件上传中...',
+        })
+        that.postUploadFile(res.tempFilePaths,res=>{
+          wx.hideLoading();
+        });
       },
+      fail(res) {
+        console.log(res)
+      }
     })
   },
+  //图片预览
   preview(e) {
-    let urls = this.data.refund_voucher.map((x) => {
+    let ImgList = this.data.ImgList.map((x) => {
       return x.img_url
     })
-    console.log(urls);
+    console.log(ImgList);
     wx.previewImage({
       current: e.target.dataset.src,
-      urls: urls
+      urls: ImgList
     })
   },
+  //关闭抽屉
   boxdialog() {
     this.setData({
       boolean: false
     })
-
   },
+  //处理抽屉
   boxdialog_bottom() {
     this.setData({
       boolean: true
     })
   },
+  //原因 类型 抽屉
   refund(e) {
     console.log(e);
     this.setData({
@@ -103,6 +85,7 @@ Page({
       })
     }
   },
+  //退款类型选择
   onlytype(e) {
     this.setData({
       refund_type: e.target.dataset.id,
@@ -110,6 +93,7 @@ Page({
       boolean: false
     })
   },
+  //退款原因选择
   notOnlytype(e) {
     this.setData({
       refund_reason_id: e.target.dataset.id,
@@ -117,93 +101,43 @@ Page({
       boolean: false
     })
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    this.setData({
-      order_no: options.order_no
-    })
-    if (app.globalData.userid) {
-      this.applyForSale()
-    } else {
-      app.callbackuserid = res => {
-        this.applyForSale()
-      }
-    }
-  },
-  applyForSale() {
-    let {
-      order_no
-    } = this.data;
-    console.log(app.globalData.userid);
-    console.log(order_no);
-    GetApplyForRefundsMoney({
-      user_id: app.globalData.userid,
-      order_no
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        this.setData({
-          Money: res.data.Response.money
-        })
-        this.RefundReasonList()
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-
-  ApplyForRefund() {
-    let {
-      order_no,
-      amount,
-      refund_type,
-      refund_reason_id,
-      refund_instruction,
-      refund_voucher
-    } = this.data;
-    PostApplyForRefunds({
-      user_id: app.globalData.userid,
-      amount,
-      order_no,
-      refund_type,
-      refund_reason_id,
-      refund_instruction,
-      refund_voucher
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        wx.redirectTo({
-          url: '../afterSalesOrders/index',
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  RefundReasonList() {
-    GetRefundReasonList({
-      rnd: Rnd()
-    }).then(res => {
-      this.setData({
-        refundReasonList: res.data.Response
-      })
-    })
-  },
+  //退款金额失焦
   refundAmount(e) {
     this.setData({
       amount: e.detail.value
     })
   },
+  //退款说明
   bindTextAreaBlur(e) {
     this.setData({
       refund_instruction: e.detail.value
     })
+  },
+  //申请退款
+  ApplyForRefund(){
+    let that = this;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    that.postOrderRefound(res=>{
+      wx.hideLoading();
+      wx.navigateTo({
+        url: '../afterSalesOrders/index',
+      })
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    if(options.order_id){
+      this.setData({
+        order_id: options.order_id,
+        order_goods_id : options.order_goods_id
+      })
+      this.getRefoundMoney();
+      this.getRefoundType();
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -252,5 +186,132 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  /**API */    
+  //获取退款金额
+  getRefoundMoney(){
+    let user_id = wx.getStorageSync('userId');
+    let { order_id,order_goods_id } = this.data;
+    GetRefoundMoney({
+      user_id: user_id,
+      order_id : order_id,
+      order_goods_id : order_goods_id,
+      sign : getSign(`user_id=${user_id}&order_id=${order_id}&order_goods_id=${order_goods_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          Money: res.data.Response.pay_money
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //申请退款-退款类型/退款原因
+  getRefoundType(){
+    GetRefoundType({
+      rnd :1,
+      sign : getSign(`rnd=1`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          reason_text: res.data.Response.type_list[0].title,
+          reason_reason: res.data.Response.reason_list[0].title,
+          refund_type: res.data.Response.type_list[0].id,
+          refund_reason_id: res.data.Response.reason_list[0].id,
+          type_list: res.data.Response.type_list,
+          reason_list : res.data.Response.reason_list,
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //申请退款
+  postOrderRefound(callback){
+    let user_id = wx.getStorageSync('userId');
+    let {amount,order_id,order_goods_id,refund_type,refund_reason_id,refund_instruction,ImgList} = this.data;
+    ImgList = ImgList.map(arr=>{
+      return arr.img_url
+    })
+    if(amount&&refund_instruction){
+      // wx.hideLoading();
+      // wx.showToast({
+      //   title: res.data.ErrMsg,
+      //   icon: 'none'
+      // })
+    }else{
+      wx.hideLoading();
+      wx.showToast({
+        title: '请输入退款金额或退款原因',
+        icon: 'none'
+      })
+      return false
+    }
+    let datas = [];
+    datas.push('user_id=' + user_id);
+    datas.push('money=' + amount);
+    datas.push('sign=' + getSign(`user_id=${user_id}&money=${amount}`));
+    PostOrderRefound({
+      body :{
+        order_id : order_id,
+        order_goods_id : order_goods_id, 
+        type_id : refund_type,
+        reason_id : refund_reason_id,
+        remark : refund_instruction,
+        img_url : ImgList,
+      }
+    },datas).then(res=>{
+      if(res.data.ErrCode==0){
+        callback && callback(res)
+      }else{
+        wx.hideLoading();
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none'
+        })
+      }
+    })
+  },
+  //文件上传
+  postUploadFile(arr,callback) {
+    console.log(arr);
+    let that = this;
+    let ImgList = that.data.ImgList;
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]);
+      wx.uploadFile({
+        url: 'https://xiaolinmanhua.zztv021.com/api/Lib/PostUploadFile?rnd=1&sign=' + getSign(`rnd=1`),
+        filePath: arr[i],
+        name: 'file',
+        formData: {},
+        success(res) {
+          console.log("res2222", res);
+          var p = JSON.parse(res.data);
+          console.log(p)
+          if (p.ErrCode == 0) {
+            ImgList.push({
+              "img_url": p.Response
+            })
+            console.log("ImgList", ImgList);
+            that.setData({
+              ImgList
+            })
+            callback && callback(res)
+          } else {
+            wx.showToast({
+              title: p.ErrMsg,
+              icon: 'none'
+            })
+          }
+        }
+      })
+    }
+  },
 })

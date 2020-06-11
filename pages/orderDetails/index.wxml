@@ -1,30 +1,39 @@
 <!--pages/orderDetails/index.wxml-->
 <view class="container">
 	<view class="refund">
-		<view class="refund_left {{order_no==0||order_no==1?'Tobepaid':'refund_img'}}">
-			<image src="../icon/wait{{order_no!=0?order_no:1}}.png"></image>
+		<view class="refund_left {{MyOrder.status==0||MyOrder.status==1?'Tobepaid':'refund_img'}}">
+			<image src="../icon/wait{{MyOrder.status!=0?MyOrder.status:1}}.png"></image>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==0||order_no==1}}">
-			<text>待支付</text><text>请在20分20秒内付款，超时订单将自动取</text>
+		<view class="refund_right" wx:if="{{MyOrder.status==0||MyOrder.status==1}}">
+			<text>待支付</text><text>请在20分20秒内付款，超时订单将自动取消</text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==2}}">
+		<view class="refund_right" wx:if="{{MyOrder.status==2}}">
 			<text>待发货</text><text>商家会尽快安排发货</text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==3}}">
+		<view class="refund_right" wx:if="{{MyOrder.status==3}}">
 			<text>待收货</text><text></text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==4}}">
+		<view class="refund_right" wx:if="{{MyOrder.status==4}}">
 			<text>待评价</text><text></text>
+		</view>
+		<view class="refund_right" wx:if="{{MyOrder.status==5}}">
+			<text>已完成</text><text></text>
+		</view>
+		<view class="refund_right" wx:if="{{MyOrder.status==6}}">
+			<text>退款</text><text></text>
+		</view>
+		<view class="refund_right" wx:if="{{MyOrder.status==7}}">
+			<text>取消</text><text></text>
 		</view>
 	</view>
 	<view class="bgcolor">
-		<view class="Logistics" wx:if="{{order_no==3||order_no==4}}">
+		<view class="Logistics" wx:if="{{MyOrder.status>2&&MyOrder.status<6}}">
 			<view class="Logistics_left">
 				<image src="../icon/wuliu.png"></image>
 			</view>
 			<view class="position_right">
-				<view>快递已经到达上海，正在安排派件</view>
-				<view>2019-12-12 12:00</view>
+				<view>{{MyOrder.courier_list[0].content}}</view>
+				<view>{{MyOrder.courier_list[0].time}}</view>
 			</view>
 			<image class="gengduo" src="./../icon/gengduo.png" />
 		</view>
@@ -33,22 +42,24 @@
 				<image src="../icon/dingwei.png"></image>
 			</view>
 			<view class="position_right">
-				<view>张三 18888888888</view>
-				<view>上海市长宁区延安西路1088号1903</view>
+				<view>{{MyOrder.name}} {{MyOrder.mobile}}</view>
+				<view>{{MyOrder.address}}</view>
 			</view>
 		</view>
 		<view class="commoditys">
-			<view class="commodity" wx:for="{{2}}" wx:key="*this">
+			<view class="commodity" wx:for="{{MyOrder.glist}}" wx:key="index">
 				<view class="commodity_left">
-					<image src="./../images/mall1.png"></image>
+					<image src="{{item.goods_img_url}}"></image>
 				</view>
 				<view class="commodity_right">
-					<view class="commodity_title">经典马克杯<text class="commodity_num">x1</text></view>
-					<view class="commodity_property">白色</view>
+					<view class="commodity_title">{{item.goods_name}}<text class="commodity_num">x{{item.num}}</text></view>
+					<view class="commodity_property">{{item.sku_parameter_type_title}}{{item.size_title}}</view>
 					<view class="commodity_money">
-						<text>¥200</text>
+						<text>¥{{item.sku_price}}</text>
 						<!-- <text class="commodity_num">x1</text> -->
-						<text class="commodity_aftersale_btn" data-order_no="index" catchtap="applyAgain">售后</text>
+						<block wx:if="{{MyOrder.status>1&&MyOrder.status<6}}">
+							<text class="commodity_aftersale_btn" data-id="{{item.id}}"  catchtap="router_applyAgain">售后</text>
+						</block>
 					</view>
 				</view>
 			</view>
@@ -56,47 +67,50 @@
 		<view class="amount">
 			<view style="border:none;">
 				<text>商品总额</text>
-				<text>¥200</text>
+				<text>¥{{MyOrder.sum_price}}</text>
 			</view>
 			<view>
 				<text>运费</text>
-				<text>¥20</text>
+				<text>¥{{MyOrder.freight}}</text>
 			</view>
 			<view>
 				<text>积分</text>
-				<text class="jifen">-20</text>
+				<text class="jifen">-¥{{MyOrder.point_money}}</text>
 			</view>
 			<view>
 				<text>优惠券</text>
-				<text>-20</text>
+				<text class="jifen">-¥{{MyOrder.coupon_money}}</text>
 			</view>
 			<view>
 				<text>发票</text>
-				<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
+				<text>{{MyOrder.user_invoice_title?MyOrder.user_invoice_title:"不要发票"}}</text>
 			</view>
 			<view>
 				<text>实际需支付金额</text>
-				<text class="jine">¥20</text>
+				<text class="jine">¥{{MyOrder.price}}</text>
 			</view>
 		</view>
 		<view class="order">
-			<view class="reason_tex">订单编号：89898988</view>
-			<view class="reason_tex">下单时间：2019-12-12 12:00</view>
-			<view class="reason_tex">付款时间: 2019-12-12 12:00</view>
-			<view class="reason_tex">付款方式：微信</view>
-			<view class="reason_tex">发货时间：2019-12-12 12:00</view>
+			<view class="reason_tex">订单编号：{{MyOrder.order_no}}</view>
+			<view class="reason_tex">下单时间：{{MyOrder.add_timespan}}</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status == 7}}">取消时间：{{MyOrder.cancel_timespan}}</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status >1 && MyOrder.status != 7}}">付款时间: {{MyOrder.pay_add_timespan}}</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status >1 && MyOrder.status != 7}}">付款方式：微信</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status >2 && MyOrder.status != 7}}">发货时间：{{MyOrder.delivery_timespan}}</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status >3 && MyOrder.status != 7}}">确认时间：{{MyOrder.take_delivery_timespan}}</view>
+			<view class="reason_tex" wx:if="{{MyOrder.status >4 && MyOrder.status != 7}}">评价时间：{{MyOrder.finish_timespan}}</view>
 		</view>
 		<view class="refund_btn">
-			<view class="Quantity">共2件商品</view>
-			<view class="Amount">¥200</view>
+			<view class="Quantity">共{{MyOrder.gong}}件商品</view>
+			<view class="Amount">¥{{MyOrder.price}}</view>
       <view class="btns">
-        <view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">取消订单</view>      
-        <view class="btnz" catchtap="" wx:if="{{order_no == 2||order_no == 3}}">申请售后</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 3||order_no == 4}}">查看物流</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">付款</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 2}}">提醒发货</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 3}}">确认签收</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 4}}">评价</view>
+        <view class="btnz" catchtap="cancelOrder" wx:if="{{MyOrder.status == 1||MyOrder.status == 0}}">取消订单</view>      
+        <!-- <view class="btnz" catchtap="router_applyAgain" wx:if="{{MyOrder.status == 2||MyOrder.status == 3}}">申请售后</view> -->
+        <view class="btnz" catchtap="router_Logistics" wx:if="{{MyOrder.status == 3}}">查看物流</view>
+        <view class="btnz" catchtap="router_payment" wx:if="{{MyOrder.status == 1||MyOrder.status == 0}}">付款</view>
+        <!-- <view class="btnz" catchtap="" wx:if="{{MyOrder.status == 2}}">提醒发货</view> -->
+        <view class="btnz" catchtap="OrderSign" wx:if="{{MyOrder.status == 3}}">确认签收</view>
+        <view class="btnz" catchtap="router_Evaluation" wx:if="{{MyOrder.status == 4}}">评价</view>
       </view>
 		</view>
 	</view>

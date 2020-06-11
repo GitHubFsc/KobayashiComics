@@ -128,8 +128,14 @@ Page({
       that.getGoodsSize(res=>{
         let arr=[], data = {};
         data.car_id = 0;
-        data.sku_id = res.data.Response[0].id;
-        data.goods_id = res.data.Response[0].goods_id;
+        if(res.data.Response.length>0){
+          data.size_id = res.data.Response[0].size_id;
+          data.sku_parameter_type_id = res.data.Response[0].sku_parameter_type_id;
+          data.goods_id = res.data.Response[0].goods_id;
+        }else{
+          data.size_id = 0;
+          data.sku_parameter_type_id = 0;   
+        }
         data.number = this.data.num;
         arr.push(data)
         wx.navigateTo({
@@ -141,53 +147,7 @@ Page({
       })
     }
   },
-  /**API */
-  //获取手机号
-  getPhoneNumber(e) {
-    let that = this;
-    that.setData({
-      loading: true,
-    })
-    app.getPhoneNumber(e,(data)=>{
-      console.log("手机号回调",data)
-      if(data){
-        that.setData({
-          steps : 1 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //获取用户信息
-  getUserInfo(e) {
-    let that = this;
-    that.setData({
-      loading: true
-    })
-    app.getUserInfo(e,(data)=>{
-      console.log("用户回调",data)
-      if(data){
-        that.setData({
-          steps : 2 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //用户登录
-  UserLogin() {
-    var that = this;
-    app.login((data)=>{
-      console.log("登录成功",data)
-      if(data){
-        that.setData({
-          steps : 3 ,
-          loading: false,
-        })
-        this.getGoodsDetail();
-      }
-    })
-  },
+ 
   /**
    * 生命周期函数--监听页面加载
    */
@@ -256,6 +216,52 @@ Page({
 
   },
   /**API */
+  //获取手机号
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+      loading: true,
+    })
+    app.getPhoneNumber(e,(data)=>{
+      console.log("手机号回调",data)
+      if(data){
+        that.setData({
+          steps : 1 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //获取用户信息
+  getUserInfo(e) {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+    app.getUserInfo(e,(data)=>{
+      console.log("用户回调",data)
+      if(data){
+        that.setData({
+          steps : 2 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //用户登录
+  UserLogin() {
+    var that = this;
+    app.login((data)=>{
+      console.log("登录成功",data)
+      if(data){
+        that.setData({
+          steps : 3 ,
+          loading: false,
+        })
+        this.getGoodsDetail();
+      }
+    })
+  },
   //商品详情
   getGoodsDetail(){
     let user_id = wx.getStorageSync('userId');
@@ -267,7 +273,7 @@ Page({
     }).then(res=>{
       if(res.data.ErrCode==0){
         res.data.Response.eval.map(item=>{
-          item.add_timespan = utils.formatTime(new Date(item.add_timespan))
+          item.add_timespan = utils.formatTime(new Date(Number(item.add_timespan)))
         })
         this.setData({
           GoodsDetail : res.data.Response
@@ -349,6 +355,4 @@ Page({
       }
     })
   },
-
-
 })

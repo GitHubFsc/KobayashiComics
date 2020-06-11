@@ -1,130 +1,152 @@
 // pages/afterSalesOrders/index.js
+import { GetMyRefoundOrder, RGetCanCelOrder, getSign} from '../../utils/axios.js';
+var utils = require('../../utils/util.js');
 const app = getApp()
 Page({
   data: {
-    recommend :['全部','退款中','退款成功','退款失败'],
+    recommend: ['全部', '退款中', '退款成功', '退款失败'],
     winWidth: 0,
     winHeight: 0,
     currentTab: 0,
     type: 0,
     page: 1,
     pagesize: 10,
-    orderList :[]
+    orderList: []
   },
-  onLoad: function () {
-
-    var that = this;
-    /**
-     * 获取当前设备的宽高
-     */
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          winWidth: res.windowWidth,
-          winHeight: res.windowHeight
-        });
-      }
-    });
-    if (app.globalData.userid) {
-      // this.getList()
-    } else {
-      app.callbackuserid = res => {
-        // this.getList()
-      }
-    }
-  },
-
-  getList() {
-    let {
-      type,
-      pagesize,
-      page,
-      currentTab
-    } = this.data;
-    GetMyApplyForRefunds({
-      user_id: app.globalData.userid,
-      type,
-      page,
-      pagesize,
-    }).then(res => {
-      console.log("res", res)
-      if (currentTab == 0) {
-        let list0 = this.data.list0;
-        res.data.Response.map(item => {
-          list0.push(item)
-        })
-        this.setData({
-          list0
-        });
-      } else if (currentTab == 1) {
-        let list1 = this.data.list1;
-        res.data.Response.map(item => {
-          list1.push(item)
-        })
-        this.setData({
-          list1
-        });
-      } else if (currentTab == 2) {
-        let list2 = this.data.list2;
-        res.data.Response.map(item => {
-          list2.push(item)
-        })
-        this.setData({
-          list2
-        });
-      } else {
-        let list3 = this.data.list3;
-        res.data.Response.map(item => {
-          list3.push(item)
-        })
-        this.setData({
-          list3
-        });
-      }
+  /**路由 */
+  //订单详情
+  router_afterSalesOrderDetails(e) {
+    wx.navigateTo({
+      url: '../afterSalesOrderDetails/index?id=' + e.currentTarget.dataset.id +'&order_id=' + e.currentTarget.dataset.order_id,
     })
   },
-  CancelRefund(e) {
-    GetCancelRequest({
-      user_id: app.globalData.userid,
-      order_no:e.target.dataset.order_no
+  //重新申请
+  router_applyAgain(e) {
+    let that = this;
+    let order_id = e.currentTarget.dataset.id,
+    order_goods_id = e.currentTarget.dataset.gid;
+    wx.navigateTo({
+      url: '../applyForSale/index?order_id=' + order_id + '&order_goods_id=' + order_goods_id,
+    })
+  },
+  /**事件 */
+  // tab切换逻辑
+  nav_tab: function (e) {
+    let that = this;
+    that.setData({
+      currentTab: e.target.dataset.index
+    })
+    that.getMyRefoundOrder();
+  },
+  //取消申请
+  cancelOrder(e){
+    let that = this;
+    that.getCanCelOrder(e.currentTarget.dataset.id,res=>{
+      that.getMyRefoundOrder();
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log(options)
+    this.setData({
+      order_id: options.id
+    })
+    this.getMyRefoundOrder();
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  /**API */
+  //售后订单
+  getMyRefoundOrder() {
+    let user_id = wx.getStorageSync('userId'),
+      { page, pagesize } = this.data;
+    GetMyRefoundOrder({
+      user_id: user_id,
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
-        console.log("res",res);
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
+        console.log(res);
+        this.setData({
+          orderList: res.data.Response
         })
-        this.orderList();
       } else {
         wx.showToast({
           title: res.data.ErrMsg,
-          icon: "none"
+          icon: 'none'
         })
       }
     })
   },
-  applyAgain(e){
-    wx.navigateTo({
-      url: '../applyForSale/index?order_no='+e.target.dataset.order_no,
+  //退款订单-取消
+  getCanCelOrder(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    RGetCanCelOrder({
+      user_id :user_id ,
+      return_order_id : id,
+      sign: getSign(`user_id=${user_id}&return_order_id=${id}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
     })
   },
-  router_afterSalesOrderDetails(e){
-    wx.navigateTo({
-      url: '../afterSalesOrderDetails/index?order_no='+e.target.dataset.order_no,
-    })
-  },
-  //  tab切换逻辑
-  nav_tab: function (e) {
-    console.log(e);
-    this.setData({
-      currentTab : e.target.dataset.index
-    })
-    // this.getList();
-  },
-  onReachBottom: function () {
-    this.setData({
-      page: this.data.page + 1
-    });
-    // this.getList();
-  },
+
+
 })

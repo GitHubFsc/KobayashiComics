@@ -140,6 +140,7 @@
   height: 160rpx;
   line-height: 100%;
   position: relative;
+  font-size: 26rpx;
 }
 
 .myother .myother_img{

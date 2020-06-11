@@ -29,9 +29,9 @@ Page({
     let that = this;
     that.postAddNews(res => {
       console.log(res);
-      // wx.navigateTo({
-      //   url: '../shareSuccess/index'
-      // })
+      wx.navigateTo({
+        url: '../shareSuccess/index'
+      })
     })
 
   },
@@ -53,7 +53,6 @@ Page({
   //图片上传
   addimg() {
     let that = this;
-    let dynamicImgList = that.data.dynamicImgList;
     wx.chooseImage({
       count: 9,
       sizeType: ['original', 'compressed'],
@@ -252,13 +251,13 @@ Page({
     datas.push('user_id=' + user_id)
     datas.push('sign=' + getSign(`user_id=${user_id}`))
     PostAddNews({
-      body: {
+      body: [{
         img_url: dynamicImgList,
         content: textareaVal,
         goods_id: goods_id?goods_id:0,
         type: 2,
         video: '',
-      }
+      }]
     }, datas).then(res => {
       if (res.data.ErrCode == 0) {
         callback && callback(res)

@@ -696,8 +696,9 @@ image {
   border-radius: 30rpx;
   text-align: center;
   line-height: 60rpx;
-  margin-left: 102rpx;
-  margin-right: 20rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 350rpx;
 }
 /* 步进条 */
 .stepsBox{

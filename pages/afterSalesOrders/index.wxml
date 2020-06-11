@@ -11,31 +11,31 @@
 		<view class="tab_ctn">
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
-					<block wx:for="{{3}}" wx:key="*this">
-						<view class="order">
+					<block wx:for="{{orderList}}" wx:for-index="idx" wx:for-item="arr" wx:key="index" >
+						<view class="order" data-order_no="{{arr.return_order_no}}" data-id="{{arr.id}}" data-order_id="{{arr.order_id}}" catchtap="router_afterSalesOrderDetails">
 								<view class="title">
-									<view class="orderId">售后编号：88888888</view>
-									<view class="shop_status">{{index==0?"退款中":index==1?"退款成功":index==2?"退款失败":""}}</view>
+									<view class="orderId">售后编号：{{arr.return_order_no}}</view>
+									<view class="shop_status">{{arr.status==1?"退款中":arr.status==2?"退款成功":arr.status==3?"退款失败":""}}</view>
 								</view>
-								<view wx:for="{{2}}" wx:key="index" class="mall" data-order_no="index" catchtap="router_afterSalesOrderDetails">
+								<view class="mall" data-goods_id="{{arr.goods_id}}">
 									<view class="mall_img">
-										<image src="./../images/mall1.png"></image>
+										<image src="{{arr.goods_img_url}}"></image>
 									</view>
 									<view class="mall_right">
-										<view class="mall_name">经典马克杯</view>
-										<view class="mall_txt">白色</view>
-										<view class="mall_price">¥10<text>x1</text></view>
+										<view class="mall_name">{{arr.goods_name}}</view>
+										<view class="mall_txt">{{arr.sku_parameter_type_title}}{{arr.size_title}}</view>
+										<view class="mall_price">¥{{arr.money}}<text>x{{arr.num}}</text></view>
 									</view>
 								</view>
 								<view class="mall_bot">
-									共1件商品 <text>¥200</text>
+									共{{arr.num}}件商品 <text>¥{{arr.money}}</text>
 								</view>
-							<view class="btn" wx:if="{{index==0||index==2}}">
-								<view wx:if="{{index==0}}">
-									<view class="btnz">取消申请</view>
+							<view class="btn" wx:if="{{arr.status==1||arr.status==3}}">
+								<view wx:if="{{arr.status==1}}">
+									<view class="btnz" data-id="{{arr.id}}" catchtap="cancelOrder">取消申请</view>
 								</view>
-                <view wx:if="{{index==2}}">
-									<view class="btnz" catchtap="applyAgain" data-index="index">再次申请</view>
+                <view wx:if="{{arr.status==3}}">
+									<view class="btnz" catchtap="router_applyAgain" data-id="{{arr.order_id}}" data-gid="{{arr.order_goods_id}}" data-index="index">再次申请</view>
 								</view>
 							</view>
 						</view>

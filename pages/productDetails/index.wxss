@@ -160,7 +160,9 @@
   margin-right: 20rpx;
 }
 
-.synopsis {}
+.synopsis {
+  width: 370rpx;
+}
 
 .user_name {
   font-size: 28rpx;
@@ -178,9 +180,10 @@
 }
 
 .star_count {
+  width: 270rpx;
   margin-top: 32rpx;
-  margin-left: 236rpx;
   display: flex;
+  justify-content: flex-end;
 }
 
 .star_count .star {

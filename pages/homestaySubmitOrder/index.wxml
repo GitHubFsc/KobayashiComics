@@ -75,7 +75,7 @@
 			</view>
 			<view class="cd_cell">
 				<view>商品总额</view>
-				<view class="price">¥280</view>
+				<view class="price">¥{{homestay.total_price}}</view>
 			</view>
 		</view>
 	</view>

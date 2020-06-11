@@ -1,61 +1,65 @@
 <!--pages/Evaluation/index.wxml-->
 <view class="container ">
-  <block wx:if="{{submit}}">
-    <view class="Evaluation_box" >
-      <view class="commodity">
-        <view class="commodity_img">
-          <image src="./../images/mall1.png"></image>
-        </view>
-        <view class="commodity_right">
-          <view>经典马克杯</view>
-          <view>白色</view>
-          <view>¥200</view>
-        </view>
-      </view>
-      <view class="starList">
-        <block wx:for="{{LitUp}}">
-          <view class="star" data-index="{{index+1}}" data-type="0" catchtap="star">
-            <image src="./../icon/collectH.png" />
-          </view>
-        </block>
-        <block wx:for="{{Unlit}}">
-          <view class="star" data-index="{{index+1}}" data-type="1" catchtap="star">
-            <image src="./../icon/collectG.png" />
-          </view>
-        </block>
-      </view>
-      <view class="Feedback_textarea">
-        <textarea placeholder="请输入评价" value="{{problemVal}}" number="200" bindblur="TextAreaBlur" bindconfirm="TextAreaConfirm"></textarea>
-      </view>
-      <view class="problemImgs">
-        <view class="problemImg">
-          <block wx:for="{{problemImgs}}" wx:key="index">
-            <view class="problem_Img">
-              <view class="problem_img" data-src="{{item.img_url}}" catchtap="previewImage">
-                <image src="{{item.img_url}}" mode="aspectFit"></image>
-              </view>
-              <view class="del" data-index="{{index}}" catchtap="delete">
-                <image src="./../icon/delete.png"></image>
-              </view>
-            </view>
-          </block>
-          <view class="addImg" catchtap="addImg">
-            <view class="add_img">
-              <image src="./../icon/xj.png"></image>
-            </view>
-            <view>上传照片</view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="submit" catchtap="submit">发表评价</view>
-  </block>
+	<block wx:if="{{submit}}">
+		<block wx:for="{{goods}}" wx:key="index">
+			<view class="Evaluation_box">
+				<view class="commodity">
+					<view class="commodity_img">
+						<image src="{{item.goods_img_url}}"></image>
+					</view>
+					<view class="commodity_right">
+						<view>{{item.goods_name}}</view>
+						<view>{{item.sku_parameter_type_title}}{{item.size_title}}</view>
+						<view>¥{{item.sku_price}}</view>
+					</view>
+				</view>
+				<view class="starList">
+					<block wx:for="{{item.LitUp}}" wx:for-index="idx" wx:for-item="arr" wx:key="index" >
+						<view class="star" data-num="{{idx+1}}" data-type="0" data-index="{{index}}" catchtap="star">
+							<image src="./../icon/collectH.png" />
+						</view>
+					</block>
+					<block wx:for="{{item.Unlit}}" wx:for-index="idx" wx:for-item="arr" wx:key="index" >
+						<view class="star" data-num="{{idx+1}}" data-type="1" data-index="{{index}}" catchtap="star">
+							<image src="./../icon/collectG.png" />
+						</view>
+					</block>
+				</view>
+				<view class="Feedback_textarea">
+					<textarea placeholder="请输入评价" value="{{problemVal}}" data-index="{{index}}" number="200" bindblur="TextAreaBlur" bindconfirm="TextAreaConfirm"></textarea>
+				</view>
+				<view class="problemImgs">
+					<view class="problemImg">
+						<block wx:for="{{item.img_url}}" wx:for-index="idx" wx:for-item="arr" wx:key="index" >
+							<view class="problem_Img">
+								<view class="problem_img" data-src="{{arr.img_url}}" data-index="{{index}}" catchtap="previewImage">
+									<image src="{{arr.img_url}}" mode="aspectFit"></image>
+								</view>
+								<view class="del" data-idx="{{idx}}" data-index="{{index}}" catchtap="delete">
+									<image src="./../icon/delete.png"></image>
+								</view>
+							</view>
+						</block>
+						<view class="addImg" catchtap="addImg" data-index="{{index}}">
+							<view class="add_img">
+								<image src="./../icon/xj.png"></image>
+							</view>
+							<view>上传照片</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</block>
+		<view class="submit" catchtap="submit">发表评价</view>
+	</block>
 	<block wx:if="{{!submit}}">
-    <view class="Evaluation">
-      <view class="hr"></view>
-      <view class="Evaluation_img"><image src="./../icon/Evaluation.png"></image></view>
-      <view class="Evaluation_txt">评价成功</view>
-      <view class="submit" catchtap="router_home">返回首页</view>
-    </view>
-  </block>
+		<view class="Evaluation">
+			<view class="hr"></view>
+			<view class="Evaluation_img">
+				<image src="./../icon/Evaluation.png"></image>
+			</view>
+			<view class="Evaluation_txt">评价成功</view>
+			<view class="submit" catchtap="router_home">返回首页</view>
+		</view>
+	</block>
 </view>

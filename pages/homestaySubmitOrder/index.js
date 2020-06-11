@@ -56,7 +56,7 @@ Page({
       that.postHomestayReservation(res=>{
         console.log(res);
         //微信支付
-        that.postWeChatPay(res=>{
+        that.postWeChatPay(res,data=>{
           wx.showToast({
             title: '支付成功',
             icon:'none'
@@ -94,7 +94,7 @@ Page({
     let that = this;
     that.setData({
       peopleNum: that.data.peopleNumList[e.detail.value],
-      num : e.detail.value +1
+      num : ++e.detail.value
     })
   },
   //租客信息开关
@@ -414,19 +414,18 @@ Page({
     })
   },
   //微信支付
-  postWeChatPay(data){
+   postWeChatPay(data, callback) {
     let userInfo = wx.getStorageSync('userInfo');
     let order_no = data.order_no,
-    price =data.price,pay_way = data.pay_way;
-    let openid = userInfo.openId,
-    appid = userInfo.watermark.appid;
+      price = data.price;
+    let openid = userInfo.openId
     let user_id = wx.getStorageSync('userId');
-    console.log("order_no",order_no,'price',price,'pay_way',pay_way,'openid',openid,'appid',appid,'user_id',user_id);
+    console.log("order_no", order_no, 'price', price * 100, 'openid', openid, 'user_id', user_id);
     let body = "微信支付"
-    let url = '&body=' + body + '&total_fee=' + Number(moneys) + '&out_trade_no=' + order + '&configId=' + configId + '&trade_type=JSAPI&msgid=' + msgid;
+    let url = '&body=' + body + '&total_fee=' + price * 100 + '&out_trade_no=' + order_no + '&configId=104&trade_type=JSAPI&msgid=' + openid;
     wx.request({
       url: 'https://pays.zztv021.com/payment/wxpay/wxpay.ashx?action=jspayparam' + url,
-      success:  (res)=> {
+      success: (res) => {
         wx.hideLoading()
         wx.requestPayment({
           'timeStamp': res.data.timeStamp,
@@ -434,23 +433,25 @@ Page({
           'package': res.data.package,
           'signType': res.data.signType,
           'paySign': res.data.paySign,
-          'success': (item)=>{
+          success: (item) => {
             if (item.errMsg == "requestPayment:ok") {
               callback && callback(item)
-            }else {
+            } else {
+              wx.hideLoading()
               wx.showToast({
                 title: item.errMsg,
                 icon: 'none',
               })
             }
           },
-          'fail': (item)=> {
+          fail: () => {
+            wx.hideLoading()
             wx.showToast({
               title: '取消支付！',
               icon: 'none'
             })
-            //取消支付 民宿订单
-            wx.redirectTo({
+            //取消支付 商品订单
+            wx.switchTab({
               url: '../homestayOrder/index?index=1',
             })
           }

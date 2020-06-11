@@ -30,7 +30,7 @@
       <textarea bindblur="bindTextAreaBlur" auto-height placeholder="请输入退款说明" value="{{textarea}}"/>
     </view>
     <view class="ExplanationBox">
-      <view wx:for="{{refund_voucher}}" class='img_item'>
+      <view wx:for="{{ImgList}}" class='img_item' wx:key="index">
         <image src='{{item.img_url}}' mode='aspectFill' data-index="{{index}}" data-src="{{item.img_url}}" catchtap="preview" />
       </view>
       <view class="Explanationchildtw">
@@ -45,12 +45,15 @@
   <view class="boxdialog" wx:if="{{boolean}}" catchtap="boxdialog">
     <view>
       <view class="boxdialog_bottom" wx:if="{{refund}}" catchtap="boxdialog_bottom">
-        <view class="bottbox" catchtap="onlytype" data-text="仅退款"  data-id="1">仅退款</view>
-        <view class="bottbox" catchtap="onlytype" data-text="退货退款" data-id="2" >退货退款</view>
+        <block wx:for="{{type_list}}" wx:key="index">
+          <view class="bottbox" catchtap="onlytype" data-text="{{item.title}}"  data-id="{{item.id}}">{{item.title}}</view>
+        </block>
         <view class="bottboxqx" catchtap="boxdialog">取消</view>
       </view>
       <view class="boxdialog_bottomon" wx:else="" catchtap="boxdialog_bottom">
-        <view class="bottboxon" catchtap="notOnlytype" data-text="{{item.title}}" data-id="{{item.id}}" wx:for="{{refundReasonList}}">{{item.title}}</view>
+        <block wx:for="{{reason_list}}" wx:key="index">
+            <view class="bottboxon" catchtap="notOnlytype" data-text="{{item.title}}" data-id="{{item.id}}">{{item.title}}</view>
+        </block>
         <view class="hr"></view>
         <view class="bottboxqx" catchtap="boxdialog">取消</view>
       </view>

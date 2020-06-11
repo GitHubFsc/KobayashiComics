@@ -1,4 +1,4 @@
-import {get,post,getSign} from './http.js';
+import { get, post, getSign} from './http.js';
 /**随机数 */
 //获取随机数
 const Rnd = () => {
@@ -200,6 +200,85 @@ const PostSubmitOrder = (data, datas) => {
 
 
 
+/**订单 */
+//我的订单
+const GetMyOrder = data => {
+  return get('api/Order/GetMyOrder', data);
+}
+//订单签收
+const GetOrderSign = data => {
+  return get('api/Order/GetOrderSign', data);
+}
+//取消订单
+const GetCanCelOrder = data => {
+  return get('api/Order/GetCanCelOrder', data);
+}
+//订单物流
+const GetOrderLogistics = data => {
+  return get('api/Order/GetOrderLogistics', data);
+}
+//订单详情
+const GetOrderDetail = data => {
+  return get('api/Order/GetOrderDetail', data);
+}
+//获取退款金额
+const GetRefoundMoney = data => {
+  return get('api/Order/GetRefoundMoney', data);
+}
+//申请退款-退款类型/退款原因
+const GetRefoundType = data => {
+  return get('api/Order/GetRefoundType', data);
+}
+//申请退款
+const PostOrderRefound = (data, datas) => {
+  return post('api/Order/PostOrderRefound', data, datas);
+}
+
+/**评价 */
+//商品评价
+const GetEvalList = data => {
+  return get('api/Eval/GetEvalList', data);
+}
+//订单-添加评价
+const PostAddEval = (data, datas) => {
+  return post('api/Eval/PostAddEval', data, datas);
+}
+
+
+
+
+
+
+/**售后订单 */
+//我的售后订单
+const GetMyRefoundOrder = data => {
+  return get('api/Refound/GetMyRefoundOrder', data);
+}
+//退款订单-取消
+const RGetCanCelOrder = data => {
+  return get('api/Refound/GetCanCelOrder', data);
+}
+//退款订单详情
+const GetReturnOrderDetail = data => {
+  return get('api/Refound/GetReturnOrderDetail', data);
+}
+//快递列表
+const GetReturnExpress = data => {
+  return get('api/Refound/GetReturnExpress', data);
+}
+//退款订单-填写寄回快递单号
+const GetSetExpress = data => {
+  return get('api/Refound/GetSetExpress', data);
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -262,8 +341,27 @@ const PostHomestayReservation = (data, datas) => {
 }
 
 
-
-
+/**民宿订单 */
+//民宿订单-列表
+const GetMyHomestayOrder = data => {
+  return get('api/HomestayOrder/GetMyHomestayOrder', data);
+}
+//民宿订单-取消
+const GetCancelHomestayOrder = data => {
+  return get('api/HomestayOrder/GetCancelHomestayOrder', data);
+}
+//民宿订单详情
+const GetHomestayOrderDetail = data => {
+  return get('api/HomestayOrder/GetHomestayOrderDetail', data);
+}
+//取消退款
+const GetCancelRouteOrder = data => {
+  return get('api/HomestayOrder/GetCancelRouteOrder', data);
+}
+//民宿订单-申请退款
+const PostHomestayReturnOrder = (data, datas) => {
+  return post('api/HomestayOrder/PostHomestayReturnOrder', data, datas);
+}
 
 
 
@@ -471,6 +569,42 @@ export {
 
 
 
+
+  /**订单 */
+  GetMyOrder,
+  GetOrderSign,
+  GetCanCelOrder,
+  GetOrderLogistics,
+  GetOrderDetail,
+  GetRefoundMoney,
+  GetRefoundType,
+  PostOrderRefound,
+
+
+
+  /**评论 */
+  GetEvalList, 
+  PostAddEval,
+
+
+
+  
+  /**售后订单 */
+  GetMyRefoundOrder,
+  RGetCanCelOrder,
+  GetReturnOrderDetail,
+  GetReturnExpress,
+  GetSetExpress,
+
+
+
+
+
+
+
+
+
+
   /**民宿 */
   GetHomestayBanner,
   GetBoutiqueHomestay,
@@ -483,6 +617,15 @@ export {
   GetHomestayNight,
   GetHomestayMarke,
   PostHomestayReservation,
+
+
+
+  /**民宿订单 */
+  GetMyHomestayOrder ,
+  GetCancelHomestayOrder  ,
+  GetHomestayOrderDetail,
+  GetCancelRouteOrder  ,
+  PostHomestayReturnOrder,
 
 
 
@@ -516,7 +659,7 @@ export {
 
 
 
-  
+
 
   /**收藏 */
   GetMyCollection,

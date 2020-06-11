@@ -52,11 +52,11 @@ Page({
     let end_time = new Date(year + '-' + selectOut ).getTime();
     that.getReservationTime(res=>{
       console.log(res);
-      wx.navigateTo({
-        url: './../homestaySubmitOrder/index?id=' + that.data.homestayId + 
-        '&homesta_sku_id=' +that.data.homesta_sku_id + '&begin_time=' + begin_time
-        +'&end_time='+ end_time
-      })
+      // wx.navigateTo({
+      //   url: './../homestaySubmitOrder/index?id=' + that.data.homestayId + 
+      //   '&homesta_sku_id=' +that.data.homesta_sku_id + '&begin_time=' + begin_time
+      //   +'&end_time='+ end_time
+      // })
       res.data.Response.map(item=>{
         let timespan = Number(item.timespan);
         if(timespan>=begin_time&&timespan<=end_time){
@@ -67,13 +67,16 @@ Page({
             })
             return false
           }else{
+            
           }
         }
       })
       that.getHomestayNight(res=>{
         console.log(res);
          wx.navigateTo({
-          url: './../homestaySubmitOrder/index?id' + that.data.homestayId
+          url: './../homestaySubmitOrder/index?id=' + that.data.homestayId + 
+            '&homesta_sku_id=' +that.data.homesta_sku_id + '&begin_time=' + begin_time
+            +'&end_time='+ end_time
         })
       })
     })
@@ -160,7 +163,7 @@ Page({
   onLoad: function (options) {
     let user_id = wx.getStorageSync('userId');
     let homestayId = options.id;
-    let selectInto = utils.formatNumber(new Date().getMonth() + 1) + "月" + utils.formatNumber(new Date().getDay()) + '日',
+    let selectInto = utils.formatNumber(new Date().getMonth() + 1) + "月" + utils.formatNumber(new Date().getDate()) + '日',
       selectOut;
     let year = new Date().getFullYear();
     let time1 = year + '-' + selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2");
@@ -339,11 +342,11 @@ Page({
     })
   },
   //民宿预订-计算共入住夜晚数量
-  getHomestayNight() {
+  getHomestayNight(callback) {
     let { homestayId, homesta_sku_id} = this.data;
     let user_id = wx.getStorageSync('userId')
-    let selectInto = this.data.selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2"),
-      selectOut = this.data.selectOut.replace(/(\d{2})\月(\d{2})\日/, "$1-$2");
+    let selectInto = this.data.selectInto.replace(/(\d{2})\月(\d{2})\日/, "$1-$2") + ' 00:00',
+      selectOut = this.data.selectOut.replace(/(\d{2})\月(\d{2})\日/, "$1-$2") + ' 00:00';
     let year = new Date().getFullYear();
     let begin_time = new Date(year + '-' + selectInto).getTime();
     let end_time = new Date(year + '-' + selectOut).getTime();

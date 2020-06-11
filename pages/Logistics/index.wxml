@@ -2,13 +2,13 @@
 <view class="container Logistics">
 	<view class='g_con'>
 		<view class='topExpress'>
-			<view class='topExpress-middle'>订单编号：8923892489</view>
-			<view class='topExpress-company'>快递公司：申通快递</view>
-			<view class='topExpress-phone'>物流电话：<text>95554</text></view>
+			<view class='topExpress-middle'>订单编号：{{Logistics.order_no}}</view>
+			<view class='topExpress-company'>快递公司：{{Logistics.courier_title}}</view>
+			<view class='topExpress-phone'>物流电话：<text>{{Logistics.courier_mobile}}</text></view>
 		</view>
 		<!-- 物流时间轴 -->
 		<view class='expressRecord'>
-      <view class='topExpress-phone'>物流单号：<text>892389238</text></view>
+      <view class='topExpress-phone'>物流单号：<text>{{Logistics.courier_mobile}}</text></view>
 			<!-- 单个物流记录点时间轴：当前正在进行的物流状态 -->
 			<view class='expressRecord-single-close'>
 				<!-- 左边子容器 -->
@@ -26,8 +26,8 @@
           <view class='getAddress-time'>2020-12-12 12:00</view>
 				</view> -->
 				<view class='expressRecord-text'>
-					<view class='getAddress-text'>订单已经到达配送点，详情请联系快递员电话：12891389</view>
-          <view class='getAddress-time'>2020-12-12 12:00</view>
+					<view class='getAddress-text'>{{Start.content}}</view>
+          <view class='getAddress-time'>{{Start.time}}</view>
 				</view>
 				<!-- 相对父级容器绝对定位的日期 -->
 				<!-- <view class='expressRecord-dating'>
@@ -37,6 +37,7 @@
 			</view>
 
 			<!-- 单个物流记录点时间轴：已经过去的物流状态 -->
+			<block wx:for="{{Logistics.courier_list}}" wx:key="index"></block>
 			<view class='expressRecord-single-close'>
 				<view class='expressRecord-single-noReach-online-top-close'>
 					<view class='online-top-close'></view>
@@ -44,8 +45,8 @@
 					<view class='online-bottom'></view>
 				</view>
 				<view class='expressRecord-text'>
-					<view class='getAddress-text'>订单已经到达配送点，详情请联系快递员电话：12891389</view>
-          <view class='getAddress-time'>2020-12-12 12:00</view>
+					<view class='getAddress-text'>{{item.content}}</view>
+          <view class='getAddress-time'>{{item.time}}</view>
 				</view>
 				<!-- <view class='expressRecord-date'>
 					<view class='expressRecord-date-text'>
@@ -66,8 +67,8 @@
 					<view class='online-bottom-start'></view>
 				</view>
 				<view class='expressRecord-text'>
-					<view class='getAddress-text'>订单已经到达配送点，详情请联系快递员电话：12891389</view>
-          <view class='getAddress-time'>2020-12-12 12:00</view>
+					<view class='getAddress-text'>{{End.content}}</view>
+          <view class='getAddress-time'>{{End.time}}</view>
 				</view>
 				<!-- <view class='expressRecord-date'>
 					<view class='expressRecord-date-text'>

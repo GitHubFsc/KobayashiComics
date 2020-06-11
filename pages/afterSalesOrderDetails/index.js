@@ -1,48 +1,42 @@
 // pages/orderDetails/index.js
-
+import { GetReturnOrderDetail, RGetCanCelOrder, GetReturnExpress,GetSetExpress, getSign} from '../../utils/axios.js';
+var utils = require('../../utils/util.js');
 const app = getApp()
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    order_no: 1,
+    return_order_id : '',
+    order_id: '',
     dialog_box: false,
     select_box: false,
-    CourierCompany: "选择快递公司",
-    express_no: null,
     orderDetails: null,
-    imgArr :[],
+    CourierCompany: "选择快递公司",
     CourierCompanys :[],
-    express_id : []
+    category_id :'',
+    express_id : [],
+    express_no: null,
   },
 
+  /**路由 */
+  //重新申请
+  router_applyAgain(e) {
+    let that = this;
+    let order_goods_id = e.currentTarget.dataset.gid,
+    order_id  = that.data.order_id ;
+    wx.navigateTo({
+      url: '../applyForSale/index?order_id=' + order_id + '&order_goods_id=' + order_goods_id,
+    })
+  },
+  /**事件 */
+  //打开快递公司下拉
   CourierCompany() {
     this.setData({
       select_box: !this.data.select_box
     })
   },
-  CancelRefund() {
-    let {
-      order_no
-    } = this.data;
-    GetCancelRequest({
-      user_id: app.globalData.userid,
-      order_no
-    }).then(res => {
-      console.log("res",res);
-      if(res.data.ErrCode==0){
-        wx.redirectTo({
-          url: '../afterSalesOrders/index' 
-        })
-      }
-    })
-  },
-  applyAgain(){
-    wx.navigateTo({
-      url: '../applyForSale/index?order_no='+this.data.order_no,
-    })
-  },
+  //快递公司选择
   select_box(e) {
     this.setData({
       express_id : e.currentTarget.dataset.id,
@@ -50,97 +44,59 @@ Page({
       select_box: false
     })
   },
+  //填写寄回单号
   SingleNumber() {
     this.setData({
       dialog_box: true
     })
-    GetExpressList({
-      rnd :Rnd()
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log("res",res);
-        this.setData({
-          CourierCompanys: res.data.Response
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
   },
+  //关闭快递填写弹框
   cancel() {
     this.setData({
       dialog_box: false
     })
   },
+  //快递单号失焦
   bindKeyInput(e) {
     this.setData({
-      SingleNumber: e.detail.value
+      express_no: e.detail.value
     })
   },
-  submit() {
-    this.setData({
-      dialog_box: false
-    })
-    let {order_no,express_id,express_no} = this.data;
-    GetGetExpressOrderNumber({
-      user_id: app.globalData.userid,
-      order_no,
-      express_no,
-      express_id
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log("res",res);
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
+  //提交快递单号
+  submit(){
+    let that = this;
+    that.getSetExpress(res=>{
+      ththatis.setData({
+        dialog_box: false
+      })
     })
   },
-  getData(){
-    let {
-      order_no
-    } = this.data;
-    GetMyApplyForRefundsDetails({
-      user_id: app.globalData.userid,
-      order_no
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        this.setData({
-          orderDetails : res.data.Response,
-          imgArr : res.data.Response.refund_voucher.split(",")
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
+  //取消申请
+  cancelOrder(){
+    let that = this;
+    let id = that.data.return_order_id;
+    that.getCanCelOrder(id,res=>{
+      wx.navigateBack({
+        delta: 1
+      })
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      order_no: options.orderno
-    })
-    if (app.globalData.userid) {
-      this.getData()
-    } else {
-      app.callbackuserid = res => {
-        this.getData()
-      }
+    if(options){
+      this.setData({
+        return_order_id: options.id,
+        order_id : options.order_id,
+      })
+      wx.showLoading({
+        title: '加载中...',
+      })
+      this.getReturnOrderDetail(options.id);
+      this.getReturnExpress();
     }
-
+   
   },
 
   /**
@@ -190,5 +146,96 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  /**API */
+
+  //订单详情
+  getReturnOrderDetail(id){
+    let user_id = wx.getStorageSync('userId');
+    GetReturnOrderDetail({
+      user_id : user_id,
+      return_order_id : id,
+      sign : getSign(`user_id=${user_id}&return_order_id=${id}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        res.data.Response.add_timespan = res.data.Response.add_timespan ? utils.formatTime(new Date(Number(res.data.Response.add_timespan))) : 0;
+        res.data.Response.order_add_timespan = res.data.Response.order_add_timespan ? utils.formatTime(new Date(Number(res.data.Response.order_add_timespan))) : 0;
+        res.data.Response.pay_add_timespan = res.data.Response.pay_add_timespan ? utils.formatTime(new Date(Number(res.data.Response.pay_add_timespan))) : 0;
+        res.data.Response.delivery_timespan = res.data.Response.delivery_timespan ? utils.formatTime(new Date(Number(res.data.Response.delivery_timespan))) : 0;
+        this.setData({
+          orderDetails: res.data.Response
+        })
+        wx.hideLoading()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none'
+        })
+      }
+    })
+  },
+  //退款订单-取消
+  getCanCelOrder(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    RGetCanCelOrder({
+      user_id :user_id ,
+      return_order_id : id,
+      sign: getSign(`user_id=${user_id}&return_order_id=${id}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //快递列表
+  getReturnExpress(){
+    GetReturnExpress({
+      rnd : 1,
+      sign : getSign(`rnd=1`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          CourierCompanys : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
+  //提交快递单号
+  getSetExpress(callback){
+    let user_id = wx.getStorageSync('userId');
+    let {return_order_id,category_id,express_no,} = this.data;
+    GetSetExpress({
+      user_id : user_id,
+      return_order_id : return_order_id,
+      category_id : category_id,
+      express_no : express_no,
+      sign: getSign(`user_id=${user_id}&return_order_id=${return_order_id}&category_id=${category_id}&express_no=${express_no}`)
+    }).then(res=>{
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+  },
 })
