@@ -36,82 +36,7 @@ Page({
       url: '../integral/index',
     })
   },
-  /**API */
-  //获取手机号
-  getPhoneNumber(e) {
-    let that = this;
-    that.setData({
-      loading: true,
-    })
-    app.getPhoneNumber(e,(data)=>{
-      console.log("手机号回调",data)
-      if(data){
-        that.setData({
-          steps : 1 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //获取用户信息
-  getUserInfo(e) {
-    let that = this;
-    that.setData({
-      loading: true
-    })
-    app.getUserInfo(e,(data)=>{
-      console.log("用户回调",data)
-      if(data){
-        that.setData({
-          steps : 2 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //用户登录
-  UserLogin() {
-    var that = this;
-    app.login((data)=>{
-      console.log("登录成功",data)
-      if(data){
-        that.setData({
-          steps : 3 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //我的主页
-  getMyHomePage(){
-    let user_id = wx.getStorageSync('userId');
-    GetMyHomePage({
-      user_id: user_id,
-      sign: getSign(`user_id=${user_id}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        this.setData({
-          userInfo : res.data.Response
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  /**WX API */
-  //获取收货地址
-  getAddress(){
-    wx.chooseAddress({
-      success (res) {
-        console.log("收件人姓名",res.userName)
-        console.log("收件人号码",res.telNumber)
-        console.log("收件人地址",res.provinceName+res.cityName+res.detailInfo)
-      }
-    })
-  },
+
   //
   /**
    * 生命周期函数--监听页面加载
@@ -122,6 +47,7 @@ Page({
       this.setData({
         steps : 3 
       })
+      this.getMyHomePage()
     } else {
       this.setData({
         steps : 0
@@ -176,5 +102,82 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+    /**API */
+  //获取手机号
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+      loading: true,
+    })
+    app.getPhoneNumber(e,(data)=>{
+      console.log("手机号回调",data)
+      if(data){
+        that.setData({
+          steps : 1 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //获取用户信息
+  getUserInfo(e) {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+    app.getUserInfo(e,(data)=>{
+      console.log("用户回调",data)
+      if(data){
+        that.setData({
+          steps : 2 ,
+          loading: false,
+        })
+      }
+    })
+  },
+  //用户登录
+  UserLogin() {
+    var that = this;
+    app.login((data)=>{
+      console.log("登录成功",data)
+      if(data){
+        that.setData({
+          steps : 3 ,
+          loading: false,
+        })
+        this.getMyHomePage()
+      }
+    })
+  },
+  //我的主页
+  getMyHomePage(){
+    let user_id = wx.getStorageSync('userId');
+    GetMyHomePage({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          userInfo : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  /**WX API */
+  //获取收货地址
+  getAddress(){
+    wx.chooseAddress({
+      success (res) {
+        console.log("收件人姓名",res.userName)
+        console.log("收件人号码",res.telNumber)
+        console.log("收件人地址",res.provinceName+res.cityName+res.detailInfo)
+      }
+    })
+  },
 })

@@ -1,4 +1,6 @@
 // pages/news/index.js
+import {GetNewsCount,getSign} from '../../utils/axios.js';
+import utils from './../../utils/util'
 const app = getApp()
 Page({
 
@@ -6,8 +8,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    steps : 3,
-    loading: false
+    steps: 3,
+    loading: false,
+    sys_count : 0,
+    comments_count : 0,
   },
   /*路由*/
   //系统消息
@@ -22,52 +26,6 @@ Page({
       url: '../commentMessage/index',
     })
   },
-  /**API */
-  //获取手机号
-  getPhoneNumber(e) {
-    let that = this;
-    that.setData({
-      loading: true,
-    })
-    app.getPhoneNumber(e,(data)=>{
-      console.log("手机号回调",data)
-      if(data){
-        that.setData({
-          steps : 1 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //获取用户信息
-  getUserInfo(e) {
-    let that = this;
-    that.setData({
-      loading: true
-    })
-    app.getUserInfo(e,(data)=>{
-      console.log("用户回调",data)
-      if(data){
-        that.setData({
-          steps : 2 ,
-          loading: false,
-        })
-      }
-    })
-  },
-  //用户登录
-  UserLogin() {
-    var that = this;
-    app.login((data)=>{
-      console.log("登录成功",data)
-      if(data){
-        that.setData({
-          steps : 3 ,
-          loading: false,
-        })
-      }
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -75,11 +33,12 @@ Page({
     let user_id = wx.getStorageSync('userId');
     if (user_id) {
       this.setData({
-        steps : 3 
+        steps: 3
       })
+      this.getNewsCount()
     } else {
       this.setData({
-        steps : 0
+        steps: 0
       })
     }
   },
@@ -95,7 +54,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getNewsCount()
   },
 
   /**
@@ -131,5 +90,73 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //获取手机号
+  getPhoneNumber(e) {
+    let that = this;
+    that.setData({
+      loading: true,
+    })
+    app.getPhoneNumber(e, (data) => {
+      console.log("手机号回调", data)
+      if (data) {
+        that.setData({
+          steps: 1,
+          loading: false,
+        })
+      }
+    })
+  },
+  //获取用户信息
+  getUserInfo(e) {
+    let that = this;
+    that.setData({
+      loading: true
+    })
+    app.getUserInfo(e, (data) => {
+      console.log("用户回调", data)
+      if (data) {
+        that.setData({
+          steps: 2,
+          loading: false,
+        })
+      }
+    })
+  },
+  //用户登录
+  UserLogin() {
+    var that = this;
+    app.login((data) => {
+      console.log("登录成功", data)
+      if (data) {
+        that.setData({
+          steps: 3,
+          loading: false,
+        })
+        this.getNewsCount()
+      }
+    })
+  },
+  //系统消息/评论消息/未读消息总数-未读数量
+  getNewsCount(){
+    let user_id = wx.getStorageSync('userId');
+    GetNewsCount({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          sys_count : res.data.Response.sys_count,
+          comments_count : res.data.Response.comments_count,
+          sum_count : res.data.Response.sum_count,
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

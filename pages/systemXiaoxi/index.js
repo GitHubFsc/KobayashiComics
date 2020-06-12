@@ -1,18 +1,21 @@
 // pages/systemXiaoxi/index.js
+import {GetSysNews,getSign} from '../../utils/axios.js';
+import utils from './../../utils/util'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    page : 1,
+    pagesize : 10
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getSysNews()
   },
 
   /**
@@ -62,5 +65,30 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  //系统消息
+  getSysNews(){
+    let user_id = wx.getStorageSync('userId'),
+        {page,pagesize} = this.data;
+    GetSysNews({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign : getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        res.data.Response.map(arr=>{
+          arr.add_timespan = utils.formatTime(new Date(Number(res.data.Response.add_timespan)));
+        })
+        this.setData({
+          News : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

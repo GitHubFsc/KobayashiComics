@@ -1,13 +1,23 @@
 // pages/commentMessage/index.js
+import {GetCommentsNews,getSign} from '../../utils/axios.js';
+import utils from './../../utils/util'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    page: 1,
+    pagesize: 10
   },
 
+  /**路由 */
+  //社区详情
+  router_communityDetails(e) {
+    wx.navigateTo({
+      url: '../communityDetails/index?id=' + e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -62,5 +72,30 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  //系统消息
+  getCommentsNews() {
+    let user_id = wx.getStorageSync('userId'),
+      { page,  pagesize } = this.data;
+      GetCommentsNews({
+      user_id: user_id,
+      page: page,
+      pagesize: pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        res.data.Response.map(arr => {
+          arr.add_timespan = utils.formatTime(new Date(Number(res.data.Response.add_timespan)));
+        })
+        this.setData({
+          Comments: res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

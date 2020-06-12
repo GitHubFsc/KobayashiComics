@@ -11,37 +11,45 @@
 		<view class="tab_ctn">
 			<block wx:for="{{recommend}}" wx:key="*this">
 				<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
-					<block wx:for="{{8}}" wx:key="*this">
-						<view class="order" data-order_no="{{item}}" catchtap="router_homestayorderDetails">
+					<block wx:for="{{OrderList}}" wx:for-index="idx" wx:for-item="arr" wx:key="idx">
+						<view class="order" data-id="{{arr.id}}" catchtap="router_homestayorderDetails">
 								<view class="title">
-									<view class="orderId">民宿编号：88888888</view>
-									<view class="shop_status">{{index==0?"已完成":index==1?"待支付":index==2?"未住宿":index==3?"未住宿-商家已接单":index==4?"被拒绝":index==5?"退款中":index==6?"退款成功":index==7?"退款失败":"已完成"}}</view>
+									<view class="orderId">民宿编号：{{arr.order_no}}</view>
+									<view class="shop_status" wx:if="{{arr.status==1}}">待支付</view>
+									<view class="shop_status" wx:if="{{arr.status==2}}">未住宿-商家已接单</view>
+									<view class="shop_status" wx:if="{{arr.status==3}}">未住宿</view>
+									<view class="shop_status" wx:if="{{arr.status==8}}">被拒绝</view>
+									<view class="shop_status" wx:if="{{arr.status==6&&arr.is_return==1}}">退款中</view>
+									<view class="shop_status" wx:if="{{arr.status==6&&arr.is_return==2}}">退款成功</view>
+									<view class="shop_status" wx:if="{{arr.status==6&&arr.is_return==3}}">退款失败</view>
+									<view class="shop_status" wx:if="{{arr.status==5}}">已完成</view>
+									<view class="shop_status" wx:if="{{arr.status==7}}">已取消</view>
 								</view>
-								<view wx:for="{{2}}" wx:key="index" class="mall">
+								<view class="mall">
 									<view class="mall_img">
-										<image src="./../images/homestay0.png"></image>
+										<image src="{{arr.img_url}}"></image>
 									</view>
 									<view class="mall_right">
-										<view class="mall_name">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
-										<view class="mall_txt">a户型</view>
-										<view class="mall_price">¥300</view>
+										<view class="mall_name">{{arr.title}}</view>
+										<view class="mall_txt">{{arr.homestay_sku_remark}}</view>
+										<view class="mall_price">¥{{arr.price}}</view>
 									</view>
 								</view>
 							<view class="btn">
-                <view wx:if="{{index==0||index==1}}">
-									<view catchtap="cancelOrder" data-order_no="{{item.order_no}}" class="btnz">取消</view>
+                <view wx:if="{{arr.status==1}}">
+									<view catchtap="cancelOrder" data-id="{{arr.id}}" class="btnz">取消</view>
 								</view>
-								<view wx:if="{{index==2||index==3}}">
-									<view catchtap="router_applyAgain" data-order_no="{{item.order_no}}" class="btnz">申请退款</view>
+								<view wx:if="{{arr.status==2||arr.status==3}}">
+									<view catchtap="router_applyAgain" data-price="{{arr.price}}" data-id="{{arr.id}}" data-hid="{{arr.order_homestay_id}}" class="btnz">申请退款</view>
 								</view>
-                <view wx:if="{{index==0||index==1}}">
-									<view catchtap="payment" class="btnz">付款</view>
+                <view wx:if="{{arr.status==1}}">
+									<view catchtap="payment" data-order_no="{{arr.order_no}}" data-price="{{arr.price}}" class="btnz">付款</view>
 								</view>
-                <view wx:if="{{index==5}}">
-									<view  class="btnz">取消退款</view>
+                <view wx:if="{{arr.status==6&&arr.is_return==1}}">
+									<view data-id="{{arr.id}}" data-rid="{{arr.return_id}}" catchtap="cancelRefund" class="btnz">取消退款</view>
 								</view>
-                <view wx:if="{{index==7}}">
-									<view catchtap="router_applyAgain" class="btnz">再次申请</view>
+                <view wx:if="{{arr.status==6&&arr.is_return==3}}">
+									<view catchtap="router_applyAgain" data-id="{{arr.id}}" data-hid="{{arr.order_homestay_id}}" class="btnz">再次申请</view>
 								</view>
 							</view>
 						</view>

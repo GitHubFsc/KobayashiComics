@@ -223,6 +223,13 @@ Page({
       })
     }
   },
+
+    /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
   //获取首页轮播图
   getIndexBanner() {
     GetIndexBanner({

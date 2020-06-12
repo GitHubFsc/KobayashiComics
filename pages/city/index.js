@@ -75,8 +75,8 @@ Page({
   positionCity(){
     let city = this.data.city;
     wx.setStorageSync('city', city);
-    wx.switchTab({
-      url: '../index/index'
+    wx.navigateBack({
+      delta: 1
     })
   },
   //选择城市

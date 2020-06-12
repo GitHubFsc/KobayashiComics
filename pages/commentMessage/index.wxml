@@ -1,15 +1,16 @@
 <!--pages/commentMessage/index.wxml-->
 <view class="container">
   <view class="hr"></view>
-  <block wx:for="{{2}}" wx:key="index">
-    <view class="comment_box">
-      <view class="cb_time">2020-02-02 12:00</view>
-      <view class="cb_title"><text>张三</text>评论我：“我对别人的评论”</view>
+  <block wx:for="{{Comments}}" wx:key="index">
+    <view class="comment_box" data-id="{{item.news_id}}" catchtap="router_communityDetails">
+      <view class="cb_time">{{item.add_timespan}}</view>
+      <view class="cb_title" wx:if="{{item.type==1}}"><text>{{item.to_user_nickname}}</text>评论<text>我</text>：“{{item.title}}”</view>
+      <view class="cb_title" wx:if="{{item.type==1}}"><text>{{item.to_user_nickname}}</text>回复<text>我</text>：“{{item.title}}”</view>
       <view class="cb_bot">
         <view  class="cb_bot_img">
-          <image src="./../images/mall1.png"></image>
+          <image src="{{item.path_type==1?item.video_img_url:item.img_url}}"></image>
         </view >
-        <view class="cb_txt">强烈安利这款马克杯，好看拿着也舒服…</view>
+        <view class="cb_txt">{{item.content}}</view>
       </view>
     </view>
   </block>

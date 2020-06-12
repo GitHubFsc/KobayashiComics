@@ -1,11 +1,16 @@
 // pages/route/index.js
+import {GetRouteList,getSign} from '../../utils/axios.js';
+import utils from '../../utils/util.js';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchIdx : 0
+    switchIdx : 1,
+    city : '',
+    page : 1,
+    pagesize : 10,
   },
   /*路由*/
   //路线详情
@@ -14,18 +19,30 @@ Page({
       url: '../routeDetalis/index?id='+e.currentTarget.dataset.id,
     })
   },
+  //选择城市
+  router_city() {
+    wx.navigateTo({
+      url: '../city/index'
+    })
+  },
   /*事件*/
   switch(e){
     let that = this;
     that.setData({
       switchIdx : e.currentTarget.dataset.index,
     })
+    this.getRouteList();
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let city = wx.getStorageSync('city')?wx.getStorageSync('city'):'上海市';
+    this.setData({
+      city : city
+    })
+    this.getRouteList()
   },
 
   /**
@@ -75,5 +92,31 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API */
+  //路线列表
+  getRouteList(){
+    let user_id = wx.getStorageSync('userId'),
+    {city,page,pagesize,switchIdx} = this.data;
+    GetRouteList({
+      user_id : user_id,
+      keywords : city,
+      type : switchIdx,
+      page : page,
+      pagesize : pagesize,
+      sign : getSign(`user_id=${user_id}&type=${switchIdx}&keywords=${city}&page=${page}&pagesize=${pagesize}`),
+    }).then(res=>{
+      if(res.data.ErrCode==0){
+        console.log(res);
+        this.setData({
+          RouteList : res.data.Response
+        })
+      }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      }
+    })
   }
 })

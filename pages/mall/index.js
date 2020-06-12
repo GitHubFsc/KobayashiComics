@@ -9,7 +9,8 @@ Page({
   data: {
     Banner :[],
     page : 1,
-    pagesize : 10
+    pagesize : 10,
+    sum_count :0,
   },
   //路由
   //农家特产等
@@ -19,6 +20,7 @@ Page({
       url: '../mallList/index?id='+ e.currentTarget.dataset.id + '&title=' +  e.currentTarget.dataset.title,
     })
   },
+  //搜索
   router_search(){
     wx.navigateTo({
       url: '../search/index'
@@ -166,6 +168,25 @@ Page({
           RecommendGoods : res.data.Response
         })
       }else{
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //系统消息/评论消息/未读消息总数-未读数量
+  getNewsCount(){
+    let user_id = wx.getStorageSync('userId');
+    GetNewsCount({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          sum_count : res.data.Response.sum_count,
+        })
+      } else {
         wx.showToast({
           title: res.data.ErrMsg,
           icon: "none"

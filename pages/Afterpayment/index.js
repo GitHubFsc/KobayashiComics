@@ -1,16 +1,27 @@
 // pages/Afterpayment/index.js
+import { GetMyLike,getSign} from '../../utils/axios.js';
+var utils = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    type :''
+    type :'',
+    page : 1,
+    pagesize : 10,
   },
   /*路由 */
+  //返回首页
   router_home(){
     wx.switchTab({
       url: './../index/index'
+    })
+  },
+  //商品详情
+  router_productDetails(e){
+    wx.navigateTo({
+      url: '../productDetails/index?id='+ e.currentTarget.dataset.id,
     })
   },
   /**
@@ -20,6 +31,7 @@ Page({
     this.setData({
       type : options.index
     })
+    this.getMyLike();
   },
   
   /**
@@ -69,5 +81,28 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**API  */
+  //猜你喜欢
+  getMyLike(){
+    let user_id = wx.getStorageSync('userId'),
+    {page,pagesize} = this.data;
+    GetSysNews({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign : getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          MyLike : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

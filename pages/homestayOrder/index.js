@@ -1,5 +1,5 @@
 // pages/homestayOrder/index.js
-import { GetMyHomestayOrder, GetCancelHomestayOrder, GetCancelRouteOrder,  getSign} from "../../utils/http"
+import { GetMyHomestayOrder, GetCancelHomestayOrder,GetCancelRouteOrder, getSign} from "../../utils/axios"
 Page({
 
   /**
@@ -8,62 +8,87 @@ Page({
   data: {
     recommend: ['全部民宿', '待支付', '未住宿', '被拒绝', '退款'],
     currentTab: 0,
-    OrderList :[],
+    OrderList: [],
+    page: 1,
+    pagesize: 10,
   },
   //路由
   //民宿订单详情
   router_homestayorderDetails(e) {
-    console.log(e.currentTarget.dataset.order_no)
+    console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: '../homestayorderDetails/index?order_no=' + e.currentTarget.dataset.order_no,
+      url: '../homestayorderDetails/index?id=' + e.currentTarget.dataset.id,
     })
   },
   //申请退款
   router_applyAgain(e) {
     let that = this;
-    let order_id = that.data.order_id,
-      order_goods_id = e.currentTarget.dataset.id;
+    let order_id = e.currentTarget.dataset.id,
+      order_goods_id = e.currentTarget.dataset.hid,
+    money = e.currentTarget.dataset.price;
     wx.navigateTo({
-      url: '../applyForSale/index?order_id=' + order_id + '&order_goods_id=' + order_goods_id + '&type=2',
+      url: '../applyForSale/index?order_id=' + order_id + '&order_goods_id=' + order_goods_id + '&money=' + money + '&type=2',
     })
   },
   //事件
   //tab 切换
   nav_tab(e) {
-    this.setData({
+    let that = this;
+    that.setData({
       currentTab: e.target.dataset.index
     })
+    that.getMyHomestayOrder()
   },
   //取消订单
   cancelOrder(e) {
     let that = this;
     let id = e.currentTarget.dataset.id;
-    that.getCanCelOrder(id, res => {
-      that.getOrderDetail();
+    wx.showLoading({
+      title: '订单取消中...',
+    })
+    that.getCancelHomestayOrder(id, res => {
+      wx.hideLoading()
+      that.getMyHomestayOrder();
     })
   },
   //付款
   payment(e) {
     let that = this;
     let data = {};
-    data.order_no = that.data.MyOrder.order_no,
-      data.price = that.data.MyOrder.price;
+    data.order_no = e.currentTarget.dataset.order_no,
+      data.price = e.currentTarget.dataset.price;
     console.log(data);
     wx.showLoading({
       mask: true,
       title: '提交中...'
     })
-    // that.postWeChatPay(data, res => {
-    //   that.getMyHomestayOrder();
-    // })
+    that.postWeChatPay(data, res => {
+      that.getMyHomestayOrder();
+    })
   },
+  //取消退款
+  cancelRefund(e){
+    console.log(e);
+    let that = this;
+    let rid = e.currentTarget.dataset.rid,
+    id = e.currentTarget.dataset.id;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    that.getCancelRouteOrder(rid,id,res=>{
+      wx.hideLoading()
+      that.getMyHomestayOrder();
+    })
+  },  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      currentTab: options.index
-    })
+    if (options.index) {
+      this.setData({
+        currentTab: options.index
+      })
+    }
     this.getMyHomestayOrder()
   },
 
@@ -117,14 +142,15 @@ Page({
   },
   //我的民宿订单
   getMyHomestayOrder() {
-    let user_id = wx.getStorageSync('user_id'),
-      { page, pagesize, currentTab } = this.data;
+    let user_id = wx.getStorageSync('userId'),
+      { page, pagesize, currentTab } = this.data,
+      type = currentTab==3?8:currentTab==4?6:currentTab;
     GetMyHomestayOrder({
       user_id: user_id,
       page: page,
       pagesize: pagesize,
-      type: currentTab,
-      sign: getSign(`user_id=${usre_id}&page=${page}&pagesize=${pagesize}&type=${currentTab}`)
+      type: type,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}&type=${type}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
@@ -141,11 +167,11 @@ Page({
   },
   //民宿订单-取消
   getCancelHomestayOrder(id, callback) {
-    let user_id = wx.getStorageSync('user_id');
+    let user_id = wx.getStorageSync('userId');
     GetCancelHomestayOrder({
       user_id: user_id,
       order_id: id,
-      sign: getSign(`user_id=${usre_id}&order_id=${id}`)
+      sign: getSign(`user_id=${user_id}&order_id=${id}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
@@ -160,12 +186,12 @@ Page({
   },
   //取消退款
   getCancelRouteOrder(rid, id, callback) {
-    let user_id = wx.getStorageSync('user_id');
+    let user_id = wx.getStorageSync('userId');
     GetCancelRouteOrder({
       user_id: user_id,
       order_id: id,
       return_order_id: rid,
-      sign: getSign(`user_id=${usre_id}&order_id=${id}&return_order_id=${rid}`)
+      sign: getSign(`user_id=${user_id}&order_id=${id}&return_order_id=${rid}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);

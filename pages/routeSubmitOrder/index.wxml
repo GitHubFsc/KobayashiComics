@@ -3,12 +3,12 @@
 	<view class="commoditys">
 		<view class="commodity_top">
 			<view class="ct_img">
-				<image src="./../images/homestay0.png"></image>
+				<image src="{{RouteDetail.imglist[0].img_url}}"></image>
 			</view>
 			<view class="ct_right">
-				<view class="ct_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
+				<view class="ct_title">{{RouteDetail.title}}</view>
 				<view class="ct_price">
-					<view class="price">¥300</view>
+					<view class="price">¥{{RouteDetail.price}}</view>
 					<view>x1</view>
 				</view>
 			</view>
@@ -16,30 +16,35 @@
 		<view class="commodity_information">
       <view class="ci_cell">
 				<view>预定人姓名</view>
-				<view><input type="text" placeholder="请输入预定人的姓名" /></view>
+				<view><input type="text" placeholder="请输入预定人的姓名" value="{{user_name}}" data-model="user_name" bindinput="inputWatch" /></view>
 			</view>
       <view class="ci_cell">
 				<view>联系方式</view>
-				<view><input type="number" placeholder="请输入联系方式" /></view>
+				<view><input type="number" placeholder="请输入联系方式" value="{{user_phone}}" data-model="user_phone" bindinput="inputWatch" /></view>
 			</view>
       <view class="ci_cell">
 				<view>预定人数</view>
-				<view><input type="text" placeholder="请填写预定人数" /></view>
+				<view><input type="text" placeholder="请填写成人人数" value="{{people_num}}" data-model="people_num" bindinput="inputWatch" /></view>
+        <view>人</view>
+			</view>
+			<view class="ci_cell">
+				<view>预定人数</view>
+				<view><input type="text" placeholder="请填写儿童人数" value="{{children_num}}" data-model="children_num" bindinput="inputWatch" /></view>
         <view>人</view>
 			</view>
 			<view class="ci_cell" catchtap="IntoOtu">
 				<view>预定开始日期</view>
-				<view><input type="text" placeholder="请选择预定开始时间" value="{{IntoTime}}" /></view>
+				<view><input type="text" placeholder="请选择预定开始时间" value="{{start_time}}"/></view>
 			</view>
 		</view>
 		<view class="commodity_discount">
 			<view class="cd_cell">
-				<view>住宿费</view>
-				<view>¥300</view>
+				<view>路线费</view>
+				<view>¥{{Route.sum_price}}</view>
 			</view>
 			<view class="cd_cell">
 				<view>优惠券</view>
-				<view class="cdc_txt">-¥10</view>
+				<view class="cdc_txt">-¥{{}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
@@ -49,24 +54,24 @@
 				<view>
 					<switch class="switch" type="switch" color="#CB0101"  bindchange="switchChange" />
 				</view>
-				<view>100积分可抵扣10元</view>
-				<view class="price">-¥10</view>
+				<view>{{Route.point}}积分可抵扣{{Route.discount_point_money}}元</view>
+				<view class="price">-¥{{Route.point_discount_money}}</view>
 			</view>
 			<view class="cd_cell" catchtap="router_invoice">
 				<view>发票</view>
-				<view class="cdc_txt">不要发票</view>
+				<view class="cdc_txt">{{invoice.title?invoice.title:'不要发票'}}</view>
 				<view class="more">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
 			</view>
 			<view class="cd_cell">
 				<view>商品总额</view>
-				<view class="price">¥280</view>
+				<view class="price">¥{{Route.total_price}}</view>
 			</view>
 		</view>
 	</view>
 	<view class="topay">
-		<view>实际支付：<text class="topay_price">¥280</text></view>
+		<view>实际支付：<text class="topay_price">¥{{Route.total_price}}</text></view>
 		<view catchtap="router_topay">去支付</view>
 	</view>
 	<view class="calendar_box" hidden="{{calendar_box}}" catchtap="close">
@@ -76,10 +81,12 @@
 					<image src="./../icon/close.png"></image>
 				</view>
 				<view>请选择日期</view>
-				<view class="calendar_txt" catchtap="">清空</view>
+				<view class="calendar_txt" catchtap="empty">清空</view>
 			</view>
-			<view class="calendar" hidden="{{calendar}}">
-				<Calendar workerClockData="{{workerClockData}}"></Calendar>
+			<view class="calendar_nav">
+			</view>
+			<view class="calendar" hidden="{{!calendar}}">
+				<calendar id="calendarB" calendarConfig="{{calendarConfigB}}" bind:afterTapDay="afterTapDayB" bind:whenChangeMonth="whenChangeMonthB" bind:onTapDay="onTapDayB" bind:afterCalendarRender="afterCalendarRenderB"></calendar>
 			</view>
 		</view>
 	</view>

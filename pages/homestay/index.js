@@ -1,12 +1,11 @@
 // pages/homestay/index.js
 import { GetHomestayBanner, GetBoutiqueHomestay, GetHomestay,GetReservationTime, GetHomestayNight,getSign} from '../../utils/axios.js';
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    city:'',
+    city:'上海市',
     banner :[],
     boutique:[],
     recommend: [],
@@ -33,7 +32,7 @@ Page({
   onLoad: function (options) {
     let city = wx.getStorageSync('city');
     this.setData({
-      city : city
+      city : city?city :'上海市'
     })
     this.getHomestayBanner();  
     this.getBoutiqueHomestay(city);
@@ -98,6 +97,8 @@ Page({
   onShareAppMessage: function () {
 
   },
+
+  /**API */
   //民宿banner
   getHomestayBanner() {
     GetHomestayBanner({

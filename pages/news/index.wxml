@@ -6,14 +6,14 @@
 				<image src="./../icon/systemNews.png"></image>
 			</view>
 			<view class="news_title">系统消息</view>
-			<view class="news_num">1</view>
+			<view class="news_num" wx:if="{{sys_count>0}}">{{sys_count}}</view>
 		</view>
 		<view class="news" catchtap="router_commentMessage">
 			<view class="news_img">
 				<image src="./../icon/commentNews.png"></image>
 			</view>
 			<view class="news_title">评论消息</view>
-			<view class="news_num">1</view>
+			<view class="news_num" wx:if="{{comments_count>0}}">{{comments_count}}</view>
 		</view>
 		<view class="news">
 			<button open-type="contact">
@@ -21,7 +21,7 @@
 					<image src="./../icon/serviceNews.png"></image>
 				</view>
 				<view class="news_title">客服消息</view>
-				<view class="news_num">1</view>
+				<!-- <view class="news_num">1</view> -->
 			</button>
 		</view>
 	</view>

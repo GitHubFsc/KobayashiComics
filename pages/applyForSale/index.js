@@ -1,5 +1,5 @@
 // pages/applyForSale/index.js
-import { GetRefoundMoney, GetRefoundType, PostOrderRefound, getSign } from '../../utils/axios.js';
+import { GetRefoundMoney, GetRefoundType,GetCateGoryList, PostOrderRefound, PostHomestayReturnOrder,PostRouteOrder,getSign } from '../../utils/axios.js';
 var utils = require('../../utils/util.js');
 const app = getApp()
 Page({
@@ -20,7 +20,8 @@ Page({
     ImgList : [],
     amount: "",
     refund_instruction: "",
-    refundReasonList: []
+    refundReasonList: [],
+    type : 1,
   },
 
   /**事件 */
@@ -119,12 +120,29 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
-    that.postOrderRefound(res=>{
-      wx.hideLoading();
-      wx.navigateTo({
-        url: '../afterSalesOrders/index',
+    if(that.data.type==1){
+      that.postOrderRefound(res=>{
+        wx.hideLoading();
+        wx.redirectTo({
+          url: '../afterSalesOrders/index?index=4',
+        })
       })
-    })
+    }else if(that.data.type==2){
+      that.postHomestayReturnOrder(res=>{
+        wx.hideLoading();
+        wx.redirectTo({
+          url: '../homestayOrder/index?index=4',
+        })
+      })
+    }else{
+      that.postRouteOrder(res=>{
+        wx.hideLoading();
+        wx.redirectTo({
+          url: '../routeOrder/index?index=4',
+        })
+      })
+    }
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -133,10 +151,17 @@ Page({
     if(options.order_id){
       this.setData({
         order_id: options.order_id,
-        order_goods_id : options.order_goods_id
+        order_goods_id : options.order_goods_id,
+        Money : options.money?options.money:0,
+        type : options.type?options.type:1
       })
-      this.getRefoundMoney();
-      this.getRefoundType();
+      if(options.type){
+        this.getCateGoryList()
+      }else{
+        this.getRefoundType();
+        this.getRefoundMoney();
+      } 
+     
     }
   },
   /**
@@ -210,7 +235,7 @@ Page({
       }
     })
   },
-  //申请退款-退款类型/退款原因
+  //申请退款-退款类型/退款原因 商品
   getRefoundType(){
     GetRefoundType({
       rnd :1,
@@ -233,20 +258,34 @@ Page({
       }
     })
   },
-  //申请退款
+  //申请退款-退款原因 路线 民宿
+  getCateGoryList(){
+    GetCateGoryList({
+      rnd :1,
+      sign : getSign(`rnd=1`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          reason_reason: res.data.Response[0].title,
+          refund_reason_id: res.data.Response[0].id,
+          reason_list : res.data.Response,
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //商品-申请退款
   postOrderRefound(callback){
     let user_id = wx.getStorageSync('userId');
     let {amount,order_id,order_goods_id,refund_type,refund_reason_id,refund_instruction,ImgList} = this.data;
     ImgList = ImgList.map(arr=>{
       return arr.img_url
     })
-    if(amount&&refund_instruction){
-      // wx.hideLoading();
-      // wx.showToast({
-      //   title: res.data.ErrMsg,
-      //   icon: 'none'
-      // })
-    }else{
+    if(amount&&refund_instruction){}else{
       wx.hideLoading();
       wx.showToast({
         title: '请输入退款金额或退款原因',
@@ -266,6 +305,81 @@ Page({
         reason_id : refund_reason_id,
         remark : refund_instruction,
         img_url : ImgList,
+      }
+    },datas).then(res=>{
+      if(res.data.ErrCode==0){
+        callback && callback(res)
+      }else{
+        wx.hideLoading();
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none'
+        })
+      }
+    })
+  }, 
+  //民宿-申请退款
+  postHomestayReturnOrder(callback){
+    let user_id = wx.getStorageSync('userId');
+    let {amount,order_id,order_goods_id,refund_reason_id,refund_instruction} = this.data;
+    if(amount&&refund_instruction){}else{
+      wx.hideLoading();
+      wx.showToast({
+        title: '请输入退款金额或退款原因',
+        icon: 'none'
+      })
+      return false
+    }
+    let datas = [];
+    datas.push('user_id=' + user_id);
+    datas.push('sign=' + getSign(`user_id=${user_id}`));
+    PostHomestayReturnOrder({
+      body :{
+        order_id : order_id,
+        order_goods_id : order_goods_id, 
+        price : amount,
+        category_id : refund_reason_id,
+        remark : refund_instruction,
+      }
+    },datas).then(res=>{
+      if(res.data.ErrCode==0){
+        callback && callback(res)
+      }else{
+        wx.hideLoading();
+        wx.showToast({
+          title: res.data.ErrMsg + '三秒后返回上一页',
+          icon: 'none'
+        })
+        setTimeout(function () {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 3000)
+      }
+    })
+  },
+  //路线-申请退款
+  postRouteOrder(callback){
+    let user_id = wx.getStorageSync('userId');
+    let {amount,order_id,order_goods_id,refund_reason_id,refund_instruction} = this.data;
+    if(amount&&refund_instruction){}else{
+      wx.hideLoading();
+      wx.showToast({
+        title: '请输入退款金额或退款原因',
+        icon: 'none'
+      })
+      return false
+    }
+    let datas = [];
+    datas.push('user_id=' + user_id);
+    datas.push('route_order_id=' + order_id);
+    datas.push('route_order_detail_id=' + order_goods_id);
+    datas.push('sign=' + getSign(`user_id=${user_id}&route_order_id=${order_id}&route_order_detail_id=${order_goods_id}`));
+    PostRouteOrder({
+      body :{
+        money : amount,
+        category_id : refund_reason_id,
+        remark : refund_instruction,
       }
     },datas).then(res=>{
       if(res.data.ErrCode==0){

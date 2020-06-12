@@ -17,15 +17,15 @@
 		<view class="recommend">
 			<view class="recommend_tilte">猜你喜欢</view>
 			<view class="recommend_bot">
-				<block wx:for="{{8}}" wx:key="index">
-					<view class="fruit">
+				<block wx:for="{{MyLike}}" wx:key="index">
+					<view class="fruit" data-id="{{item.id}}" catchtap="router_productDetails">
 						<view class="fruit_img">
-							<image src="./../images/recommend_mall.png"></image>
+							<image src="{{item.img_url}}"></image>
 						</view>
-						<view class="fruit_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+						<view class="fruit_txt">{{item.title}}</view>
 						<view class="fruit_bottom">
-							<view class="price_now">¥200</view>
-							<view class="price_bef">¥300</view>
+							<view class="price_now">¥{{item.price}}</view>
+							<view class="price_bef">¥{{item.original}}</view>
 						</view>
 					</view>
 				</block>

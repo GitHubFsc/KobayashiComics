@@ -1,13 +1,13 @@
 <!--pages/systemXiaoxi/index.wxml-->
 <view class="container">  
   <view class="hr"></view>
-	<block wx:for="{{3}}" wx:key="index">
+	<block wx:for="{{News}}" wx:key="index">
 		<view class="systemXiaoxi_boxs">
-			<view class="systemXiaoxi_time">2019-02-20</view>
+			<view class="systemXiaoxi_time">{{item.add_timespan}}</view>
 			<view class="systemXiaoxi_box">
-				<view>订单付款成功</view>
-				<view>2019-02-20 12:00</view>
-				<view>您的订单会尽快安排发货，如果有问题可以联系在线客服，或者拨打客服电话239230</view>
+				<view>{{item.title}}</view>
+				<view>{{item.add_timespan}}</view>
+				<view>{{item.content}}</view>
 			</view>
 		</view>
 	</block>

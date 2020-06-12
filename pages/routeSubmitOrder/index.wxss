@@ -31,7 +31,7 @@
 }
 
 .ct_right {
-  width: auto;
+  width: 400rpx;
   height: auto;
   line-height: 40rpx;
 }
@@ -193,7 +193,7 @@
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: rgba(153, 153, 153, 1);
+  /* color: rgba(153, 153, 153, 1); */
   text-align: center;
 }
 .calendar_box .calendars .calendar_nav{
@@ -252,4 +252,10 @@
   line-height: 120rpx;
   text-align: center;
   color: #d40001;
+}
+.calendarTxtR{
+  color: #d40001;
+}
+.calendarTxtB{
+  color: rgba(153, 153, 153, 1);
 }

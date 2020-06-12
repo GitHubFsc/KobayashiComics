@@ -26,10 +26,26 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+const getToday = () => {
+  let date = new Date();
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  return [year, month, day].map(formatNumber).join('-');
+}
+const getTime = () =>{
+  let date = new Date();
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  return [year, month, day].map(formatNumber).join('-') + ' 00:00';
+}
 
 module.exports = {
   formatTime: formatTime,
   ymr : ymr,
   DateTime : DateTime,
-  formatNumber : formatNumber
+  formatNumber : formatNumber,
+  getToday : getToday,
+  getTime : getTime
 }

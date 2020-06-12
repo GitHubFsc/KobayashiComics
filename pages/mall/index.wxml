@@ -8,7 +8,7 @@
 		</view>
 		<view class="top_right" catchtap="router_news">
 			<image src="./../icon/mallnews.png"></image>
-			<text>1</text>
+			<text wx:if="{{sum_count>0}}">{{sum_count}}</text>
 		</view>
 	</view>
 	<!-- 轮播导航 -->

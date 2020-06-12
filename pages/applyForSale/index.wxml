@@ -9,7 +9,7 @@
     <view class="Apply">最多申请¥{{Money}}</view>
   </view>
   <view class="reason">
-    <view class="reason_box reason_boxone">
+    <view class="reason_box reason_boxone" wx:if="{{type==1}}">
       <view>选择退款类型</view>
       <view catchtap="refund" data-type="type">
         <text>{{reason_text}}</text>
@@ -27,9 +27,9 @@
   <view class="Explanation">
     <view class="Explanationchildon">退款说明 </view>
     <view class="Explanationchildon">
-      <textarea bindblur="bindTextAreaBlur" auto-height placeholder="请输入退款说明" value="{{textarea}}"/>
+      <textarea bindinput="bindTextAreaBlur" auto-height placeholder="请输入退款说明" value="{{textarea}}"/>
     </view>
-    <view class="ExplanationBox">
+    <view class="ExplanationBox" wx:if="{{type==1}}">
       <view wx:for="{{ImgList}}" class='img_item' wx:key="index">
         <image src='{{item.img_url}}' mode='aspectFill' data-index="{{index}}" data-src="{{item.img_url}}" catchtap="preview" />
       </view>

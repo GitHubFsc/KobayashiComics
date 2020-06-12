@@ -284,10 +284,66 @@ const GetSetExpress = data => {
 
 
 /**路线 */
+//路线列表
+const GetRouteList = data => {
+  return get('api/Route/GetRouteList', data);
+} 
+//路线详情
+const GetRouteDetail = data => {
+  return get('api/Route/GetRouteDetail', data);
+} 
+//路线-订单预览/计算金额
+const GetRoutePrice = data => {
+  return get('api/Route/GetRoutePrice', data);
+} 
+//路线-月份日期筛选
+const GetTimePrice = data => {
+  return get('api/Route/GetTimePrice', data);
+} 
+//路线列表
+const PostMakeRouteOrder = (data, datas) => {
+  return post('api/Route/PostMakeRouteOrder', data, datas);
+}
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+/**我的路线 */
+//我的路线
+const GetMyRouteOrder = data => {
+  return get('api/RouteOrder/GetMyRouteOrder', data);
+} 
+//路线订单详情 
+const GetRouteOrderDetail = data => {
+  return get('api/RouteOrder/GetRouteOrderDetail', data);
+}
+//取消退款
+const RGetCancelRouteOrder = data => {
+  return get('api/RouteOrder/GetCancelRouteOrder', data);
+}
+//路线订单-取消
+const GetCanRouteOrder = data => {
+  return get('api/RouteOrder/GetCanRouteOrder', data);
+}
+//退款原因
+const GetCateGoryList = data => {
+  return get('api/RouteOrder/GetCateGoryList', data);
+}
+//我的路线订单-申请退款
+const PostRouteOrder = (data, datas) => {
+  return post('api/RouteOrder/PostRouteOrder', data, datas);
+}
 
 
 
@@ -362,6 +418,24 @@ const GetCancelRouteOrder = data => {
 const PostHomestayReturnOrder = (data, datas) => {
   return post('api/HomestayOrder/PostHomestayReturnOrder', data, datas);
 }
+
+
+
+
+  /**我的消息 */
+  //系统消息/评论消息/未读消息总数-未读数量
+  const GetNewsCount = data => {
+    return get('api/Message/GetNewsCount', data);
+  }
+  //系统消息
+  const GetSysNews = data => {
+    return get('api/Message/GetSysNews', data);
+  }
+  //评论消息
+  const GetCommentsNews = data => {
+    return get('api/Message/GetCommentsNews', data);
+  }
+
 
 
 
@@ -626,6 +700,41 @@ export {
   GetHomestayOrderDetail,
   GetCancelRouteOrder  ,
   PostHomestayReturnOrder,
+
+
+
+
+
+  /**路线 */
+  GetRouteList,  
+  GetRouteDetail,  
+  GetRoutePrice,  
+  GetTimePrice,  
+  GetCateGoryList,
+  PostMakeRouteOrder,
+
+
+
+
+
+
+
+  /**我的路线 */
+  GetMyRouteOrder,
+  GetRouteOrderDetail,
+  RGetCancelRouteOrder,
+  GetCanRouteOrder,
+  PostRouteOrder,
+
+
+  /**我的消息 */
+  GetNewsCount,
+  GetSysNews,
+  GetCommentsNews,
+
+
+
+
 
 
 

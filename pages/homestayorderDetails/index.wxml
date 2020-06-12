@@ -1,71 +1,125 @@
 <!--pages/homestayorderDetails/index.wxml-->
 <view class="container">
-	<view class="refund">
-		<view class="refund_left {{order_no==0||order_no==1?'Tobepaid':'refund_img'}}">
-			<image src="../icon/wait{{order_no!=0?order_no:1}}.png"></image>
+	<!--民宿订单 头部 由于退款部分判断条件为两个 使用三木判断过于冗余现在分开来写  -->
+	<view class="refund" wx:if="{{OrderDetail.status==1}}">
+		<view class="refund_left Tobepaid">
+			<image src="../icon/wait1.png"></image>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==0||order_no==1}}">
+		<view class="refund_right">
 			<text>待支付</text><text>请在20分20秒内付款，超时订单将自动取</text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==2}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==3}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/wait8.png"></image>
+		</view>
+		<view class="refund_right">
 			<text>未住宿</text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==3}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==2}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/wait8.png"></image>
+		</view>
+		<view class="refund_right">
 			<text>未住宿-商家已接单</text><text></text>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==4}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==8}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/wait7.png"></image>
+		</view>
+		<view class="refund_right">
 			<view>被拒绝-订单已退款</view>
 			<view class="refund_txt">退款已经通过微信原路返回</view>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==5}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==6 && OrderDetail.refound.status==1}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/refund1.png"></image>
+		</view>
+		<view class="refund_right">
 			<view>退款中</view>
 			<view class="refund_txt">稍后会有工作人员审核处理</view>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==6}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==6 && OrderDetail.refound.status==2}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/refund2.png"></image>
+		</view>
+		<view class="refund_right">
 			<view>退款成功</view>
 			<view class="refund_txt">退款已经通过微信原路返回</view>
 		</view>
-		<view class="refund_right" wx:if="{{order_no==7}}">
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==6 && OrderDetail.refound.status==3}}">
+		<view class="refund_leftrefund_img">
+			<image src="../icon/refund3.png"></image>
+		</view>
+		<view class="refund_right">
 			<text>退款失败</text><text></text>
 		</view>
 	</view>
-	<view class="bgcolor">
-		<view class="Refund" wx:if="{{order_no==5||order_no==6||order_no==7}}">
-			<view class="reason_tex">申请退款时间：2019-12-12 12:00</view>
-			<view class="reason_tex">退款金额：¥380</view>
-			<view class="reason_tex" wx:if="{{order_no!=0}}">退款原因：日期选错了</view>
-			<view class="reason_tex" wx:if="{{order_no!=0}}">退款说明：我们日程有调整 想换个日期预定</view>
+	<view class="refund" wx:if="{{OrderDetail.status==7}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/wait7.png"></image>
 		</view>
-		<view class="WriteOff" wx:if="{{order_no==3}}">
-			<view class="WriteOffCode"><image src="./../images/code.png"></image></view>
-			<view>2389238949</view>
+		<view class="refund_right">
+			<text>已取消</text><text></text>
+		</view>
+	</view>
+	<view class="refund" wx:if="{{OrderDetail.status==5}}">
+		<view class="refund_left refund_img">
+			<image src="../icon/wait5.png"></image>
+		</view>
+		<view class="refund_right">
+			<text>已完成</text><text></text>
+		</view>
+	</view>
+
+
+
+	<view class="bgcolor">
+		<view class="Refund" wx:if="{{OrderDetail.status==6}}">
+			<view class="reason_tex">申请退款时间：{{OrderDetail.refound.add_timespan}}</view>
+			<view class="reason_tex">退款金额：¥{{OrderDetail.refound.money}}</view>
+			<view class="reason_tex" wx:if="{{order_no!=0}}">退款原因：{{OrderDetail.refound.reason_title}}</view>
+			<view class="reason_tex" wx:if="{{order_no!=0}}">退款说明：{{OrderDetail.refound.remark}}</view>
+		</view>
+		<view class="WriteOff" wx:if="{{OrderDetail.status==2}}">
+			<view class="WriteOffCode">
+				<canvas style="width: 65px; height: 65px;" canvas-id="myQrcode"></canvas>
+				<!-- <image src="{{OrderDetail.order_no}}"></image> -->
+			</view>
+			<view>{{OrderDetail.verification_code}}</view>
 			<view>核销码</view>
 		</view>
 		<view class="bookInformation">
 			<view class="bi_title">预定信息</view>
-      <view>入离时间：张三</view>
-      <view>入住时间：入住日14:00后</view>
-      <view>离店时间：离开日12:00点前</view>
-      <view>入住人数：2人</view>
-      <view class="bi_tenant">
-        <view>住客信息：</view>
-        <view>
-          <view>张三 23892389823</view>
-          <view>李四 348934898989</view>
-        </view>
-      </view>
+			<view>入离时间：{{OrderDetail.detail.begin_timespan}}~{{OrderDetail.detail.end_timespan}}</view>
+			<view>入住时间：入住日14:00后</view>
+			<view>离店时间：离开日12:00点前</view>
+			<view>入住人数：{{OrderDetail.detail.num}}人</view>
+			<view class="bi_tenant">
+				<view>住客信息：</view>
+				<view>
+					<block wx:for="{{OrderDetail.people}}" wx:key="index">
+						<view>{{item.name}} {{item.num}}</view>
+					</block>
+				</view>
+			</view>
 		</view>
 		<view class="commoditys">
-			<view class="commodity" wx:for="{{2}}" wx:key="*this">
+			<view class="commodity">
 				<view class="commodity_left">
-					<image src="./../images/homestay0.png"></image>
+					<image src="{{OrderDetail.detail.img_url}}"></image>
 				</view>
 				<view class="commodity_right">
-					<view class="commodity_title">美式阁楼风情小木屋泗泾佘山欢乐谷玛雅</view>
-					<view class="commodity_property">a户型</view>
+					<view class="commodity_title">{{OrderDetail.detail.title}}</view>
+					<view class="commodity_property">{{OrderDetail.detail.homestay_sku_remark}}</view>
 					<view class="commodity_money">
-						<text>¥200</text>
-						<text class="commodity_num">x1</text>
+						<text>¥{{OrderDetail.detail.price}}</text>
+						<text class="commodity_num">x{{OrderDetail.detail.homestay_num}}</text>
 						<!-- <text class="commodity_aftersale_btn" data-order_no="index" catchtap="applyAgain">售后</text> -->
 					</view>
 				</view>
@@ -74,42 +128,42 @@
 		<view class="amount">
 			<view style="border:none;">
 				<text>住宿费</text>
-				<text>¥200</text>
+				<text>¥{{OrderDetail.sum_price}}</text>
 			</view>
 			<view>
 				<text>积分</text>
-				<text>¥20</text>
+				<text>-¥{{OrderDetail.point_money}}</text>
 			</view>
 			<view>
 				<text>优惠券</text>
-				<text class="jifen">-20</text>
+				<text class="jifen">-¥{{OrderDetail.coupon_money}}</text>
 			</view>
 			<view>
 				<text>发票</text>
-				<text>{{orderDetails.point_youhui?"不要发票":orderDetails.point_youhui==0?"个人发票":"公司发票"}}</text>
+				<text>{{OrderDetail.user_invoice_type?"不要发票":OrderDetail.user_invoice_type==1?"个人发票":"公司发票"}}</text>
 			</view>
 			<view>
 				<text>实际需支付金额</text>
-				<text class="jine">¥380</text>
+				<text class="jine">¥{{OrderDetail.price}}</text>
 			</view>
 		</view>
 		<view class="order">
-			<view class="reason_tex">订单编号：89898988</view>
-			<view class="reason_tex">下单时间：2019-12-12 12:00</view>
-			<view class="reason_tex" wx:if="{{order_no!=0}}">付款时间: 2019-12-12 12:00</view>
-			<view class="reason_tex" wx:if="{{order_no!=0}}">付款方式：微信支付</view>
-			<view class="reason_tex" wx:if="{{order_no!=0}}">发货时间：2019-12-12 12:00</view>
+			<view class="reason_tex">订单编号：{{OrderDetail.order_no}}</view>
+			<view class="reason_tex">下单时间：{{OrderDetail.add_timespan}}</view>
+			<view class="reason_tex" wx:if="{{OrderDetail.status>1&&OrderDetail.status!=7}}">付款时间: {{OrderDetail.pay_add_timespan}}</view>
+			<view class="reason_tex" wx:if="{{OrderDetail.status>1}}">付款方式：{{OrderDetail.pay_way_title}}</view>
+			<view class="reason_tex" wx:if="{{OrderDetail.status == 7}}">取消时间: {{OrderDetail.cancel_timespan}}</view>
 		</view>
-		<view class="refund_btn" wx:if="{{order_no==0||order_no == 1||order_no == 2||order_no == 3||order_no == 5||order_no == 7}}">
-			<view class="Quantity" wx:if="{{order_no==0||order_no == 1}}">需支付</view>
-			<view class="Amount" wx:if="{{order_no==0||order_no == 1}}">¥200</view>
-      <view class="btns">
-        <view class="btnz" catchtap="" wx:if="{{order_no == 0||order_no == 1}}">取消预定</view>      
-				<view class="btnz" catchtap="" wx:if="{{order_no == 1||order_no == 0}}">付款</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 2||order_no == 3}}">申请退款</view>
-				<view class="btnz" catchtap="" wx:if="{{order_no == 5}}">取消退款</view>
-        <view class="btnz" catchtap="" wx:if="{{order_no == 7}}">再次申请</view>
-      </view>
+		<view class="refund_btn" wx:if="{{OrderDetail.status == 1 || OrderDetail.status == 6 || OrderDetail.status == 2 || OrderDetail.status == 3}}">
+			<view class="Quantity" wx:if="{{OrderDetail.status == 1}}">需支付</view>
+			<view class="Amount" wx:if="{{OrderDetail.status == 1}}">¥{{OrderDetail.price}}</view>
+			<view class="btns">
+				<view class="btnz" catchtap="cancelOrder" data-id="{{OrderDetail.order_id}}" wx:if="{{OrderDetail.status == 1}}">取消预定</view>
+				<view class="btnz" catchtap="payment" data-order_no="{{OrderDetail.order_no}}" data-price="{{OrderDetail.price}}" wx:if="{{OrderDetail.status == 1}}">付款</view>
+				<view class="btnz" catchtap="router_applyAgain"  wx:if="{{OrderDetail.status == 2 || OrderDetail.status == 3}}">申请退款</view>
+				<view class="btnz" catchtap="cancelRefund" data-rid="{{OrderDetail.refound.id}}" data-id="{{OrderDetail.order_id}}"  wx:if="{{OrderDetail.status == 6 && OrderDetail.refound.status==1}}">取消退款</view>
+				<view class="btnz" catchtap="router_applyAgain" wx:if="{{OrderDetail.status == 6 && OrderDetail.refound.status==3}}">再次申请</view>
+			</view>
 		</view>
 	</view>
 </view>

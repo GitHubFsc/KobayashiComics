@@ -37,9 +37,11 @@
 
 .reason {
   width: 100%;
-  height: 200rpx;
+  /* height: 200rpx; */
+  height: auto;
   background-color: #fff;
   margin-top: 20rpx;
+  padding: 5rpx 0;
 }
 
 .reason .reason_box {

@@ -1,32 +1,104 @@
 // pages/routeOrderDetails/index.js
+import { GetRouteOrderDetail, RGetCancelRouteOrder,GetCanRouteOrder,getSign } from '../../utils/axios.js';
+import utils from '../../utils/util.js';
+import qrcode from '../../utils/weapp-qrcode.js'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    order_no : null
+    order_no : null,
+    order_id : '',
+    route_order_detail_id : '',
+    return_order_id : '',
   },
-  // applyAgain(e){
-  //   wx.navigateTo({
-  //     url: '../applyForSale/index?order_no='+e.target.dataset.order_no,
-  //   })
-  // },
+
+  /**路由 */
+  //申请售后
+  router_applyAgain(e){
+    let that = this;
+    let order_id = that.data.order_id,
+      order_goods_id = that.data.route_order_detail_id,
+    money = e.currentTarget.dataset.price;
+    wx.navigateTo({
+      url: '../applyForSale/index?order_id=' + order_id + '&order_goods_id=' + order_goods_id + '&money=' + money + '&type=3',
+    })
+  },
+
+
+  //事件
+  //取消订单
+  cancelOrder(e){
+    let that = this;
+    let id = that.data.order_id,
+    data = {};
+    data.user_id = wx.getStorageSync('userId');
+    data.order_id = id;
+    data.sign = getSign(`user_id=${wx.getStorageSync('userId')}&order_id=${id}`)
+    wx.showLoading({
+      title: '订单取消中...',
+    })
+    that.getCanRouteOrder(data, res => {
+      wx.hideLoading()
+      that.getRouteOrderDetail();
+    })
+  },
+  //支付
+  payment(e){
+    let that = this;
+    let data = {};
+    data.order_no = e.currentTarget.dataset.order_no,
+      data.price = e.currentTarget.dataset.price;
+    console.log(data);
+    wx.showLoading({
+      mask: true,
+      title: '提交中...'
+    })
+    that.postWeChatPay(data, res => {
+      this.setData({
+        currentTab : 0
+      })
+      that.getRouteOrderDetail();
+    })
+  },
+  //取消退款
+  cancelRefund(e){
+    console.log(e);
+    let that = this;
+    let rid = that.data.return_order_id,
+    id = that.data.order_id,
+    data = {};
+    data.user_id = wx.getStorageSync('userId');
+    data.order_id = id;
+    data.return_order_id = rid;
+    data.sign = getSign(`user_id=${wx.getStorageSync('userId')}&order_id=${id}&return_order_id=${rid}`)
+    wx.showLoading({
+      title: '加载中...',
+    })
+    that.getCancelRouteOrder(data,res=>{
+      wx.hideLoading()
+      that.getRouteOrderDetail();
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log(options)
-    this.setData({
-      order_no: options.order_no
-    })
-    // if (app.globalData.userid) {
-    //   this.getData()
-    // } else {
-    //   app.callbackuserid = res => {
-    //     this.getData()
-    //   }
-    // }
+    if(options){
+      this.setData({
+        order_id: options.id,
+        route_order_detail_id : options.rid,
+        return_order_id : options.gid
+      })
+      wx.showLoading({
+        title: '加载中...',
+      })
+      this.getRouteOrderDetail()
+    }
   },
 
   /**
@@ -76,5 +148,120 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**API */
+  //我的路线详情
+  getRouteOrderDetail(){
+    let user_id = wx.getStorageSync('userId'),
+    order_id = this.data.order_id;
+    GetRouteOrderDetail({
+      user_id: user_id,
+      order_id: order_id,
+      sign: getSign(`user_id=${user_id}&order_id=${order_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        res.data.Response.cancel_time = res.data.Response.cancel_time ? utils.formatTime(new Date(Number(res.data.Response.cancel_time))) : 0;
+        res.data.Response.now_time = res.data.Response.now_time ? utils.formatTime(new Date(Number(res.data.Response.now_time))) : 0;
+        res.data.Response.begin_timespan = res.data.Response.begin_timespan ? utils.formatTime(new Date(Number(res.data.Response.begin_timespan))) : 0;
+        res.data.Response.end_timespan = res.data.Response.end_timespan ? utils.formatTime(new Date(Number(res.data.Response.end_timespan))) : 0;
+        res.data.Response.add_timespan = res.data.Response.add_timespan ? utils.formatTime(new Date(Number(res.data.Response.add_timespan))) : 0;
+        res.data.Response.cancel_timespan = res.data.Response.cancel_timespan ? utils.formatTime(new Date(Number(res.data.Response.cancel_timespan))) : 0;
+        res.data.Response.pay_add_timespan = res.data.Response.pay_add_timespan ? utils.formatTime(new Date(Number(res.data.Response.pay_add_timespan))) : 0;
+        if(res.data.Response.refound){
+          res.data.Response.refound.add_timespan = utils.formatTime(new Date(Number(res.data.Response.refound.add_timespan)))
+          res.data.Response.refound.cancel_time = utils.formatTime(new Date(Number(res.data.Response.refound.cancel_time)))
+        }
+        if(res.data.Response.status==2){
+          qrcode({
+            width: 65,
+            height: 65,
+            canvasId: 'myQrcode',
+            text: res.data.Response.verification_code
+          })
+        }
+        this.setData({
+          OrderDetail: res.data.Response
+        })
+        wx.hideLoading()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      }
+    })
+  },
+  // 取消退款 
+  getCancelRouteOrder(data,callback){
+    RGetCancelRouteOrder(data).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      }
+    })
+  },
+  // 路线订单-取消
+  getCanRouteOrder(data,callback){
+    GetCanRouteOrder(data).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: 'none',
+        })
+      }
+    })
+  },
+  //微信支付
+  postWeChatPay(data, callback) {
+    let userInfo = wx.getStorageSync('userInfo');
+    let order_no = data.order_no,
+      price = data.price;
+    let openid = userInfo.openId
+    let user_id = wx.getStorageSync('userId');
+    console.log("order_no", order_no, 'price', price * 100, 'openid', openid, 'user_id', user_id);
+    let body = "微信支付"
+    let url = '&body=' + body + '&total_fee=' + price * 100 + '&out_trade_no=' + order_no + '&configId=104&trade_type=JSAPI&msgid=' + openid;
+    wx.request({
+      url: 'https://pays.zztv021.com/payment/wxpay/wxpay.ashx?action=jspayparam' + url,
+      success: (res) => {
+        wx.hideLoading()
+        wx.requestPayment({
+          'timeStamp': res.data.timeStamp,
+          'nonceStr': res.data.nonceStr,
+          'package': res.data.package,
+          'signType': res.data.signType,
+          'paySign': res.data.paySign,
+          success: (item) => {
+            if (item.errMsg == "requestPayment:ok") {
+              callback && callback(item)
+            } else {
+              wx.hideLoading()
+              wx.showToast({
+                title: item.errMsg,
+                icon: 'none',
+              })
+            }
+          },
+          fail: () => {
+            wx.hideLoading()
+            wx.showToast({
+              title: '取消支付！',
+              icon: 'none'
+            })
+            this.getMyRouteOrder();
+          }
+        });
+      }
+    });
+  },
 })

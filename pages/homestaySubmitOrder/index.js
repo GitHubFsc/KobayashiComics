@@ -50,6 +50,9 @@ Page({
   router_topay(){
     let that = this;
     //去支付 计算价格 
+    wx.showLoading({
+      title: '订单提交中...',
+    })
     that.getHomestayMarke(res=>{
       console.log(res);
       //提交订单
@@ -57,6 +60,7 @@ Page({
         console.log(res);
         //微信支付
         that.postWeChatPay(res,data=>{
+          wx.hideLoading()
           wx.showToast({
             title: '支付成功',
             icon:'none'
@@ -450,8 +454,8 @@ Page({
               title: '取消支付！',
               icon: 'none'
             })
-            //取消支付 商品订单
-            wx.switchTab({
+            //取消支付 民宿订单
+            wx.redirectTo({
               url: '../homestayOrder/index?index=1',
             })
           }

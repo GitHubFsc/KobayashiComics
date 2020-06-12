@@ -107,12 +107,13 @@ Page({
   //售后订单
   getMyRefoundOrder() {
     let user_id = wx.getStorageSync('userId'),
-      { page, pagesize } = this.data;
+      { page, pagesize ,currentTab} = this.data;
     GetMyRefoundOrder({
       user_id: user_id,
       page: page,
       pagesize: pagesize,
-      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+      type :currentTab,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}&type=${currentTab}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
