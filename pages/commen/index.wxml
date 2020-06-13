@@ -1,38 +1,55 @@
 <!--pages/commen/index.wxml-->
 <view class="container commen">
 	<view class="comment_body">
-		<block wx:for="{{3}}" wx:key="{{index}}">
-			<view class="content">
-				<view class="user">
+		<block wx:for="{{CommentsList}}" wx:key="index">
+			<view class="content" data-id="{{item.id}}">
+				<view class="user" data-id="{{item.user_id}}">
 					<view class="avatar">
-						<image src="./../images/userimg.png" />
+						<image src="{{item.avatar}}" />
 					</view>
 					<view class="synopsis">
-						<view class="user_name">熙和</view>
-						<view class="user_time">2020年3月20日 20:00</view>
+						<view class="user_name">{{item.nickname}}</view>
+						<view class="user_time">{{item.add_timespan}}</view>
+						<!-- 2020年3月20日 20:00 -->
 					</view>
 					<view class="like">
-						<view class="like_img" data-id="1" catchtap="like">
-							<image src="./../icon/like.png"></image>
+						<view class="like_img" data-cid="{{item.id}}" catchtap="like">
+							<image src="{{item.is_like?'./../icon/likeR.png':'./../icon/like.png'}}"></image>
 						</view>
-						<view>122</view>
+						<view>{{item.like_count}}</view>
 					</view>
 				</view>
-				<view class="comment_txt">
-					这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论
-				</view>
-				<view class="comment_reply">
-					<view>李莎：<text>心态崩溃</text></view>
-					<view>李白<text class="reply">回复</text>李莎：<text>心态崩溃心态崩溃</text></view>
-					<view class="comment_morereplies" wx:if="{{index==1}}" data-id="1" catchtap="router_reply">
-						<view>查看更多回复 </view>
-						<view class="gengduo">
-							<image src="./../icon/gengduoB.png" />
+				<view class="comment_txt" data-cid="{{item.id}}" data-name="{{item.nickname}}" catchtap="Reply">{{item.content}}</view>
+				<block wx:if="{{item.reply.length>0}}">
+					<view class="comment_reply">
+						<block wx:for="{{item.reply}}" wx:for-item="arr" wx:key="index">
+							<view wx:if="{{arr.is_reply==0}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
+							<view wx:if="{{arr.is_reply==1}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
+						</block>
+						<view class="comment_morereplies" data-id="{{item.id}}" catchtap="router_reply" wx:if="{{item.reply.length>1}}">
+							<view>查看更多回复 </view>
+							<view class="gengduo">
+								<image src="./../icon/gengduoB.png" />
+							</view>
 						</view>
 					</view>
-				</view>
+				</block>
 			</view>
 		</block>
-
+		<!-- <view class="commentMore" data-id="{{NewsDetail.id}}" catchtap="router_commen" wx:if="{{NewsDetail.commentslist.length>1}}">
+			<view>查看更多评论</view>
+			<view class="gengduo">
+				<image src="./../icon/gengduo.png" />
+			</view>
+		</view> -->
+	</view>
+		<!-- 输入框 + 发布 -->
+	<view class="InputBox" hidden="{{InputBox}}" catchtap="InputClose">
+		<view class="Input_box" style="bottom:{{bottom}}px">
+			<view class="Input_user" wx:if="{{type==0}}">评论给 {{userName}}</view>
+			<view class="Input_user" wx:if="{{type==1}}">正在回复 {{userName}}</view>
+			<view class="Input_txt"><textarea focus="{{!InputBox}}" fixed="true" show-confirm-bar="{{false}}" adjust-position="{{false}}" auto-focus="true" placeholder="请输入评论" bindfocus="commentFoucus" bindblur="commentBlur" bindinput="commentInput" value="{{commentValue}}"></textarea></view>
+			<view class="Input_btn" catchtap="InputBtn">发布</view>
+		</view>
 	</view>
 </view>

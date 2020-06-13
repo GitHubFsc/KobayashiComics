@@ -1,36 +1,46 @@
 <!--pages/reply/index.wxml-->
 <view class="container reply">
 	<view class="comment_body">
-		<view class="content">
-			<view class="user">
+		<view class="content" data-id="{{commendts.id}}">
+			<view class="user" data-id="{{commendts.user_id}}">
 				<view class="avatar">
-					<image src="./../images/userimg.png" />
+					<image src="{{commendts.avatar}}" />
 				</view>
 				<view class="synopsis">
-					<view class="user_name">熙和</view>
-					<view class="user_time">2020年3月20日 20:00</view>
+					<view class="user_name">{{commendts.nickname}}</view>
+					<view class="user_time">{{commendts.add_timespan}}</view>
+					<!-- 2020年3月20日 20:00 -->
 				</view>
 				<view class="like">
-					<view class="like_img" data-id="1" catchtap="like">
-						<image src="./../icon/like.png"></image>
+					<view class="like_img" data-cid="{{commendts.id}}" catchtap="like">
+						<image src="{{commendts.is_like?'./../icon/likeR.png':'./../icon/like.png'}}"></image>
 					</view>
-					<view>122</view>
+					<view>{{commendts.like_count}}</view>
 				</view>
 			</view>
-			<view class="comment_txt">
-				这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论这是我的评论
-			</view>
-			<view class="comment_reply">
-				<view>李莎：<text>心态崩溃</text></view>
-				<view>李白<text class="reply">回复</text>李莎：<text>心态崩溃心态崩溃</text></view>
-        <view>李莎：<text>心态崩溃</text></view>
-        <view>李莎：<text>心态崩溃</text></view>
-			</view>
+			<view class="comment_txt" data-cid="{{commendts.id}}" data-name="{{commendts.nickname}}" catchtap="Reply">{{commendts.content}}</view>
+			<block wx:if="{{commendts.reply.length>0}}">
+				<view class="comment_reply">
+					<block wx:for="{{commendts.reply}}" wx:for-item="arr" wx:key="index">
+						<view wx:if="{{arr.is_reply==0}}" data-cid="{{commendts.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
+						<view wx:if="{{arr.is_reply==1}}" data-cid="{{commendts.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
+					</block>
+				</view>
+			</block>
 		</view>
-	</view> 
-  <!-- 评论+点赞+输入 -->
-  <view class="comment_bot">
-			<view><input type="text" placeholder="请输入评论" bindinput="getValue" bindconfirm="comment" /></view>
-      <view class="define" catchtap="define">确定</view>
-  </view>
+	</view>
+	<!-- 评论+点赞+输入 -->
+	<view class="comment_bot">
+		<view class="cb_input" data-cid="{{commendts.id}}" data-name="{{commendts.nickname}}" catchtap="Reply"></view>
+		<view class="define" catchtap="define">确定</view>
+	</view>
+	<!-- 输入框 + 发布 -->
+	<view class="InputBox" hidden="{{InputBox}}" catchtap="InputClose">
+		<view class="Input_box" style="bottom:{{bottom}}px">
+			<view class="Input_user" wx:if="{{type==0}}">评论给 {{userName}}</view>
+			<view class="Input_user" wx:if="{{type==1}}">正在回复 {{userName}}</view>
+			<view class="Input_txt"><textarea focus="{{!InputBox}}" fixed="true" show-confirm-bar="{{false}}" adjust-position="{{false}}" auto-focus="true" placeholder="请输入评论" bindfocus="commentFoucus" bindblur="commentBlur" bindinput="commentInput" value="{{commentValue}}"></textarea></view>
+			<view class="Input_btn" catchtap="InputBtn">确定</view>
+		</view>
+	</view>
 </view>

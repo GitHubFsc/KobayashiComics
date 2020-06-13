@@ -2,8 +2,11 @@
 import {
   GetNewsDetail,
   GetMyLikeNews,
+  GetNewsLike,
   GetAddComments,
   GetAddReply,
+  GetAddLike,
+  GetFocus,
   getSign
 } from '../../utils/axios.js';
 var utils = require('../../utils/util.js');
@@ -69,7 +72,11 @@ Page({
   /*事件*/
   //关注
   attention(e) {
-    console.log(1213)
+    var that = this;
+    let id = e.currentTarget.dataset.id;
+    that.getFocus(id,res=>{
+      that.getNewsDetail();
+    })
   },
   //发布评论
   InputBtn() {
@@ -119,6 +126,19 @@ Page({
   //点赞
   like(e) {
     console.log(e)
+    let that = this,
+    type = e.currentTarget.dataset.type;
+    if(type==0){
+      let id = e.currentTarget.dataset.id;
+      that.getNewsLike(id,res=>{
+        that.getNewsDetail();
+      })
+    }else{
+      let id = e.currentTarget.dataset.cid;
+      that.getAddLike(id,res=>{
+        that.getNewsDetail();
+      })
+    }
   },
   //评论/回复 输入框高度获取
   commentFoucus(e) {
@@ -158,6 +178,9 @@ Page({
       this.setData({
         steps: 3,
         NewsId: options.id
+      })
+      wx.showLoading({
+        title: '加载中...',
       })
       this.getNewsDetail();
       this.getMyLikeNews();
@@ -280,6 +303,7 @@ Page({
         this.setData({
           NewsDetail: res.data.Response
         })
+        wx.hideLoading()
       } else {
         wx.showToast({
           title: res.data.ErrMsg,
@@ -291,10 +315,7 @@ Page({
   //猜你感兴趣
   getMyLikeNews() {
     let userId = wx.getStorageSync('userId');
-    let {
-      page,
-      pagesize
-    } = this.data;
+    let { page, pagesize } = this.data;
     GetMyLikeNews({
       user_id: userId,
       page: page,
@@ -346,6 +367,63 @@ Page({
       sign: getSign(`user_id=${userId}&comments_id=${cid}&repy_id=${rid}&content=${commentValue}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //点赞 + 取消点赞 -评论
+  getAddLike(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetAddLike({
+      user_id: user_id,
+      comments_id: id,
+      sign: getSign(`user_id=${user_id}&comments_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //点赞 + 取消点赞 -咨询
+  getNewsLike(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetNewsLike({
+      user_id: user_id,
+      news_id: id,
+      sign: getSign(`user_id=${user_id}&news_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback(res)
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //关注
+  getFocus(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetFocus({
+      user_id: user_id,
+      fuser_id: id,
+      sign: getSign(`user_id=${user_id}&fuser_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
         callback && callback(res)
       } else {
         wx.showToast({
