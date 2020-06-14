@@ -2,12 +2,19 @@
 <view class="container">
 	<view class="hr"></view>
 	<view class="user_list">
-		<block wx:for="{{3}}" wx:key="index">
-			<view class="user" data-id="{{index}}" catchtap="router_homepage">
-				<view class="user_img"><image src="./../images/userimg2.png"></image></view>
-				<view class="user_name">张三</view>
-				<view class="followFans" wx:if="{{type==0}}" data-id="{{index}}" catchtap="unsubscribe">取消关注</view>
-				<view class="UnfollowFans" wx:if="{{type==1}}" data-id="{{index}}" catchtap="attention">关注</view>
+		<block wx:for="{{user_list}}" wx:key="index" wx:if="{{type==0}}">
+			<view class="user" data-id="{{item.focus_user_id}}" catchtap="router_homepage">
+				<view class="user_img"><image src="{{item.avatar}}"></image></view>
+				<view class="user_name">{{item.nickname}}</view>
+				<view class="followFans" data-id="{{item.id}}" catchtap="unsubscribe">取消关注</view>
+			</view>
+		</block>
+		<block wx:for="{{user_list}}" wx:key="index" wx:if="{{type==1}}">
+			<view class="user" data-id="{{item.focus_user_id}}" catchtap="router_homepage">
+				<view class="user_img"><image src="{{item.avatar}}"></image></view>
+				<view class="user_name">{{item.nickname}}</view>
+				<view class="followFans" wx:if="{{item.is_focus==true}}" data-id="{{item.id}}" catchtap="unsubscribe">取消关注</view>
+				<view class="UnfollowFans" wx:if="{{item.is_focus==false}}" data-id="{{item.user_id}}" catchtap="attention">关注</view>
 			</view>
 		</block>
 	</view>

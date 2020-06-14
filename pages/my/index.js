@@ -1,5 +1,5 @@
 // pages/my/index.js
-import {GetMyHomePage,getSign} from '../../utils/axios.js';
+import {GetMyHomePage,GetMyCouponList,GetMyPoint,getSign} from '../../utils/axios.js';
 import utils from './../../utils/util'
 const app = getApp()
 Page({
@@ -47,7 +47,9 @@ Page({
       this.setData({
         steps : 3 
       })
-      this.getMyHomePage()
+      this.getMyHomePage();
+      this.getMyCouponList();
+      this.getMyPoint();
     } else {
       this.setData({
         steps : 0
@@ -146,7 +148,9 @@ Page({
           steps : 3 ,
           loading: false,
         })
-        this.getMyHomePage()
+        this.getMyHomePage();
+        this.getMyCouponList();
+        this.getMyPoint();
       }
     })
   },
@@ -160,6 +164,47 @@ Page({
       if (res.data.ErrCode == 0) {
         this.setData({
           userInfo : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //获取我的优惠券
+  getMyCouponList(){
+    let user_id = wx.getStorageSync('userId');
+    GetMyCouponList({
+      user_id : user_id,
+      type : 1,
+      page : 1,
+      pagesize : 10,
+      sign: getSign(`user_id=${user_id}&type=1&page=1&pagesize=10`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          CouponNum : res.data.Total
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //积分
+  getMyPoint(){
+    let user_id = wx.getStorageSync('userId');
+    GetMyPoint({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          MyPoint : res.data.Response.point
         })
       } else {
         wx.showToast({

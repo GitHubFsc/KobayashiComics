@@ -23,7 +23,7 @@
 		<view class="standard_select">
 			<view class="ss_left">选择规格</view>
 			<view class="ss_right" catchtap="popUpLayer">
-				<view>白色</view>
+				<view>{{colorName?colorName:'选择规格'}}{{sizeName?sizeName:''}}</view>
 				<view class="gengduo" catchtap="">
 					<image src="./../icon/gengduo.png"></image>
 				</view>
@@ -111,7 +111,7 @@
 					<view class="pul_txt" data-id="{{item.parent_sku_parameter_type}}">选择{{item.parent_sku_parameter_type_title}}</view>
 					<view class="pul_btns">
 						<block wx:for="{{item.sku_parameter_type_list}}" wx:for-item="arr" wx:key="idx">
-							<view class="pul_btn {{arr.sku_parameter_type_id==colorIdx?'select':''}}"  data-id="{{arr.sku_parameter_type_id}}" catchtap="color" >{{arr.sku_parameter_type_title}}</view>
+							<view class="pul_btn {{arr.sku_parameter_type_id==colorIdx?'select':''}}"  data-id="{{arr.sku_parameter_type_id}}" data-txt="{{arr.sku_parameter_type_title}}" catchtap="color" >{{arr.sku_parameter_type_title}}</view>
 						</block>
 					</view>
 				</view>
@@ -123,7 +123,7 @@
 					<view class="pul_txt" data-id="{{item.parent_size_id}}">选择{{item.parent_size_title}}</view>
 					<view class="pul_btns">
 						<block wx:for="{{item.size_list}}" wx:for-item="arr" wx:key="idx">
-							<view class="pul_btn {{arr.size_id==sizeIdx?'select':''}}"  data-id="{{arr.size_id}}" catchtap="size">{{arr.size_title}}</view>
+							<view class="pul_btn {{arr.size_id==sizeIdx?'select':''}}"  data-id="{{arr.size_id}}" data-txt="{{arr.size_title}}" catchtap="size">{{arr.size_title}}</view>
 						</block>
 					</view>
 				</view>

@@ -19,24 +19,34 @@ Page({
    */
   data: {
     commentValue: '',
+    userId : '',
     steps: 3,
     loading: false,
     page: 1,
     pagesize: 10,
     InputBox: true,
     bottom: '',
-    userName : '',
-    cid : null,
-    rid : null,
-    id : null,
-    type : 0,
+    userName: '',
+    cid: null,
+    rid: null,
+    id: null,
+    type: 0,
   },
   /*路由*/
   //他人主页
   router_homepage(e) {
-    wx.navigateTo({
-      url: '../homepage/index?id=' + e.currentTarget.dataset.id + '&type=' + e.currentTarget.dataset.type,
-    })
+    let id = e.currentTarget.dataset.id;
+    let user_id = wx.getStorageSync('userId');
+    if (id == user_id){
+      wx.navigateTo({
+        url: '../homepage/index?id=' + e.currentTarget.dataset.id + '&type=0'
+      })
+    }else{
+      wx.navigateTo({
+        url: '../homepage/index?id=' + e.currentTarget.dataset.id + '&type=' + e.currentTarget.dataset.type,
+      })
+    }
+      
   },
   //商品链接
   router_productDetails(e) {
@@ -74,26 +84,26 @@ Page({
   attention(e) {
     var that = this;
     let id = e.currentTarget.dataset.id;
-    that.getFocus(id,res=>{
+    that.getFocus(id, res => {
       that.getNewsDetail();
     })
   },
   //发布评论
   InputBtn() {
     var that = this;
-    if(that.data.type==0){
-      this.getAddComments(res=>{
+    if (that.data.type == 0) {
+      this.getAddComments(res => {
         this.getNewsDetail();
         that.setData({
           InputBox: !that.data.InputBox,
-          commentValue : ''
+          commentValue: ''
         })
       })
-    }else{
-      that.getAddReply(res=>{
+    } else {
+      that.getAddReply(res => {
         console.log(res);
         that.setData({
-          commentValue : '',
+          commentValue: '',
           InputBox: !that.data.InputBox
         })
         that.getNewsDetail();
@@ -105,9 +115,9 @@ Page({
     var that = this;
     console.log(e)
     that.setData({
-      id : e.currentTarget.dataset.id,
-      userName :  e.currentTarget.dataset.name,
-      type : 0,
+      id: e.currentTarget.dataset.id,
+      userName: e.currentTarget.dataset.name,
+      type: 0,
       InputBox: !that.data.InputBox
     })
   },
@@ -116,10 +126,10 @@ Page({
     var that = this;
     console.log(e)
     that.setData({
-      cid : e.currentTarget.dataset.cid,
-      rid : e.currentTarget.dataset.rid?e.currentTarget.dataset.rid : null,
-      userName :  e.currentTarget.dataset.name,
-      type : 1,
+      cid: e.currentTarget.dataset.cid,
+      rid: e.currentTarget.dataset.rid ? e.currentTarget.dataset.rid : null,
+      userName: e.currentTarget.dataset.name,
+      type: 1,
       InputBox: !that.data.InputBox
     })
   },
@@ -127,15 +137,15 @@ Page({
   like(e) {
     console.log(e)
     let that = this,
-    type = e.currentTarget.dataset.type;
-    if(type==0){
+      type = e.currentTarget.dataset.type;
+    if (type == 0) {
       let id = e.currentTarget.dataset.id;
-      that.getNewsLike(id,res=>{
+      that.getNewsLike(id, res => {
         that.getNewsDetail();
       })
-    }else{
+    } else {
       let id = e.currentTarget.dataset.cid;
-      that.getAddLike(id,res=>{
+      that.getAddLike(id, res => {
         that.getNewsDetail();
       })
     }
@@ -152,18 +162,18 @@ Page({
     var that = this;
     that.setData({
       bottom: 0,
-      commentValue : e.detail.value
+      commentValue: e.detail.value
     })
   },
   //评论/回复  输入框输入
-  commentInput(e){
+  commentInput(e) {
     var that = this;
     that.setData({
-      commentValue : e.detail.value
+      commentValue: e.detail.value
     })
   },
   //关闭输入框
-  InputClose(){
+  InputClose() {
     var that = this;
     that.setData({
       InputBox: !that.data.InputBox
@@ -173,14 +183,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let user_id = wx.getStorageSync('userId');
     if (user_id) {
       this.setData({
         steps: 3,
-        NewsId: options.id
-      })
-      wx.showLoading({
-        title: '加载中...',
+        NewsId: options.id,
+        userId : user_id,
       })
       this.getNewsDetail();
       this.getMyLikeNews();
@@ -315,7 +326,10 @@ Page({
   //猜你感兴趣
   getMyLikeNews() {
     let userId = wx.getStorageSync('userId');
-    let { page, pagesize } = this.data;
+    let {
+      page,
+      pagesize
+    } = this.data;
     GetMyLikeNews({
       user_id: userId,
       page: page,
@@ -337,7 +351,10 @@ Page({
   //添加评论
   getAddComments(callback) {
     let userId = wx.getStorageSync('userId');
-    let {  NewsDetail, commentValue } = this.data;
+    let {
+      NewsDetail,
+      commentValue
+    } = this.data;
     GetAddComments({
       user_id: userId,
       news_id: NewsDetail.id,
@@ -357,13 +374,17 @@ Page({
   //回复
   getAddReply(callback) {
     let userId = wx.getStorageSync('userId');
-    let {  cid, rid ,commentValue } = this.data;
-    rid  = rid?rid:0;
+    let {
+      cid,
+      rid,
+      commentValue
+    } = this.data;
+    rid = rid ? rid : 0;
     GetAddReply({
-      user_id : userId,
-      comments_id : cid,
-      repy_id : rid,
-      content : commentValue,
+      user_id: userId,
+      comments_id: cid,
+      repy_id: rid,
+      content: commentValue,
       sign: getSign(`user_id=${userId}&comments_id=${cid}&repy_id=${rid}&content=${commentValue}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
@@ -377,7 +398,7 @@ Page({
     })
   },
   //点赞 + 取消点赞 -评论
-  getAddLike(id,callback){
+  getAddLike(id, callback) {
     let user_id = wx.getStorageSync('userId');
     GetAddLike({
       user_id: user_id,
@@ -396,7 +417,7 @@ Page({
     })
   },
   //点赞 + 取消点赞 -咨询
-  getNewsLike(id,callback){
+  getNewsLike(id, callback) {
     let user_id = wx.getStorageSync('userId');
     GetNewsLike({
       user_id: user_id,
@@ -415,7 +436,7 @@ Page({
     })
   },
   //关注
-  getFocus(id,callback){
+  getFocus(id, callback) {
     let user_id = wx.getStorageSync('userId');
     GetFocus({
       user_id: user_id,

@@ -10,7 +10,9 @@ Page({
   data: {
     current: 0,
     colorIdx: null,
+    colorName : '',
     sizeIdx: null,
+    sizeName : '',
     num: 1,
     popUpLayerflag: true,
     collectLflag: false,
@@ -87,14 +89,16 @@ Page({
   color(e) {
     var that = this;
     that.setData({
-      colorIdx: e.currentTarget.dataset.id
+      colorIdx: e.currentTarget.dataset.id,
+      colorName : e.currentTarget.dataset.txt,
     })
   },
   //选择尺寸
   size(e) {
     var that = this;
     that.setData({
-      sizeIdx: e.currentTarget.dataset.id
+      sizeIdx: e.currentTarget.dataset.id,
+      sizeName : e.currentTarget.dataset.txt,
     })
   },
   //改变数量
@@ -125,26 +129,34 @@ Page({
         })
       })
     } else {
-      that.getGoodsSize(res=>{
-        let arr=[], data = {};
-        data.car_id = 0;
-        if(res.data.Response.length>0){
-          data.size_id = res.data.Response[0].size_id;
-          data.sku_parameter_type_id = res.data.Response[0].sku_parameter_type_id;
-          data.goods_id = res.data.Response[0].goods_id;
-        }else{
-          data.size_id = 0;
-          data.sku_parameter_type_id = 0;   
-        }
-        data.number = this.data.num;
-        arr.push(data)
-        wx.navigateTo({
-          url: '../productSubmitOrder/index?arr=' + JSON.stringify(arr),
+      if(that.data.colorIdx&&that.data.colorIdx>=0&&that.data.sizeIdx&&that.data.sizeIdx>=0){
+        that.getGoodsSize(res=>{
+          let arr=[], data = {};
+          data.car_id = 0;
+          if(res.data.Response.length>0){
+            data.size_id = res.data.Response[0].size_id;
+            data.sku_parameter_type_id = res.data.Response[0].sku_parameter_type_id;
+            data.goods_id = res.data.Response[0].goods_id;
+          }else{
+            data.size_id = 0;
+            data.sku_parameter_type_id = 0;   
+          }
+          data.number = this.data.num;
+          arr.push(data)
+          wx.navigateTo({
+            url: '../productSubmitOrder/index?arr=' + JSON.stringify(arr),
+          })
+          that.setData({
+            popUpLayerflag: true
+          })
         })
-        that.setData({
-          popUpLayerflag: true
+      }else{
+        wx.showToast({
+          title: '请选择规格',
+          icon: "none"
         })
-      })
+        return false
+      }
     }
   },
  
@@ -152,6 +164,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     let user_id = wx.getStorageSync('userId');
     if (user_id) {
       this.setData({
@@ -278,6 +293,7 @@ Page({
         this.setData({
           GoodsDetail : res.data.Response
         })
+        wx.hideLoading()
       }else{
         wx.showToast({
           title: res.data.ErrMsg,

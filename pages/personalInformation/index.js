@@ -1,5 +1,5 @@
 // pages/personalInformation/index.js
-import {getSign,PostSetinfo,PostUploadFile} from '../../utils/axios.js';
+import {getSign,PostSetinfo,GetMyHomePage,PostUploadFile} from '../../utils/axios.js';
 const app = getApp()
 Page({
 
@@ -124,12 +124,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let userInfo = wx.getStorageSync('userInfo');
+    let userInfo = wx.getStorageSync('userInfo'),
+    mobile = wx.getStorageSync('phoneNumber');
     if (userInfo) {
       this.setData({
         user_img: userInfo.avatarUrl,
+        mobile : mobile,
         selected: userInfo.gender == 1 ? true : false
       })
+      this.getMyHomePage()
     }
   },
 
@@ -180,5 +183,26 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  //获取用户信息
+  getMyHomePage(){
+    let user_id =  wx.getStorageSync('userId')
+    GetMyHomePage({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          nickname : res.data.Response.nickname,
+          user_img : res.data.Response.avatar,
+        })
+        wx.hideLoading()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
 })

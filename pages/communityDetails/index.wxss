@@ -4,6 +4,7 @@
   height: 100rpx;
   margin: 0 auto;
   display: flex;
+  position: relative;
 }
 .avatar {
   width: 64rpx;
@@ -39,8 +40,9 @@
   color: rgba(203, 1, 1, 1);
   text-align: center;
   line-height: 56rpx;
-  margin-left: 377rpx;
-  margin-top: 20rpx;
+  position: absolute;
+  top : 20rpx;
+  right: 20rpx;
 }
 
 .like {

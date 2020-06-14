@@ -9,7 +9,7 @@
 			<view class="user_name">{{NewsDetail.nickname}}</view>
 			<view class="user_time">3月20日 20:00</view>
 		</view>
-		<view class="attention" data-id="{{NewsDetail.user_id}}" catchtap="attention">关注</view>
+		<view class="attention" data-id="{{NewsDetail.user_id}}" wx:if="{{NewsDetail.user_id != userId}}" catchtap="attention">关注</view>
 	</view>
 	<!-- 轮播导航 -->
 
@@ -88,8 +88,8 @@
 					<block wx:if="{{item.reply.length>0}}">
 						<view class="comment_reply">
 							<block wx:for="{{item.reply}}" wx:for-item="arr" wx:key="index">
-								<view wx:if="{{arr.is_reply==0}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
-								<view wx:if="{{arr.is_reply==1}}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
+								<view wx:if="{{arr.is_reply==0&&index<2 }}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}：<text>{{arr.reply_content}}</text></view>
+								<view wx:if="{{arr.is_reply==1 &&index<2 }}" data-cid="{{item.id}}" data-rid="{{arr.id}}" data-name="{{arr.reply_nickname}}" catchtap="Reply">{{arr.reply_nickname}}<text class="reply">回复</text>{{arr.to_reply_nickname}}<text>{{arr.reply_content}}</text></view>
 							</block>
 							<view class="comment_morereplies" data-id="{{item.id}}" catchtap="router_reply" wx:if="{{item.reply.length>1}}">
 								<view>查看更多回复 </view>

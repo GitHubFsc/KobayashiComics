@@ -15,11 +15,11 @@
 		</view>
 		<view class="user_bot">
 			<view class="user_coupon" catchtap="router_shoppingVoucher">
-				<view>0</view>
+				<view>{{CouponNum}}</view>
 				<view>优惠券</view>
 			</view>
 			<view class="user_integral" catchtap="router_integral">
-				<view>0</view>
+				<view>{{MyPoint}}</view>
 				<view>积分</view>
 			</view>
 		</view>

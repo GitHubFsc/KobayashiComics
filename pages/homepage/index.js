@@ -1,5 +1,5 @@
 // pages/homepage/index.js
-import {GetMyHomePage,GetMyNews,GetDelNews,GetMyComments,GetMyBrowseHistory,GetDelBrowseHistory,getSign} from '../../utils/axios.js';
+import {GetMyHomePage,GetUserHomePage,GetMyNews,GetFocus,GetDelNews,GetMyComments,GetMyBrowseHistory,GetDelBrowseHistory,getSign} from '../../utils/axios.js';
 import utils from './../../utils/util'
 const app = getApp()
 Page({
@@ -13,14 +13,14 @@ Page({
     recommend : ['我的资讯','我的评论','浏览历史'],
     userInfo : '',
     currentTab : 0,
-    page : 0,
+    page : 1,
     pagesize : 10
   },
   /*路由*/
   //粉丝+关注
   router_followFans(e){
     wx.navigateTo({
-      url: '../followFans/index?type='+ e.currentTarget.dataset.type,
+      url: '../followFans/index?type='+ e.currentTarget.dataset.type + '&id=' + this.data.user_id,
     })
   },
   //更多回复
@@ -32,7 +32,7 @@ Page({
   //社区详情
   router_communityDetails(e){
     wx.navigateTo({
-      url: '../communityDetails/index?id='+e.currentTarget.dataset.index,
+      url: '../communityDetails/index?id='+e.currentTarget.dataset.id,
     })
   },
   //分享 + 动态 
@@ -44,146 +44,59 @@ Page({
   /*事件*/
   //导航栏切换
   nav_tab(e){
+    let that = this;
     this.setData({
       currentTab : e.target.dataset.index
     })
+    if(e.target.dataset.index==0){
+      that.getMyNews()
+    }else if(e.target.dataset.index==1){
+      that.getMyComments()
+    }else{
+      that.getMyBrowseHistory()
+    }
   },
   //关注
   attention(e){
-    console.log(e.currentTarget.dataset.id)
+    console.log("关注", e.currentTarget.dataset.id)
+    let that = this,
+    id = e.currentTarget.dataset.id;
+    that.getFocus(id,()=>{
+     that.getUserHomePage();
+    })
   },
   //删除咨询
   communityDel(e){
+    let that = this;
     console.log(e.currentTarget.dataset.id)
-    this.getDelNews(e.currentTarget.dataset.id)
-  },
-
-  /**API */
-  //我的主页
-  getMyHomePage(){
-    let {user_id} = this.data;
-    GetMyHomePage({
-      user_id: user_id,
-      sign: getSign(`user_id=${user_id}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        this.setData({
-          userInfo : res.data.Response
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  //用户主页
-  
-  //我的资讯
-  getMyNews(){
-    let {user_id,page,pagesize} = this.data;
-    GetMyNews({
-      user_id: user_id,
-      page : page,
-      pagesize : pagesize,
-      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log(res);
-        this.setData({
-          MyNewsList : res.data.Response
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  //删除资讯
-  getDelNews(id){
-    let {user_id} = this.data;
-    GetDelNews({
-      user_id: user_id,
-      news_id : id,
-      sign: getSign(`user_id=${user_id}&news_id=${news_id}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log(res);
-        this.getMyNews()
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  //我的评论
-  getMyComments(){
-    let {user_id} = this.data;
-    GetMyComments({
-      user_id: user_id,
-      page : page,
-      pagesize : pagesize,
-      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log(res);
-        res.data.Response.map(item=>{
-          item.add_timespan = utils.formatTime(new Date(item.add_timespan))
-        })
-        this.setData({
-          MyCommentsList : res.data.Response
-        })
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
-    })
-  },
-  //我的浏览历史
-  getMyBrowseHistory(){
-
-  },
-  //删除我的浏览记录
-  getDelBrowseHistory(){
-    let {user_id} = this.data;
-    GetDelBrowseHistory({
-      user_id: user_id,
-      news_id : id,
-      sign: getSign(`user_id=${user_id}&news_id=${news_id}`)
-    }).then(res => {
-      if (res.data.ErrCode == 0) {
-        console.log(res);
-        this.getMyNews()
-      } else {
-        wx.showToast({
-          title: res.data.ErrMsg,
-          icon: "none"
-        })
-      }
+    that.getDelNews(e.currentTarget.dataset.id,()=>{
+      that.getMyNews()
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中...',
+    })
     if(options.type==0){
       console.log("我的主页")
       options.id = wx.getStorageSync('userId');
+      this.setData({
+        user_id : options.id,
+        type : options.type,
+      })
+      this.getMyHomePage();
     }else{
-      console.log("他人主页")
+      console.log("他人主页");
+      this.setData({
+        user_id : options.id,
+        type : options.type,
+      })
+      this.getUserHomePage()
     }
-    this.setData({
-      user_id : options.id,
-      type : options.type,
-    })
-    this.getMyHomePage()
+    this.getMyNews();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -196,7 +109,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    if(this.data.type){
+      wx.showLoading({
+        title: '加载中...',
+      })
+      if(this.data.type==0){
+        this.getMyHomePage()
+      }else{
+        this.getUserHomePage()
+      }
+    }
   },
 
   /**
@@ -232,5 +154,175 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+    /**API */
+  //我的主页
+  getMyHomePage(){
+    let {user_id} = this.data;
+    GetMyHomePage({
+      user_id: user_id,
+      sign: getSign(`user_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        this.setData({
+          userInfo : res.data.Response
+        })
+        wx.hideLoading()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //用户主页
+  getUserHomePage(){
+    let {user_id} = this.data;
+    GetUserHomePage({
+      user_id : wx.getStorageSync('userId'),
+      fuser_id: user_id,
+      sign: getSign(`user_id=${wx.getStorageSync('userId')}&fuser_id=${user_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          userInfo : res.data.Response.users
+        })
+        wx.hideLoading()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //用户资讯列表
+  //我的资讯
+  getMyNews(){
+    let {user_id,page,pagesize} = this.data;
+    GetMyNews({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          MyNewsList : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //删除资讯
+  getDelNews(id,callback){
+    let {user_id} = this.data;
+    GetDelNews({
+      user_id: user_id,
+      news_id : id,
+      sign: getSign(`user_id=${user_id}&news_id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //我的评论
+  getMyComments(){
+    let {user_id,page,pagesize} = this.data;
+    GetMyComments({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        res.data.Response.map(item=>{
+          item.add_timespan = utils.formatTime(new Date(Number(item.add_timespan)))
+        })
+        this.setData({
+          MyCommentsList : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //我的浏览历史
+  getMyBrowseHistory(){
+    let {user_id,page,pagesize} = this.data;
+    GetMyBrowseHistory({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          MyNewsList : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //删除我的浏览记录
+  getDelBrowseHistory(){
+    let {user_id} = this.data;
+    GetDelBrowseHistory({
+      user_id: user_id,
+      news_id : id,
+      sign: getSign(`user_id=${user_id}&news_id=${news_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.getMyNews()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //添加关注
+  getFocus(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetFocus({
+      user_id: user_id,
+      fuser_id : id,
+      sign: getSign(`user_id=${user_id}&fuser_id=${fuser_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
 })

@@ -11,7 +11,7 @@ Page({
   //查看我的发布
   router_homepage(){
     wx.navigateTo({
-      url: '../homepage/index?id=1'+ +'&type=0'
+      url: '../homepage/index?id=1&type=0'
     })
   },
   /**

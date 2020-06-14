@@ -60,6 +60,9 @@ Page({
       success(res) {
         // tempFilePath可以作为img标签的src属性显示图片
         console.log(res.tempFilePaths)
+        wx.showLoading({
+          title: '图片上传中...',
+        })
         that.postUploadFile(res.tempFilePaths);
       },
       fail(res) {
@@ -229,6 +232,9 @@ Page({
             that.setData({
               dynamicImgList
             })
+            if(arr.length == that.data.dynamicImgList.length){
+              wx.hideLoading()
+            }
           } else {
             wx.showToast({
               title: p.ErrMsg,
@@ -251,13 +257,13 @@ Page({
     datas.push('user_id=' + user_id)
     datas.push('sign=' + getSign(`user_id=${user_id}`))
     PostAddNews({
-      body: [{
+      body: {
         img_url: dynamicImgList,
         content: textareaVal,
         goods_id: goods_id?goods_id:0,
         type: 2,
         video: '',
-      }]
+      }
     }, datas).then(res => {
       if (res.data.ErrCode == 0) {
         callback && callback(res)

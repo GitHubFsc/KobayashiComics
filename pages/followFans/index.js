@@ -1,11 +1,15 @@
 // pages/followFans/index.js
+import {GetMyFocus,GetFansList,GetCanCelFocus,GetFocus,getSign} from '../../utils/axios.js';
+import utils from './../../utils/util'
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    page : 1,
+    pagesize : 10
   },
   /*路由*/
   //他人主页
@@ -17,9 +21,27 @@ Page({
   /*事件*/
   unsubscribe(e){
     console.log("取消关注", e.currentTarget.dataset.id)
+    let that = this,
+    id = e.currentTarget.dataset.id;
+    that.getCanCelFocus(id,()=>{
+      if(that.data.type==0){
+        that.getMyFocus()
+      }else{
+        that.getFansList()
+      }
+    })
   },
   attention(e){
     console.log("关注", e.currentTarget.dataset.id)
+    let that = this,
+    id = e.currentTarget.dataset.id;
+    that.getFocus(id,()=>{
+      if(that.data.type==0){
+        that.getMyFocus()
+      }else{
+        that.getFansList()
+      }
+    })
   },
   /*
    * 生命周期函数--监听页面加载
@@ -30,8 +52,14 @@ Page({
       title: options.type == 0? "关注":"粉丝"
     })
     this.setData({
-      type : options.type
+      type : options.type,
+      user_id : options.id
     })
+    if(options.type==0){
+      this.getMyFocus()
+    }else{
+      this.getFansList()
+    }
   },
 
   /**
@@ -81,5 +109,87 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  //我的关注
+  getMyFocus(){
+    let {user_id,page,pagesize} = this.data;
+    GetMyFocus({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          user_list : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //我的粉丝
+  getFansList(){
+    let {user_id,page,pagesize} = this.data;
+    GetFansList({
+      user_id: user_id,
+      page : page,
+      pagesize : pagesize,
+      sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        this.setData({
+          user_list : res.data.Response
+        })
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //添加关注
+  getFocus(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetFocus({
+      user_id: user_id,
+      fuser_id : id,
+      sign: getSign(`user_id=${user_id}&fuser_id=${fuser_id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
+  },
+  //取消关注
+  getCanCelFocus(id,callback){
+    let user_id = wx.getStorageSync('userId');
+    GetCanCelFocus({
+      user_id: user_id,
+      id : id,
+      sign: getSign(`user_id=${user_id}&id=${id}`)
+    }).then(res => {
+      if (res.data.ErrCode == 0) {
+        console.log(res);
+        callback && callback()
+      } else {
+        wx.showToast({
+          title: res.data.ErrMsg,
+          icon: "none"
+        })
+      }
+    })
   }
 })

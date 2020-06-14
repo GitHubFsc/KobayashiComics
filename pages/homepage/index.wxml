@@ -13,7 +13,7 @@
 		<view class="user_bot">
 			<view class="user_attention" data-type="0" catchtap="router_followFans">关注<text>{{userInfo.focus_count}}</text></view>
 			<view class="user_fan" data-type="1" catchtap="router_followFans">粉丝<text>{{userInfo.fans_count}}</text></view>
-			<view class="user_btn" wx:if="{{type==1}}" data-id="2" catchtap="attention">关注</view>
+			<view class="user_btn" wx:if="{{type==1 && userInfo.is_focus}}" data-id="{{userInfo.user_id}}" catchtap="attention">关注</view>
 		</view>
 	</view>
 	<view class="hr"></view>
@@ -30,7 +30,7 @@
 				<block wx:for="{{recommend}}" wx:key="*this">
 					<view class="tab_ctn_view" wx:if="{{index==currentTab}}">
 						<block wx:if="{{currentTab==0||currentTab==2}}">
-							<block wx:for="{{MyNewsList}}" wx:key="*this">
+							<block wx:for="{{MyNewsList}}"  wx:key="*this">
 								<view class="advisory" data-id="{{item.id}}" catchtap="router_communityDetails">
 									<view class="fruit_del" data-id="{{item.id}}" catchtap="communityDel">
 										<image src="./../icon/del.png"></image>
@@ -60,9 +60,8 @@
 							<view class="comment" data-id="{{item.news_id}}" catchtap="router_reply">
 								<view class="comment_top">
 									<view class="ct_time">{{item.add_timespan}}</view>
-									<view class="ct_txt">{{item.content}}</view>
+									<!-- <view class="ct_txt">{{item.content}}</view> -->
 									<!-- <view wx:if="{{index%2==0}}" class="ct_txt">评论：“我对别人的评论”</view> -->
-
 									<!-- <view wx:if="{{index%2==1}}" class="ct_txt">回复<text>张三</text>“我对别人的很多的评论，巴拉巴拉吧啦啦”</view> -->
 								</view>
 								<view class="comment_bot">
@@ -81,18 +80,18 @@
 	<view wx:if="{{type==1}}">
 		<view class="myinformation">我的资讯</view>
 		<view class="tab_ctn_view">
-			<block wx:for="{{4}}" wx:key="*this">
+			<block wx:for="{{MyNewsList}}" wx:key="*this">
 				<view class="advisory" data-id="index" catchtap="router_communityDetails">
 					<view class="advisory_img">
-						<image src="./../images/mall1.png"></image>
+						<image src="{{item.img_url}}"></image>
 					</view>
-					<view class="advisory_txt">强烈安利这款马克杯，好看拿着也舒服</view>
+					<view class="advisory_txt">{{item.content}}</view>
 					<view class="advisory_bottom">
 						<view class="advisory_left">
-							<image data-id="" src="./../images/userimg.png"></image><text>嘻哈</text>
+							<image data-id="" src="{{item.avatar}}"></image><text>{{item.nickname}}</text>
 						</view>
 						<view class="advisory_right">
-							<image data-id="" src="./../icon/comment.png"></image><text>19999</text>
+							<image data-id="" src="./../icon/comment.png"></image><text>{{item.comments?item.comments.count:'0'}}</text>
 						</view>
 					</view>
 				</view>

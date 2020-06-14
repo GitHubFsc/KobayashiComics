@@ -16,6 +16,7 @@
   line-height: 140rpx;
   display: flex;
   border-bottom: 1rpx solid #e5e5e5;
+  position: relative;
 }
 
 .user_img {
@@ -44,7 +45,9 @@
   color: rgba(153, 153, 153, 1);
   text-align: center;
   line-height: 64rpx;
-  margin: 38rpx 0 0 410rpx;
+  margin: 38rpx 0 0 0;
+  position: absolute;
+  right: 20rpx;
 }
 
 .UnfollowFans {
@@ -58,5 +61,7 @@
   color: rgba(255, 255, 255, 1);
   text-align: center;
   line-height: 64rpx;
-  margin: 38rpx 0 0 410rpx;
+  margin: 38rpx 0 0 0;
+  position: absolute;
+  right: 20rpx;
 }
