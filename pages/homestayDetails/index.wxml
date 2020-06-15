@@ -56,8 +56,10 @@
 	<view class="hr"></view>
 	<view class="hd_description">
 		<view class="hd_title">房屋描述：</view>
+		<rich-text nodes="{{homestay.content}}"></rich-text>
 	</view>
 	<view class="hd_book" catchtap="router_book">预定</view>
+	<!-- 日期抽屉 -->
 	<view class="calendar_box" hidden="{{calendar_box}}" catchtap="close">
 		<view class="calendars">
 			<view class="calendar_top">

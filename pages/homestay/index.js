@@ -56,8 +56,8 @@ Page({
       this.setData({
         city : newcity
       })
-      this.getBoutiqueHomestay(newcity);
-      this.getHomestay(newcity)
+      this.getBoutiqueHomestay();
+      this.getHomestay()
     }else{
       console.log(222)
     }
@@ -88,7 +88,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getHomestay()
   },
 
   /**
@@ -120,7 +124,8 @@ Page({
     })
   },
   //精品民宿
-  getBoutiqueHomestay(city) {
+  getBoutiqueHomestay() {
+    let {city} = this.data;
     GetBoutiqueHomestay({
       keywords : city,
       sign : getSign(`keywords=${city}`)
@@ -140,8 +145,8 @@ Page({
     })
   },
   //推荐民宿
-  getHomestay(city) {
-    let {page,pagesize} = this.data;
+  getHomestay() {
+    let {city,page,pagesize,recommend} = this.data;
     GetHomestay({
       keywords : city,
       page : page,
@@ -150,8 +155,11 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          recommend.push(arr)
+        })
         this.setData({
-          recommend : res.data.Response
+          recommend 
         })
       } else {
         wx.showToast({

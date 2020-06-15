@@ -58,7 +58,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getPointLog()
   },
 
   /**
@@ -92,7 +96,7 @@ Page({
   //积分记录
   getPointLog(){
     let  user_id = wx.getStorageSync('userId');
-    let {page,pagesize} = this.data;
+    let {page,pagesize,PointLog} = this.data;
     GetPointLog({
       user_id : user_id,
       page :page,
@@ -103,9 +107,10 @@ Page({
         console.log(res);
         res.data.Response.map(item=>{
           item.add_timespan = utils.formatTime(new Date(item.add_timespan))
+          PointLog.push(item);
         })
         this.setData({
-          PointLog : res.data.Response
+          PointLog
         })
       } else {
         wx.showToast({

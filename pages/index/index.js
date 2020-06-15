@@ -1,5 +1,9 @@
 //index.js
-import { GetIndexBanner, GetNewsList,  getSign } from '../../utils/axios.js';
+import {
+  GetIndexBanner,
+  GetNewsList,
+  getSign
+} from '../../utils/axios.js';
 
 const app = getApp()
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
@@ -11,11 +15,11 @@ Page({
     userInfo: {},
     Carousel: [1, 2],
     recommend: ['官方资讯', '关注', '推荐', '热点'],
-    city : '上海市',
+    city: '上海市',
     currentTab: 0,
     steps: 3,
     loading: false,
-    NewsList :[],
+    NewsList: [],
     page: 1,
     pagesize: 10,
   },
@@ -106,19 +110,19 @@ Page({
   //事件
   nav_tab(e) {
     let that = this;
-    let {steps} = that.data;
+    let { steps } = that.data;
     let user_id = wx.getStorageSync('userId');
-    let index =  e.target.dataset.index +1;
+    let index = e.target.dataset.index + 1;
     that.setData({
       page: 1,
       pagesize: 10,
-      NewsList : []
+      NewsList: []
     })
     if (user_id) {
       steps = 3;
-      that.getNewsList(index,res=>{
+      that.getNewsList(index, res => {
         that.setData({
-          NewsList : res.data.Response,
+          NewsList: res.data.Response,
         })
       })
     } else {
@@ -126,9 +130,79 @@ Page({
     }
     that.setData({
       steps,
-      currentTab : e.target.dataset.index,
+      currentTab: e.target.dataset.index,
     })
   },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function () {
+    this.getIndexBanner()
+    this.getNewsList(1, res => {
+      console.log(res)
+      this.setData({
+        NewsList: res.data.Response
+      })
+    })
+  },
+  onShow() {
+    let city = wx.getStorageSync('city');
+    if (city) {
+      this.setData({
+        city
+      })
+    } else {
+      //使用经纬度获取城市名
+      let that = this;
+      wx.getLocation({
+        type: 'wgs84',
+        success(res) {
+          console.log(res);
+          const latitude = res.latitude
+          const longitude = res.longitude
+          qqmapsdk.reverseGeocoder({
+            location: {
+              latitude: latitude,
+              longitude: longitude
+            },
+            success: res => {
+              that.setData({
+                city: res.result.address_component.city,
+              })
+            }
+          });
+        }
+      })
+    }
+  },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    let that = this;
+    let index = that.data.currentTab +1 ,
+    NewsList = that.data.NewsList;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getNewsList(index,res=>{
+      res.data.Response.map(arr=>{
+        NewsList.push(arr)
+      })
+      this.setData({
+        NewsList
+      })
+    })
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+
   /**API */
   //获取手机号
   getPhoneNumber(e) {
@@ -174,62 +248,14 @@ Page({
         })
       }
     })
-    if(that.data.currentTab>0){
-      that.getNewsList(that.data.currentTab,res=>{
+    if (that.data.currentTab > 0) {
+      that.getNewsList(that.data.currentTab, res => {
         console.log(res)
       })
     }
   },
-  
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function () {
-    this.getIndexBanner()
-    this.getNewsList(1,res=>{
-      console.log(res)
-      this.setData({
-        NewsList : res.data.Response
-      })
-    })
-  },
-  onShow(){
-    let city = wx.getStorageSync('city');
-    if(city){
-      this.setData({
-        city
-      })
-    }else{
-      //使用经纬度获取城市名
-      let that = this;
-      wx.getLocation({
-        type: 'wgs84',
-        success(res) {
-          console.log(res);
-          const latitude = res.latitude
-          const longitude = res.longitude
-          qqmapsdk.reverseGeocoder({
-            location: {
-              latitude: latitude,
-              longitude: longitude
-            }, 
-            success: res =>{
-              that.setData({
-                city: res.result.address_component.city,
-              })
-            }
-          });
-        }
-      })
-    }
-  },
 
-    /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
-  },
   //获取首页轮播图
   getIndexBanner() {
     GetIndexBanner({
@@ -251,7 +277,7 @@ Page({
   //获取资讯
   getNewsList(type, callback) {
     let userId = wx.getStorageSync('userId');
-    userId = userId?userId:'-1'
+    userId = userId ? userId : '-1'
     let { page, pagesize } = this.data;
     GetNewsList({
       user_id: userId,
@@ -259,7 +285,7 @@ Page({
       page: page,
       pagesize: pagesize,
       sign: getSign(`user_id=${userId}&type=${type}&page=${page}&pagesize=${pagesize}`)
-    }).then(res => { 
+    }).then(res => {
       if (res.data.ErrCode == 0) {
         callback && callback(res)
       } else {

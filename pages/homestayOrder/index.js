@@ -8,9 +8,10 @@ Page({
   data: {
     recommend: ['全部民宿', '待支付', '未住宿', '被拒绝', '退款'],
     currentTab: 0,
-    OrderList: [],
     page: 1,
     pagesize: 10,
+    pageflag: false,
+    OrderList :[]
   },
   //路由
   //民宿订单详情
@@ -35,6 +36,9 @@ Page({
   nav_tab(e) {
     let that = this;
     that.setData({
+      page : 1,
+      pageflag : false,
+      OrderList : [],
       currentTab: e.target.dataset.index
     })
     that.getMyHomestayOrder()
@@ -48,6 +52,9 @@ Page({
     })
     that.getCancelHomestayOrder(id, res => {
       wx.hideLoading()
+      that.setData({
+        pageflag : false
+      })
       that.getMyHomestayOrder();
     })
   },
@@ -63,6 +70,10 @@ Page({
       title: '提交中...'
     })
     that.postWeChatPay(data, res => {
+      that.setData({
+        currentTab : 0,
+        pageflag :false
+      })
       that.getMyHomestayOrder();
     })
   },
@@ -77,6 +88,9 @@ Page({
     })
     that.getCancelRouteOrder(rid,id,res=>{
       wx.hideLoading()
+      that.setData({
+        pageflag : false
+      })
       that.getMyHomestayOrder();
     })
   },  
@@ -131,7 +145,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag : true,
+      page: that.data.page + 1
+    })
+    that.getMyHomestayOrder()
   },
 
   /**
@@ -143,7 +162,7 @@ Page({
   //我的民宿订单
   getMyHomestayOrder() {
     let user_id = wx.getStorageSync('userId'),
-      { page, pagesize, currentTab } = this.data,
+      { page, pagesize, currentTab , pageflag, OrderList} = this.data,
       type = currentTab==3?8:currentTab==4?6:currentTab;
     GetMyHomestayOrder({
       user_id: user_id,
@@ -154,8 +173,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            OrderList.push(arr)
+          }
+        })
+        if(!pageflag){
+          OrderList = res.data.Response
+        }
         this.setData({
-          OrderList: res.data.Response
+          OrderList
         })
       } else {
         wx.showToast({

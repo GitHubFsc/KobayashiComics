@@ -11,7 +11,8 @@ Page({
     type: 0,
     page: 1,
     pagesize: 10,
-    orderList: []
+    orderList: [],
+    pageflag :false
   },
   /**路由 */
   //订单详情
@@ -34,6 +35,9 @@ Page({
   nav_tab: function (e) {
     let that = this;
     that.setData({
+      page : 1,
+      pageflag : false,
+      MyOrder : [],
       currentTab: e.target.dataset.index
     })
     that.getMyRefoundOrder();
@@ -42,6 +46,9 @@ Page({
   cancelOrder(e){
     let that = this;
     that.getCanCelOrder(e.currentTarget.dataset.id,res=>{
+      that.setData({
+        pageflag : false
+      })
       that.getMyRefoundOrder();
     })
   },
@@ -94,7 +101,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag :true,
+      page: that.data.page + 1
+    })
+    that.getMyRefoundOrder()
   },
 
   /**
@@ -107,7 +119,7 @@ Page({
   //售后订单
   getMyRefoundOrder() {
     let user_id = wx.getStorageSync('userId'),
-      { page, pagesize ,currentTab} = this.data;
+      { page, pagesize ,currentTab,pageflag,orderList} = this.data;
     GetMyRefoundOrder({
       user_id: user_id,
       page: page,
@@ -117,8 +129,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            orderList.push(arr)
+          }
+        })
+        if(!pageflag){
+          orderList=res.data.Response
+        }
         this.setData({
-          orderList: res.data.Response
+          orderList
         })
       } else {
         wx.showToast({

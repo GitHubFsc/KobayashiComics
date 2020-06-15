@@ -8,7 +8,8 @@ Page({
    */
   data: {
     page: 1,
-    pagesize: 10
+    pagesize: 10,
+    Comments :[]
   },
 
   /**路由 */
@@ -22,7 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getCommentsNews()
   },
 
   /**
@@ -64,7 +65,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.setData({
+      page : this.data.page + 1
+    })
+    this.getCommentsNews()
   },
 
   /**
@@ -76,7 +80,7 @@ Page({
   //系统消息
   getCommentsNews() {
     let user_id = wx.getStorageSync('userId'),
-      { page,  pagesize } = this.data;
+      { page,  pagesize , Comments} = this.data;
       GetCommentsNews({
       user_id: user_id,
       page: page,
@@ -85,10 +89,11 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         res.data.Response.map(arr => {
-          arr.add_timespan = utils.formatTime(new Date(Number(res.data.Response.add_timespan)));
+          arr.add_timespan = utils.formatTime(new Date(Number(arr.add_timespan)));
+          Comments.push(arr);
         })
         this.setData({
-          Comments: res.data.Response
+          Comments
         })
       } else {
         wx.showToast({

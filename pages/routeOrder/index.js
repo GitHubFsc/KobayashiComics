@@ -10,6 +10,8 @@ Page({
     currentTab : 0,
     page : 1,
     pagesize : 10,
+    pageflag: false,
+    OrderList :[]
   },
   //路由
   //路线详情
@@ -36,6 +38,9 @@ Page({
   //tab切换
   nav_tab(e){
     this.setData({
+      page : 1,
+      pageflag : false,
+      OrderList : [],
       currentTab : e.target.dataset.index
     })
     this.getMyRouteOrder();
@@ -53,6 +58,9 @@ Page({
     })
     that.getCanRouteOrder(data, res => {
       wx.hideLoading()
+      that.setData({
+        pageflag : false
+      })
       that.getMyRouteOrder();
     })
   },
@@ -68,8 +76,9 @@ Page({
       title: '提交中...'
     })
     that.postWeChatPay(data, res => {
-      this.setData({
-        currentTab : 0
+      that.setData({
+        currentTab : 0,
+        pageflag :false
       })
       that.getMyRouteOrder();
     })
@@ -90,6 +99,9 @@ Page({
     })
     that.getCancelRouteOrder(data,res=>{
       wx.hideLoading()
+      that.setData({
+        pageflag : false
+      })
       that.getMyRouteOrder();
     })
   },
@@ -144,7 +156,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag : true,
+      page: that.data.page + 1
+    })
+    that.getMyRouteOrder()
   },
 
   /**
@@ -157,7 +174,7 @@ Page({
   //我的路线
   getMyRouteOrder(){
     let user_id = wx.getStorageSync('userId'),
-      { page, pagesize, currentTab } = this.data,
+      { page, pagesize, currentTab ,pageflag,OrderList} = this.data,
       type = currentTab==3?8:currentTab==4?6:currentTab;
     GetMyRouteOrder({
       user_id: user_id,
@@ -168,8 +185,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            OrderList.push(arr)
+          }
+        })
+        if(!pageflag){
+          OrderList = res.data.Response
+        }
         this.setData({
-          OrderList: res.data.Response
+          OrderList
         })
       } else {
         wx.showToast({

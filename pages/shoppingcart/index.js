@@ -11,7 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    carList: [1],
+    carList: [],
+    carflag : true,
     editcar: true,
     allselect: false,
     page: 1,
@@ -20,8 +21,21 @@ Page({
   },
   /*路由*/
   router_topay() {
+    let that = this,
+    arr = [],carList = that.data.carList;
+    carList.map(item=>{
+      if(item.car){
+        arr.push({
+          car_id : item.id,
+          goods_id : item.goods_id,
+          sku_parameter_type_id : item.sku_parameter_type_id,
+          size_id : item.size_id,
+          number : item.num,
+        })
+      }
+    })  
     wx.navigateTo({
-      url: './../Afterpayment/index?index=0'
+      url: '../productSubmitOrder/index?arr=' + JSON.stringify(arr),
     })
   },
   /* 事件 */
@@ -157,7 +171,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.setData({
+      page : this.data.page+1
+    })
+    this.getMyCar()
   },
 
   /**
@@ -169,7 +186,7 @@ Page({
   /**API */
   //我的购物车
   getMyCar() {
-    let { page, pagesize, carList } = this.data;
+    let { page, pagesize, carList,carflag } = this.data;
     let user_id = wx.getStorageSync('userId');
     GetMyCar({
       user_id: user_id,
@@ -180,11 +197,14 @@ Page({
       if (res.data.ErrCode == 0) {
         res.data.Response.map(item => {
           item.car = false;
+          carList.push(item)
         })
+        console.log(carList)
+        carflag = res.data.Total>0?true: false
         this.setData({
-          carList: res.data.Response
+          carList,
+          carflag
         })
-
       } else {
         wx.showToast({
           title: res.data.ErrMsg,

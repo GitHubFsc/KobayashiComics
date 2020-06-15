@@ -30,6 +30,7 @@
   <view class="Introduction">
     <view class="tille">路线简介：</view>
     <view>简介</view>
+		<rich-text nodes="{{RouteDetail.content}}"></rich-text>
   </view>
   <view class="destine" data-id="{{RouteDetail.id}}" catchtap="router_routeSubmitOrder">预定</view>
 	<!-- 登录 -->

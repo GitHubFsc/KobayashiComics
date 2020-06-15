@@ -9,7 +9,7 @@
 			<view class="user_name">{{NewsDetail.nickname}}</view>
 			<view class="user_time">3月20日 20:00</view>
 		</view>
-		<view class="attention" data-id="{{NewsDetail.user_id}}" wx:if="{{NewsDetail.user_id != userId}}" catchtap="attention">关注</view>
+		<view class="attention" data-id="{{NewsDetail.user_id}}" wx:if="{{NewsDetail.user_id != userId && NewsDetail.user_id!=0}}" catchtap="attention">{{NewsDetail.is_focus?'已关注':'关注'}}</view>
 	</view>
 	<!-- 轮播导航 -->
 

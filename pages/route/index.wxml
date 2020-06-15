@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="routes">
-			<block wx:for="{{RouteList.list}}" wx:key="index">
+			<block wx:for="{{routeList}}" wx:key="index">
 				<view class="route" data-id="{{item.id}}" catchtap="router_routeDetalis">
 					<view class="route_img">
 						<image src="{{item.img_ur}}"></image>

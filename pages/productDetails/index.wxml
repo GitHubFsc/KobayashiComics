@@ -74,17 +74,19 @@
 	<view class="hr"></view>
 	<!-- 图文详情 -->
 	<view class="details">
-		<view class="details_tltle">图文详情</view>
-		<view class="details_txt">品牌：<text>SSDF</text></view>
+	<view class="details_tltle">图文详情</view>
+			<!-- <view class="details_txt">品牌：<text>SSDF</text></view>
 		<view class="details_txt">高度：<text>12cm</text></view>
 		<view class="details_txt">材质：<text>陶瓷</text></view>
 		<view class="details_txt">颜色：<text>白色，蓝色</text></view>
-		<view class="details_txt">安全指数：<text>一级</text></view>
+		<view class="details_txt">安全指数：<text>一级</text></view> -->
+		<rich-text nodes="{{GoodsDetail.parmertslist.content}}"></rich-text>
 	</view>
 	<!-- 客服+收藏+购物车+立即购买 -->
 	<view class="Details_btn">
-		<view class="db_img" data-id="1" catchtap="router_service">
+		<view class="service" >
 			<image src="./../icon/service.png" />
+			<button open-type="contact" size="mini"></button>
 		</view>
 		<view class="db_img" data-id="1" catchtap="collectL">
 			<image src="{{GoodsDetail.is_collection?'./../icon/collectH.png':'./../icon/collectL.png'}}" />

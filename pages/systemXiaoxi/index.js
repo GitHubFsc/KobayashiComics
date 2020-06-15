@@ -8,7 +8,8 @@ Page({
    */
   data: {
     page : 1,
-    pagesize : 10
+    pagesize : 10,
+    News :[]
   },
 
   /**
@@ -50,7 +51,11 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getSysNews()
   },
 
   /**
@@ -69,7 +74,7 @@ Page({
   //系统消息
   getSysNews(){
     let user_id = wx.getStorageSync('userId'),
-        {page,pagesize} = this.data;
+        {page,pagesize,News} = this.data;
     GetSysNews({
       user_id: user_id,
       page : page,
@@ -79,9 +84,10 @@ Page({
       if (res.data.ErrCode == 0) {
         res.data.Response.map(arr=>{
           arr.add_timespan = utils.formatTime(new Date(Number(res.data.Response.add_timespan)));
+          News.push(arr)
         })
         this.setData({
-          News : res.data.Response
+          News
         })
       } else {
         wx.showToast({

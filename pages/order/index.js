@@ -15,6 +15,8 @@ Page({
     loading: false,
     page: 1,
     pagesize: 10,
+    pageflag : false,
+    MyOrder :[],
   },
   //路由
   //订单详情
@@ -36,6 +38,9 @@ Page({
       title: '提交中...'
     })
     that.postWeChatPay(data,res=>{
+      that.setData({
+        pageflag : false
+      })
       that.getMyOrder();
     })
     // wx.navigateTo({
@@ -77,6 +82,9 @@ Page({
   //tab切换
   nav_tab(e) {
     this.setData({
+      page : 1,
+      pageflag : false,
+      MyOrder : [],
       currentTab: e.target.dataset.index
     })
     this.getMyOrder()
@@ -86,6 +94,9 @@ Page({
     let that = this;
     let id = e.currentTarget.dataset.id;
     that.getCanCelOrder(id, res => {
+      that.setData({
+        pageflag : false
+      })
       that.getMyOrder();
     })
   },
@@ -94,6 +105,9 @@ Page({
     let that = this;
     let id = e.currentTarget.dataset.id;
     that.getOrderSign(id, res => {
+      that.setData({
+        pageflag : false
+      })
       that.getMyOrder();
     })
   },
@@ -155,7 +169,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag :true,
+      page: that.data.page + 1
+    })
+    that.getMyOrder()
   },
 
   /**
@@ -214,11 +233,7 @@ Page({
   //我的订单
   getMyOrder() {
     let user_id = wx.getStorageSync('userId');
-    let {
-      currentTab,
-      page,
-      pagesize
-    } = this.data;
+    let { currentTab, page, pagesize ,pageflag,MyOrder} = this.data;
     GetMyOrder({
       user_id: user_id,
       type: currentTab,
@@ -228,8 +243,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            MyOrder.push(arr)
+          }
+        })
+        if(!pageflag){
+          MyOrder = res.data.Response
+        }
         this.setData({
-          MyOrder: res.data.Response
+          MyOrder
         })
       } else {
         wx.showToast({

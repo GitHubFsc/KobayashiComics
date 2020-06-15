@@ -50,7 +50,7 @@ Page({
   //我的优惠券 
   getMyCouponList() {
     let user_id = wx.getStorageSync('userId');
-    let { currentTab, page,  pagesize } = this.data;
+    let { currentTab, page,  pagesize ,CouponList} = this.data;
     GetMyCouponList({
       user_id: user_id,
       type: currentTab,
@@ -61,9 +61,10 @@ Page({
       if (res.data.ErrCode == 0) {
         res.data.Response.map(item=>{
           item.coupon_end_timespan = utils.ymr(Number(item.coupon_end_timespan));
+          CouponList.push(item)
         })
         this.setData({
-          CouponList: res.data.Response
+          CouponList
         })
       } else {
         wx.showToast({
@@ -113,6 +114,11 @@ Page({
    */
   onReachBottom: function () {
     console.log(122)
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getMyCouponList()
   },
 
   /**

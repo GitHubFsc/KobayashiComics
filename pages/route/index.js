@@ -11,6 +11,7 @@ Page({
     city : '',
     page : 1,
     pagesize : 10,
+    routeList : []
   },
   /*路由*/
   //路线详情
@@ -29,6 +30,8 @@ Page({
   switch(e){
     let that = this;
     that.setData({
+      page : 1,
+      routeList : [],
       switchIdx : e.currentTarget.dataset.index,
     })
     this.getRouteList();
@@ -84,7 +87,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getRouteList()
   },
 
   /**
@@ -97,7 +104,7 @@ Page({
   //路线列表
   getRouteList(){
     let user_id = wx.getStorageSync('userId'),
-    {city,page,pagesize,switchIdx} = this.data;
+    {city,page,pagesize,switchIdx,routeList} = this.data;
     GetRouteList({
       user_id : user_id,
       keywords : city,
@@ -108,8 +115,12 @@ Page({
     }).then(res=>{
       if(res.data.ErrCode==0){
         console.log(res);
+        res.data.Response.list.map(arr=>{
+          routeList.push(arr)
+        })
         this.setData({
-          RouteList : res.data.Response
+          RouteList : res.data.Response,
+          routeList
         })
       }else{
         wx.showToast({

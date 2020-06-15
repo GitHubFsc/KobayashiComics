@@ -4,8 +4,8 @@
   <block wx:for="{{Comments}}" wx:key="index">
     <view class="comment_box" data-id="{{item.news_id}}" catchtap="router_communityDetails">
       <view class="cb_time">{{item.add_timespan}}</view>
-      <view class="cb_title" wx:if="{{item.type==1}}"><text>{{item.to_user_nickname}}</text>评论<text>我</text>：“{{item.title}}”</view>
-      <view class="cb_title" wx:if="{{item.type==1}}"><text>{{item.to_user_nickname}}</text>回复<text>我</text>：“{{item.title}}”</view>
+      <view class="cb_title" wx:if="{{item.type==2}}"><text>{{item.to_user_nickname}}</text>评论<text>我</text>：“{{item.title}}”</view>
+      <view class="cb_title" wx:if="{{item.type==3}}"><text>{{item.to_user_nickname}}</text>回复<text>我</text>：“{{item.title}}”</view>
       <view class="cb_bot">
         <view  class="cb_bot_img">
           <image src="{{item.path_type==1?item.video_img_url:item.img_url}}"></image>

@@ -9,6 +9,7 @@
   height: 100rpx;
   margin: 0 auto;
   display: flex;
+  position: relative;
 }
 
 .avatar {
@@ -34,8 +35,9 @@
 }
 
 .star_count {
-  margin-top: 32rpx;
-  margin-left: 200rpx;
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
   display: flex;
   flex: 1;
   justify-content: flex-end;

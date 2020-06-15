@@ -9,7 +9,8 @@ Page({
     collection : true,
     page : 1,
     pagesize:10,
-    collectionList : []
+    collectionList : [],
+    pageflag : false
   },
   /*路由*/
   //商品详情
@@ -19,12 +20,15 @@ Page({
     })
   },
   /*事件*/
-  //收藏
+  //取消收藏
   collection(e){
     let that = this;
     let id = e.currentTarget.dataset.id;
     console.log(e.currentTarget.dataset.id)
     that.getMyCollection(id,res=>{
+      that.setData({
+        pageflag : false
+      })
       wx.showToast({
         title: res.data.ErrMsg,
         icon: 'none',
@@ -78,7 +82,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag : true,
+      page: that.data.page + 1
+    })
+    that.getMyCollection()
   },
 
   /**
@@ -90,7 +99,7 @@ Page({
   //我的收藏 
   getMyCollection(id,callback){
     let user_id = wx.getStorageSync('userId');
-    let {page,pagesize} = this.data;
+    let {page,pagesize,pageflag,collectionList} = this.data;
     let data ={}
     if(id){
       data.user_id = user_id;
@@ -107,8 +116,16 @@ Page({
         if(id){
           callback && callback(res)
         }else{
+          res.data.Response.map(arr=>{
+            if(pageflag){
+              collectionList.push(arr)
+            }
+          })
+          if(!pageflag){
+            collectionList = res.data.Response
+          }
           this.setData({
-            collectionList : res.data.Response,
+            collectionList  
           })
         }
       } else {

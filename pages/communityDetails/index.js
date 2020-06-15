@@ -31,6 +31,7 @@ Page({
     rid: null,
     id: null,
     type: 0,
+    NewsList:[]  
   },
   /*路由*/
   //他人主页
@@ -243,7 +244,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getMyLikeNews()
   },
 
   /**
@@ -326,10 +331,7 @@ Page({
   //猜你感兴趣
   getMyLikeNews() {
     let userId = wx.getStorageSync('userId');
-    let {
-      page,
-      pagesize
-    } = this.data;
+    let { page, pagesize ,NewsList} = this.data;
     GetMyLikeNews({
       user_id: userId,
       page: page,
@@ -337,8 +339,11 @@ Page({
       sign: getSign(`user_id=${userId}&page=${page}&pagesize=${pagesize}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
+        res.data.Response.map(arr=>{
+          NewsList.push(arr)
+        })
         this.setData({
-          NewsList: res.data.Response
+          NewsList
         })
       } else {
         wx.showToast({

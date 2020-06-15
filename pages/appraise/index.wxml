@@ -2,18 +2,18 @@
 <view class="container appraise">
 	<!-- 商品评论 -->
 	<view class="comment">
-		<block wx:for="{{5}}" wx:key="*this">
+		<block wx:for="{{EvalList}}" wx:key="index">
 			<view class="assess">
 				<view class="user">
 					<view class="avatar" data-id="2" data-type="1" catchtap="router_homepage">
-						<image src="./../images/userimg.png"></image>
+						<image src="{{item.avater}}"></image>
 					</view>
 					<view class="synopsis" data-id="2" data-type="1" catchtap="router_homepage">
-						<view class="user_name">熙和</view>
-						<view class="user_time">2020-12-12</view>
+						<view class="user_name">{{item.nickname}}</view>
+						<view class="user_time">{{item.add_timespan}}</view>
 					</view>
 					<view class="star_count">
-						<block wx:for="{{index}}" wx:key="index">
+						<block wx:for="{{item.start_num}}" wx:key="index">
 							<view class="star">
 								<image src="./../icon/star.png" />
 							</view>
@@ -21,11 +21,11 @@
 					</view>
 				</view>
 				<view class="comment_bot">
-					<view class="comment_txt">商品很好，很有个性，第一次来小林家买东西，很是惊喜</view>
-					<view class="comment_imgs">
-						<block wx:for="{{3}}" wx:key="index">
+					<view class="comment_txt">{{item.content}}</view>
+					<view class="comment_imgs" wx:if="{{item.imglist.length>0}}">
+						<block wx:for="{{item.imglist}}"  wx:for-item="arr" wx:key="idx">
 							<view class="comment_img">
-								<image src="./../images/mall1.png" />
+								<image src="{{arr.img_url}}" />
 							</view>
 						</block>
 					</view>

@@ -14,7 +14,10 @@ Page({
     userInfo : '',
     currentTab : 0,
     page : 1,
-    pagesize : 10
+    pagesize : 10,
+    pagefilg : false,
+    MyNewsList :[],
+    MyCommentsList :[]
   },
   /*路由*/
   //粉丝+关注
@@ -46,6 +49,10 @@ Page({
   nav_tab(e){
     let that = this;
     this.setData({
+      page : 1,
+      pagefilg : false,
+      MyNewsList :[],
+      MyCommentsList :[],
       currentTab : e.target.dataset.index
     })
     if(e.target.dataset.index==0){
@@ -65,13 +72,30 @@ Page({
      that.getUserHomePage();
     })
   },
-  //删除咨询
+  //删除咨询 / 浏览历史
   communityDel(e){
-    let that = this;
+    let that = this,currentTab = that.data.currentTab; 
     console.log(e.currentTarget.dataset.id)
-    that.getDelNews(e.currentTarget.dataset.id,()=>{
-      that.getMyNews()
-    })
+    if(currentTab==0){
+      that.getDelNews(e.currentTarget.dataset.id,()=>{
+        that.setData({
+          page : 1,
+          pagefilg : false,
+          MyNewsList :[],
+        })
+        that.getMyNews()
+      })
+    }else{
+      that.getDelNews(e.currentTarget.dataset.id,()=>{
+        that.setData({
+          page : 1,
+          pagefilg : false,
+          MyNewsList :[],
+        })
+        that.getMyNews()
+      })
+    }
+   
   },
   /**
    * 生命周期函数--监听页面加载
@@ -93,6 +117,7 @@ Page({
       this.setData({
         user_id : options.id,
         type : options.type,
+        pagefilg : true,
       })
       this.getUserHomePage()
     }
@@ -116,6 +141,7 @@ Page({
       if(this.data.type==0){
         this.getMyHomePage()
       }else{
+
         this.getUserHomePage()
       }
     }
@@ -139,14 +165,24 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pagefilg : true,
+      page: that.data.page + 1
+    })
+    if(that.data.currentTab==0){
+      that.getMyNews()
+    }else if(that.data.currentTab==1){
+      that.getMyComments()
+    }else{
+      that.getMyBrowseHistory()
+    }
   },
 
   /**
@@ -201,7 +237,7 @@ Page({
   //用户资讯列表
   //我的资讯
   getMyNews(){
-    let {user_id,page,pagesize} = this.data;
+    let {user_id,page,pagesize,pagefilg,MyNewsList} = this.data;
     GetMyNews({
       user_id: user_id,
       page : page,
@@ -210,8 +246,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pagefilg){
+            MyNewsList.push(arr)
+          }
+        })
+        if(!pagefilg){
+          MyNewsList = res.data.Response
+        }
         this.setData({
-          MyNewsList : res.data.Response
+          MyNewsList
         })
       } else {
         wx.showToast({
@@ -242,7 +286,7 @@ Page({
   },
   //我的评论
   getMyComments(){
-    let {user_id,page,pagesize} = this.data;
+    let {user_id,page,pagesize,pagefilg,MyCommentsList} = this.data;
     GetMyComments({
       user_id: user_id,
       page : page,
@@ -253,9 +297,15 @@ Page({
         console.log(res);
         res.data.Response.map(item=>{
           item.add_timespan = utils.formatTime(new Date(Number(item.add_timespan)))
+          if(pagefilg){
+            MyCommentsList.push(item)
+          }
         })
+        if(!pagefilg){
+          MyCommentsList = res.data.Response
+        }
         this.setData({
-          MyCommentsList : res.data.Response
+          MyCommentsList
         })
       } else {
         wx.showToast({
@@ -267,7 +317,7 @@ Page({
   },
   //我的浏览历史
   getMyBrowseHistory(){
-    let {user_id,page,pagesize} = this.data;
+    let {user_id,page,pagesize,pagefilg,MyNewsList} = this.data;
     GetMyBrowseHistory({
       user_id: user_id,
       page : page,
@@ -275,9 +325,16 @@ Page({
       sign: getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
-        console.log(res);
+        res.data.Response.map(arr=>{
+          if(pagefilg){
+            MyNewsList.push(arr)
+          }
+        })
+        if(!pagefilg){
+          MyNewsList = res.data.Response
+        }
         this.setData({
-          MyNewsList : res.data.Response
+          MyNewsList
         })
       } else {
         wx.showToast({
@@ -288,7 +345,7 @@ Page({
     })
   },
   //删除我的浏览记录
-  getDelBrowseHistory(){
+  getDelBrowseHistory(id){
     let {user_id} = this.data;
     GetDelBrowseHistory({
       user_id: user_id,

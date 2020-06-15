@@ -73,7 +73,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getMyLike()
   },
 
   /**
@@ -86,16 +89,19 @@ Page({
   //猜你喜欢
   getMyLike(){
     let user_id = wx.getStorageSync('userId'),
-    {page,pagesize} = this.data;
-    GetSysNews({
+    {page,pagesize,MyLike} = this.data;
+    GetMyLike({
       user_id: user_id,
       page : page,
       pagesize : pagesize,
       sign : getSign(`user_id=${user_id}&page=${page}&pagesize=${pagesize}`)
     }).then(res => {
       if (res.data.ErrCode == 0) {
+        res.data.Response.map(arr=>{
+          MyLike.push(arr)
+        })
         this.setData({
-          MyLike : res.data.Response
+          MyLike 
         })
       } else {
         wx.showToast({

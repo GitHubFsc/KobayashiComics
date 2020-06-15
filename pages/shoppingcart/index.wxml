@@ -1,12 +1,6 @@
 <!--pages/shoppingcart/index.wxml-->
 <view class="container shoppingcart">
-	<view wx:if="{{carList.length==0}}">
-		<view class="carempty">
-			<image src="./../icon/carempty.png"></image>
-		</view>
-		<view class="carempty_txt">购物车空空如也～～</view>
-	</view>
-	<view wx:if="{{carList.length>0}}">
+	<view wx:if="{{carflag}}">
 		<view class="car_top" catchtap="editcar">{{editcar?'编辑':'完成'}}</view>
 		<view class="carList">
 			<view class="carLists">
@@ -20,7 +14,7 @@
 						</view>
 						<view class="car_txt">
 							<view>{{item.title}}</view>
-							<view>{{item.sku_parameter_type_title}}</view>
+							<view>{{item.sku_parameter_type_title}}{{item.size_title}}</view>
 							<view>¥{{item.sku_price}}</view>
 						</view>
 						<view class="carplusLess">
@@ -33,6 +27,12 @@
 			</view>
 		</view>
 
+	</view>
+	<view wx:else>
+		<view class="carempty">
+			<image src="./../icon/carempty.png"></image>
+		</view>
+		<view class="carempty_txt">购物车空空如也～～</view>
 	</view>
   <view class="car_bot">
 		<view class="cb_left" >

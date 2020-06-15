@@ -9,7 +9,9 @@ Page({
    */
   data: {
     page : 1,
-    pagesize : 10
+    pagesize : 10,
+    user_list: [],
+    pageflag : false
   },
   /*路由*/
   //他人主页
@@ -24,6 +26,9 @@ Page({
     let that = this,
     id = e.currentTarget.dataset.id;
     that.getCanCelFocus(id,()=>{
+      that.setData({
+        pageflag  : false
+      })
       if(that.data.type==0){
         that.getMyFocus()
       }else{
@@ -36,6 +41,9 @@ Page({
     let that = this,
     id = e.currentTarget.dataset.id;
     that.getFocus(id,()=>{
+      that.setData({
+        pageflag  : false
+      })
       if(that.data.type==0){
         that.getMyFocus()
       }else{
@@ -101,7 +109,16 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      pageflag : true,
+      page: that.data.page + 1
+    })
+    if(that.data.type==0){
+      that.getMyFocus()
+    }else{
+      that.getFansList()
+    }
   },
 
   /**
@@ -112,7 +129,7 @@ Page({
   },
   //我的关注
   getMyFocus(){
-    let {user_id,page,pagesize} = this.data;
+    let {user_id,page,pagesize,pageflag,user_list} = this.data;
     GetMyFocus({
       user_id: user_id,
       page : page,
@@ -121,8 +138,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            user_list.push(arr)
+          }
+        })
+        if(!pageflag){
+          user_list = res.data.Response
+        }
         this.setData({
-          user_list : res.data.Response
+          user_list 
         })
       } else {
         wx.showToast({
@@ -134,7 +159,7 @@ Page({
   },
   //我的粉丝
   getFansList(){
-    let {user_id,page,pagesize} = this.data;
+    let {user_id,page,pagesize,pageflag,user_list} = this.data;
     GetFansList({
       user_id: user_id,
       page : page,
@@ -143,8 +168,16 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(arr=>{
+          if(pageflag){
+            user_list.push(arr)
+          }
+        })
+        if(!pageflag){
+          user_list = res.data.Response
+        }
         this.setData({
-          user_list : res.data.Response
+          user_list 
         })
       } else {
         wx.showToast({

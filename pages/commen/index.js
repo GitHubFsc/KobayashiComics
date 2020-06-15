@@ -20,6 +20,8 @@ Page({
     InputBox: true,
     bottom: '',
     userName : '',
+    CommentsList : [],
+    getComments : false
   },
   /*路由*/
   //更多回复
@@ -36,6 +38,9 @@ Page({
     let that = this;
     let id = e.currentTarget.dataset.cid;
       that.getAddLike(id,res=>{
+        that.setData({
+          getComments : false
+        })
         that.getCommentsList();
       })
   },
@@ -55,7 +60,8 @@ Page({
         console.log(res);
         that.setData({
           commentValue : '',
-          InputBox: !that.data.InputBox
+          InputBox: !that.data.InputBox,
+          getComments : false
         })
         that.getCommentsList()
       })
@@ -108,7 +114,8 @@ Page({
   onLoad: function (options) {
     if (options.id) {
       this.setData({
-        news_id: options.id
+        news_id: options.id,
+        getComments : true
       })
       wx.showLoading({
         title: '加载中...',
@@ -156,7 +163,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1,
+      getComments : true
+    })
+    that.getCommentsList()
   },
 
   /**
@@ -169,7 +181,7 @@ Page({
   //更多评论
   getCommentsList() {
     let user_id = wx.getStorageSync('userId'),
-      { news_id, page, pagesize } = this.data;
+      { news_id, page, pagesize ,CommentsList,getComments} = this.data;
     GetCommentsList({
       user_id: user_id,
       news_id: news_id,
@@ -179,8 +191,17 @@ Page({
     }).then(res => {
       if (res.data.ErrCode == 0) {
         console.log(res);
+        res.data.Response.map(item => {
+          item.add_timespan = utils.formatTime(new Date(Number(item.add_timespan)))
+          if(getComments){
+            CommentsList.push(item)
+          }
+        })
+        if(!getComments){
+          CommentsList=res.data.Response
+        }
         this.setData({
-          CommentsList: res.data.Response
+          CommentsList
         })
         wx.hideLoading()
       } else {

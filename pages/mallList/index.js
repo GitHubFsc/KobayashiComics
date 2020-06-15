@@ -25,6 +25,8 @@ Page({
   nav_tab(e){
     let category_id = this.data.category_id;
     this.setData({
+      page : 1,
+      mallList:[],
       currentTab : e.target.dataset.index
     })
     if(category_id<0){
@@ -91,7 +93,15 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    if(that.data.category_id<0){
+      that.getActiveGoods()
+    }else{
+      that.getGoodsList()
+    }
   },
 
   /**
@@ -103,7 +113,7 @@ Page({
   /**API */
   //商品列表
   getGoodsList(){
-    let {category_id,keywords,currentTab,page,pagesize} = this.data;
+    let {category_id,keywords,currentTab,page,pagesize,mallList} = this.data;
     let type = currentTab+1;
     GetGoodsList({
       category_id: category_id,
@@ -114,8 +124,11 @@ Page({
       sign: getSign(`category_id=${category_id}&keywords=${keywords}&type=${type}&page=${page}&pagesize=${pagesize}`)
     }).then(res=>{
       if(res.data.ErrCode ==0){
+        res.data.Response.map(arr=>{
+          mallList.push(arr)
+        })
         this.setData({
-          mallList : res.data.Response
+          mallList
         })
       }else{
         wx.showToast({
@@ -127,15 +140,18 @@ Page({
   },
   //活动商品-更多
   getActiveGoods(){
-    let {page,pagesize} = this.data;
+    let {page,pagesize,mallList} = this.data;
     GetActiveGoods({
       page: page,
       pagesize: pagesize,
       sign: getSign(`page=${page}&pagesize=${pagesize}`)
     }).then(res=>{
       if(res.data.ErrCode ==0){
+        res.data.Response.map(arr=>{
+          mallList.push(arr)
+        })
         this.setData({
-          mallList : res.data.Response
+          mallList
         })
       }else{
         wx.showToast({

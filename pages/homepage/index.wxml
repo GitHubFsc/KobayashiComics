@@ -62,7 +62,7 @@
 									<view class="ct_time">{{item.add_timespan}}</view>
 									<!-- <view class="ct_txt">{{item.content}}</view> -->
 									<!-- <view wx:if="{{index%2==0}}" class="ct_txt">评论：“我对别人的评论”</view> -->
-									<!-- <view wx:if="{{index%2==1}}" class="ct_txt">回复<text>张三</text>“我对别人的很多的评论，巴拉巴拉吧啦啦”</view> -->
+									<view class="ct_txt"><text>{{item.reply_nickname}}</text>回复<text>我</text>“{{item.reply_content}}”</view>
 								</view>
 								<view class="comment_bot">
 									<view class="cb_img">

@@ -30,9 +30,9 @@ Page({
   },
   //客服
   router_service(e) {
-    wx.navigateTo({
-      url: '../dynamic/index?id=' + e.currentTarget.dataset.id,
-    })
+    // wx.navigateTo({
+    //   url: '../dynamic/index?id=' + e.currentTarget.dataset.id,
+    // })
   },
   //购物车
   router_shoppingcart() {
@@ -43,7 +43,7 @@ Page({
   //更多评价
   router_appraise() {
     wx.navigateTo({
-      url: '../appraise/index',
+      url: '../appraise/index?id=' + this.data.goods_id,
     })
   },
   /*事件*/

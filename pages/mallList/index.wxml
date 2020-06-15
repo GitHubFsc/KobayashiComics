@@ -1,8 +1,8 @@
 <!--pages/mallList/index.wxml-->
 <view class="container">
-	<view class="nav_tabs">
-		<block wx:for="{{3}}" wx:key="*this">
-			<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab">
+	<view class="nav_tabs" wx:if="{{category_id>0}}">
+		<block wx:for="{{3}}" wx:key="index" >
+			<view class="nav_tab {{index==currentTab?'active':''}}" data-index="{{index}}" catchtap="nav_tab" >
       {{item==0?'综合':item==1?'销量':item==2?'价格':''}}
 			</view>
 		</block>

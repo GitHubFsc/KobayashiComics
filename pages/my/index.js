@@ -36,7 +36,12 @@ Page({
       url: '../integral/index',
     })
   },
-
+  //我的订单
+  router_myorder(e){
+    wx.switchTab({
+      url: '../order/index?index=' + e.currentTarget.dataset.index,
+    })
+  },
   //
   /**
    * 生命周期函数--监听页面加载

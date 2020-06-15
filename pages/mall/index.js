@@ -11,6 +11,7 @@ Page({
     page : 1,
     pagesize : 10,
     sum_count :0,
+    RecommendGoods : []
   },
   //路由
   //农家特产等
@@ -88,7 +89,11 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this;
+    that.setData({
+      page: that.data.page + 1
+    })
+    that.getRecommendGoods()
   },
 
   /**
@@ -157,15 +162,18 @@ Page({
   },
   //推荐商品
   getRecommendGoods(){
-    let {page,pagesize} = this.data;
+    let {page,pagesize,RecommendGoods} = this.data;
     GetRecommendGoods({
       page: page,
       pagesize: pagesize,
       sign: getSign(`page=${page}&pagesize=${pagesize}`)
     }).then(res=>{  
       if(res.data.ErrCode==0){
+        res.data.Response.map(arr=>{
+          RecommendGoods.push(arr)
+        })
         this.setData({
-          RecommendGoods : res.data.Response
+          RecommendGoods
         })
       }else{
         wx.showToast({
