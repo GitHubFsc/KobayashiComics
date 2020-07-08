@@ -30,6 +30,10 @@
   <view class="Introduction">
     <view class="tille">路线简介：</view>
     <view>简介</view>
+		<view>{{RouteDetail.content}}</view>
+		<block wx:for="{{RouteDetail.imglist}}" wx:key="{{index}}">
+			<view class="detail_img"><image src="{{item.img_url}}"></image></view>
+		</block>
 		<rich-text nodes="{{RouteDetail.content}}"></rich-text>
   </view>
   <view class="destine" data-id="{{RouteDetail.id}}" catchtap="router_routeSubmitOrder">预定</view>

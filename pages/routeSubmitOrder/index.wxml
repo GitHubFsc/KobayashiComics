@@ -34,7 +34,8 @@
 			</view>
 			<view class="ci_cell" catchtap="IntoOtu">
 				<view>预定开始日期</view>
-				<view><input type="text" placeholder="请选择预定开始时间" value="{{start_time}}"/></view>
+				<!-- <view><input type="text" placeholder="请选择预定开始时间" value="{{start_time}}"/></view> -->
+				<view><text>{{start_time?start_time:'请选择预定开始时间'}}</text></view>
 			</view>
 		</view>
 		<view class="commodity_discount">

@@ -849,3 +849,8 @@ image {
   font-weight:400;
   color:rgba(153,153,153,1);
 }
+.detail_img{
+  width: 100%;
+  height: 600rpx;
+  /* height: auto; */
+}

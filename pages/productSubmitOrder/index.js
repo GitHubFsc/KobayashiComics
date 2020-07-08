@@ -19,6 +19,7 @@ Page({
   router_topay() {
     let that = this;
     that.postSubmitOrder(res => {
+      console.log(res);
       that.postWeChatPay(res.data.Response, data => {
         console.log(data);
         wx.redirectTo({

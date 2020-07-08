@@ -97,6 +97,9 @@
   height: 90rpx;
   color: #999999;
 }
+.commoditys .ci_cell text{
+  color: #999999;
+}
 .commoditys .cd_cell .switch {
   transform:scale(0.7,0.7);
   margin-left: 120rpx;

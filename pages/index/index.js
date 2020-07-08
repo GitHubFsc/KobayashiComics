@@ -115,7 +115,6 @@ Page({
     let index = e.target.dataset.index + 1;
     that.setData({
       page: 1,
-      pagesize: 10,
       NewsList: []
     })
     if (user_id) {

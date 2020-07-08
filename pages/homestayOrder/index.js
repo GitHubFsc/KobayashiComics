@@ -268,10 +268,10 @@ Page({
               title: '取消支付！',
               icon: 'none'
             })
-            //取消支付 商品订单
-            wx.switchTab({
-              url: '../order/index?index=1',
+            this.setData({
+              pageflag : false
             })
+            this.getMyHomestayOrder();
           }
         });
       }

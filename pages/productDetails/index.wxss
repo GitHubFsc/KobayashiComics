@@ -222,15 +222,16 @@
 }
 
 .comment .more {
-  width: 100%;
+  width: 160rpx;
   height: auto;
   padding: 26rpx 0;
+  margin: 0 auto;
   font-size: 26rpx;
   font-weight: 400;
   color: rgba(51, 51, 51, 1);
   display: flex;
   text-align: center;
-  padding-left: 42%;
+  /* padding-left: 42%; */
 }
 
 .comment .more .more_img {
@@ -440,4 +441,9 @@
   top:0;
   left: 0;
   background-color: rgba(0, 0, 0, 0);
+}
+.detail_img{
+  width: 100%;
+  height: 600rpx;
+  /* height: auto; */
 }

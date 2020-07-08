@@ -56,7 +56,10 @@
 	<view class="hr"></view>
 	<view class="hd_description">
 		<view class="hd_title">房屋描述：</view>
-		<rich-text nodes="{{homestay.content}}"></rich-text>
+		<view>{{homestay.content}}</view>
+		<block wx:for="{{homestay.imglist}}" wx:key="{{index}}">
+			<view class="detail_img"><image src="{{item.img_url}}"></image></view>
+		</block>
 	</view>
 	<view class="hd_book" catchtap="router_book">预定</view>
 	<!-- 日期抽屉 -->

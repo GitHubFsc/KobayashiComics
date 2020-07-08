@@ -10,7 +10,7 @@
 							<image src="{{item.car?'./../icon/Selected.png':'./../icon/Unselected.png'}}"></image>
 						</view>
 						<view class="car_img">
-							<image src="{{item.sp_img}}"></image>
+							<image src="{{item.img_url}}"></image>
 						</view>
 						<view class="car_txt">
 							<view>{{item.title}}</view>

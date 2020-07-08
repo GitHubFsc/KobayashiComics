@@ -269,6 +269,9 @@ Page({
               title: '取消支付！',
               icon: 'none'
             })
+            this.setData({
+              pageflag : false
+            })
             this.getMyRouteOrder();
           }
         });
